@@ -1,0 +1,27 @@
+/**
+ * This CSS file sets up the base, component, and utility styles for the application using Tailwind CSS.
+ * It also imports a custom font file from the 'public/font' directory.
+ */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: 'font';
+    /* Assign a name to the font family */
+    src: url('../public/font/font.otf') format('opentype');
+    /* Specify the font file path and format */
+    font-weight: normal;
+    /* Set the font weight (optional) */
+    font-style: normal;
+    /* Set the font style (optional) */
+}
+
+*{
+    font-family: 'font';
+}
+
+
+::-webkit-scrollbar{
+    display: none;
+}
