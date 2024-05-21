@@ -31,7 +31,7 @@ A responsive and feature-rich chat application template built with React, Materi
 1. **Clone the repository**:
 
    ```bash
-   git clone https://github.com/yourusername/chat-application-template.git
+   git clone https://github.com/nuralam9922/Chat-Application-Template-react-
    cd chat-application-template
    ```
 
