@@ -12,6 +12,7 @@ const MessageInput = () => {
 
   return (
     <div className="w-full h-auto flex flex-col md:flex-row px-2 md:px-4 items-end md:items-end gap-1 md:gap-4 justify-between bg-backgroundColor shadow-md py-3">
+      
       <div className="w-full md:w-fit h-full">
         <div className="flex items-start justify-start gap-2 mb-2 md:mb-0 h-full">
           <div className="w-14 border rounded-md bg-blue-gray-50 h-10 lg:h-full flex items-center justify-center cursor-pointer">
