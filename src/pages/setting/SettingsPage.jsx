@@ -1,6 +1,4 @@
-import { Checkbox } from '@material-tailwind/react';
 import React, { useState } from 'react';
-import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi';
 import { CgShortcut } from 'react-icons/cg';
 import { FaThemeco } from 'react-icons/fa6';
 import { GrNotification } from 'react-icons/gr';
@@ -10,10 +8,10 @@ import { LuWallpaper } from 'react-icons/lu';
 import { MdPrivacyTip, MdSecurity } from 'react-icons/md';
 import settingPageImage from '../../assets/setting.svg';
 import BottomBarForMobile from '../../components/Sidebar/BottomBarForMobile';
-import { Privacy } from './SubSettings/Privacy/Privacy';
-import { Notifications } from './SubSettings/Notifications/Notifications';
-import Security from './SubSettings/Security/Security';
 import ChatWallpaper from './SubSettings/ChatWallpaper/ChatWallpaper';
+import { Notifications } from './SubSettings/Notifications/Notifications';
+import { Privacy } from './SubSettings/Privacy/Privacy';
+import Security from './SubSettings/Security/Security';
 import Theme from './SubSettings/Theme';
 
 const settingName = [

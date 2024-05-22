@@ -7,6 +7,8 @@ import { MdCreate } from 'react-icons/md';
 import useWindowWidth from '../hooks/useWindowWidth';
 import { Sidebar } from '../components';
 import BottomBarForMobile from '../components/Sidebar/BottomBarForMobile';
+import { Button } from '@material-tailwind/react';
+import { useSelector } from 'react-redux';
 
 const stories = [
   {
@@ -82,9 +84,10 @@ const posts = [
 
 function UserFeed() {
   const [width] = useWindowWidth();
-  
+  const { theme } = useSelector(state => state.theme);
+
   return (
-    <div className="flex w-full">
+    <div className="flex w-full bg-backgroundColor">
       <div
         style={{
           display: width > 1213 ? 'flex' : 'none',
@@ -109,34 +112,61 @@ function UserFeed() {
             ))}
           </div>
 
-          {/* showing in only in mobile and tabes  */}
-
           <div className="w-full py-5 lg:hidden">
-            <div className="w-full grid grid-cols-2 sm:flex  mt-2 gap-3 flex-wrap ">
-              <div className="flex-grow h-10 bg-gray-100 rounded-lg cursor-pointer hover:hover:bg-gray-300 text-primaryTextColor flex items-center px-2 gap-2 justify-center capitalize">
-                <CgAdd /> <p> Add post</p>
-              </div>
-              <div className="flex-grow h-10 bg-gray-100 rounded-lg cursor-pointer hover:hover:bg-gray-300 text-primaryTextColor flex items-center justify-center px-2 gap-2">
-                <MdCreate /> <p> Add A story</p>
-              </div>
-              <div className="flex-grow h-10 bg-gray-100 rounded-lg cursor-pointer hover:hover:bg-gray-300 text-primaryTextColor flex items-center justify-center px-2 gap-2">
-                <BsPostcard /> <p> Manage Posts</p>
-              </div>
-             
-              <div className="flex-grow h-10 bg-gray-100 rounded-lg cursor-pointer hover:hover:bg-gray-300 text-primaryTextColor flex items-center justify-center px-2 gap-2">
-                <FiSave /> <p> Saved post</p>
-              </div>
-              {/* <div className="flex-grow h-10 bg-gray-100 rounded-lg cursor-pointer hover:hover:bg-gray-300 text-primaryTextColor flex items-center px-2 gap-2">
-                <FiSave /> <p> Saved post</p>
-              </div> */}
-              {/* Add more options as needed */}
+            <div className="w-full grid grid-cols-2 sm:flex mt-2 gap-3 flex-wrap">
+              <Button
+                color="blue"
+                // ripple="light"
+                onClick={() => console.log('Add post')}
+                buttonType="filled"
+                size="lg"
+                className="flex-grow h-10hover:bg-blue-700 rounded-lg cursor-pointer  text-primaryTextColor flex items-center px-2 gap-2 justify-center capitalize"
+              >
+                <CgAdd className="mr-2" /> Add post
+              </Button>
+              <Button
+                color="lightBlue"
+                ripple="light"
+                onClick={() => console.log('Add A story')}
+                buttonType="filled"
+                size="lg"
+                className="flex-grow h-10hover:bg-blue-700 rounded-lg cursor-pointer  text-primaryTextColor flex items-center justify-center px-2 gap-2"
+              >
+                <MdCreate className="mr-2" /> Add A story
+              </Button>
+              <Button
+                color="lightBlue"
+                ripple="light"
+                onClick={() => console.log('Manage Posts')}
+                buttonType="filled"
+                size="lg"
+                className="flex-grow h-10hover:bg-blue-700 rounded-lg cursor-pointer  text-primaryTextColor flex items-center justify-center px-2 gap-2"
+              >
+                <BsPostcard className="mr-2" /> Manage Posts
+              </Button>
+              <Button
+                color="lightBlue"
+                onClick={() => console.log('Saved post')}
+                ripple="light"
+                buttonType="filled"
+                size="lg"
+                className="flex-grow h-10hover:bg-blue-700 rounded-lg cursor-pointer  text-primaryTextColor flex items-center justify-center px-2 gap-2"
+              >
+                <FiSave className="mr-2" /> Saved post
+              </Button>
             </div>
           </div>
 
           {/* Posts */}
           <div className="mt-6 w-full md:w-[70%] md:mx-auto">
             {posts.map(post => (
-              <div key={post.id} className="bg-white md:p-4 rounded-lg shadow-md mt-2">
+              <div
+                key={post.id}
+                style={{
+                  backgroundColor: theme === 'light' ? 'white' : '#212121',
+                }}
+                className={` md:p-4 text-primaryTextColor rounded-lg shadow-md mt-5 p-4`}
+              >
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-gray-200 rounded-full overflow-hidden">
                     <img src="https://via.placeholder.com/50" alt={post.user} className="w-full h-full rounded-full object-cover" />
@@ -150,7 +180,7 @@ function UserFeed() {
                 {post.image && <img src={post.image} alt="Post" className="mt-4 rounded-lg w-full object-cover" />}
                 <div className="mt-4 flex justify-between items-center">
                   <div className="flex space-x-4">
-                    <button className="flex items-center space-x-1 text-blue-500 hover:bg-cyan-100 px-3 p-1 rounded-md hover:text-blue-900 duration-200">
+                    <button className="flex items-center space-x-1  bg-cyan-50 px-3 p-1 rounded-md text-blue-900 duration-200">
                       <span className="flex items-center justify-center gap-2">
                         {post.likes} <BsHeart />
                       </span>
@@ -171,28 +201,56 @@ function UserFeed() {
         </div>
       </div>
       <BottomBarForMobile />
-      
     </div>
   );
 }
 const FeedSidebar = () => {
   return (
-    <div className=" flex-col w-full md:w-full  text-white h-full px-4 border ">
+    <div style={{
+      borderRight: '1px solid rgb(229 231 235 / 17%)',
+    }} className="flex-col w-full md:w-full text-white h-full px-4 ">
       <h1 className="text-2xl font-bold text-primaryTextColor mt-5">Menu</h1>
       <div className="w-full flex flex-col mt-2 gap-3">
-        <div className="w-full h-14  bg-gray-100 rounded-lg cursor-pointer hover:hover:bg-gray-300 text-primaryTextColor flex items-center px-4 gap-2">
+        <Button
+          color="lightBlue"
+          ripple="light"
+          buttonType="filled"
+          size="lg"
+          className="w-full h-14 hover:bg-blue-700 rounded-lg cursor-pointer text-primaryTextColor flex items-center px-4 gap-2"
+          onClick={() => console.log('Add post')}
+        >
           <CgAdd /> <p> Add post</p>
-        </div>
-        <div className="w-full h-14  bg-gray-100 rounded-lg cursor-pointer hover:hover:bg-gray-300 text-primaryTextColor flex items-center px-4 gap-2">
+        </Button>
+        <Button
+          color="gray"
+          ripple="light"
+          buttonType="filled"
+          size="lg"
+          className="w-full h-14  rounded-lg cursor-pointer text-primaryTextColor flex items-center px-4 gap-2"
+          onClick={() => console.log('Add A story')}
+        >
           <MdCreate /> <p> Add A story</p>
-        </div>
-        <div className="w-full h-14  bg-gray-100 rounded-lg cursor-pointer hover:hover:bg-gray-300 text-primaryTextColor flex items-center px-4 gap-2">
+        </Button>
+        <Button
+          color="gray"
+          ripple="light"
+          buttonType="filled"
+          size="lg"
+          className="w-full h-14  rounded-lg cursor-pointer text-primaryTextColor flex items-center px-4 gap-2"
+          onClick={() => console.log('Delete post')}
+        >
           <CgTrash /> <p> Delete post</p>
-        </div>
-        <div className="w-full h-14  bg-gray-100 rounded-lg cursor-pointer hover:hover:bg-gray-300 text-primaryTextColor flex items-center px-4 gap-2">
+        </Button>
+        <Button
+          color="gray"
+          ripple="light"
+          buttonType="filled"
+          size="lg"
+          className="w-full h-14  rounded-lg cursor-pointer text-primaryTextColor flex items-center px-4 gap-2"
+          onClick={() => console.log('Manage Posts')}
+        >
           <BsPostcard /> <p> Manage Posts</p>
-        </div>
-        {/* Add more options as needed */}
+        </Button>
       </div>
     </div>
   );

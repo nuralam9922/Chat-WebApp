@@ -3,9 +3,11 @@ import { Avatar } from '@material-tailwind/react';
 import React, { useState } from 'react';
 import 'tailwindcss/tailwind.css';
 import BottomBarForMobile from '../components/Sidebar/BottomBarForMobile';
+import { useSelector } from 'react-redux';
 
 function FriendRequestPage() {
   const [activeTab, setActiveTab] = useState('friends');
+  const { theme } = useSelector(state => state.theme);
 
   const requests = [
     { id: 1, name: 'Alice' },
@@ -23,7 +25,7 @@ function FriendRequestPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-backgroundColor w-full">
+    <div className="min-h-screen bg-backgroundColor w-full text-primaryTextColor">
       <div className=" shadow-md rounded-lg p-6 h-full">
         <h1 className="text-2xl font-bold mb-4">Friend Requests</h1>
         <div className="mb-4 flex flex-wrap gap-4">
@@ -46,11 +48,17 @@ function FriendRequestPage() {
             {friends.length > 0 ? (
               <ul>
                 {friends.map(friend => (
-                  <li key={friend.name} className="bg-gray-100 p-4 rounded-lg mb-2 shadow-sm flex justify-between">
+                  <li
+                    style={{
+                      backgroundColor: theme === 'light' ? 'white' : '#212121',
+                    }}
+                    key={friend.name}
+                    className="text-primaryTextColor p-4 rounded-lg mb-2 shadow-sm flex justify-between"
+                  >
                     <div className="flex gap-4">
                       {' '}
                       <Avatar className="rounded-full lg:size-32" src="https://docs.material-tailwind.com/img/face-2.jpg" alt="avatar" />
-                      <span>{friend.name}</span>
+                      <span className="">{friend.name}</span>
                     </div>
                     <div className="flex gap-3 items-start">
                       <Button color="blue" className="text-xs px-3 w-fit">
@@ -71,17 +79,23 @@ function FriendRequestPage() {
             {requests.length > 0 ? (
               <ul>
                 {requests.map(request => (
-                  <li key={request.id} className="bg-gray-100 p-4 rounded-lg mb-2 shadow-sm flex justify-between">
+                  <li
+                    key={request.id}
+                    style={{
+                      backgroundColor: theme === 'light' ? 'white' : '#212121',
+                    }}
+                    className="bg-gray-100 p-4 rounded-lg mb-2 shadow-sm flex justify-between"
+                  >
                     <div className="flex gap-4">
                       {' '}
                       <Avatar className="rounded-full lg:size-32" src="https://docs.material-tailwind.com/img/face-2.jpg" alt="avatar" />
-                      <span>{request.name}</span>
+                      <span className="">{request.name}</span>
                     </div>
                     <div className="flex gap-3 items-start">
-                      <Button color="blue" className="text-xs px-3 w-fit">
+                      <Button color="blue" className="text-xs px-3 w-fit md:w-32">
                         Accept
                       </Button>
-                      <Button color="red" className="text-xs px-3 w-fit">
+                      <Button color="red" className="text-xs px-3 w-fit md:w-32">
                         Reject
                       </Button>
                     </div>

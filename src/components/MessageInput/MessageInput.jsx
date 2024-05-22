@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import fileIcon from '../../assets/fileIcon.svg';
-import useAutoResizeTextarea from '../../hooks/useAutoResizeTextarea ';
-import EmojiPickerComponent from '../EmojiPickerComponent';
 import { BsEmojiDizzy } from 'react-icons/bs';
 import { GrAttachment } from 'react-icons/gr';
+import useAutoResizeTextarea from '../../hooks/useAutoResizeTextarea ';
+import EmojiPickerComponent from '../EmojiPickerComponent';
 
 const MessageInput = () => {
   const textareaRef = useAutoResizeTextarea();
@@ -11,14 +10,13 @@ const MessageInput = () => {
   const [text, setText] = useState('');
 
   return (
-    <div className="w-full h-auto flex flex-col md:flex-row px-2 md:px-4 items-end md:items-end gap-1 md:gap-4 justify-between bg-backgroundColor shadow-md py-3">
-      
-      <div className="w-full md:w-fit h-full">
-        <div className="flex items-start justify-start gap-2 mb-2 md:mb-0 h-full">
-          <div className="w-14 border rounded-md bg-blue-gray-50 h-10 lg:h-full flex items-center justify-center cursor-pointer">
-            <GrAttachment className='text-black' />
+    <div className="w-full h-auto flex flex-col md:flex-row px-2 md:px-4 items-end md:items-end lg:gap-1 md:gap-4 justify-between bg-backgroundColor shadow-md mb-3 md:mb-0 lg:py-3">
+      <div className="w-full md:w-fit h-full flex items-end  justify-start">
+        <div className="flex items-end justify-between gap-2 mb-2 md:mb-0 h-full ">
+          <div className="min-h-10  rounded-md flex items-center p-3 px-4 justify-center flex-shrink-0 border cursor-pointer">
+            <GrAttachment className="text-primaryTextColor text-xl" />
           </div>
-          <div onClick={() => setShowEmoji(!showEmoji)} className="h-10 lg:h-full rounded-md flex items-center p-3 px-4 justify-center flex-shrink-0 border cursor-pointer">
+          <div onClick={() => setShowEmoji(!showEmoji)} className="min-h-10  rounded-md flex items-center p-3 px-4 justify-center flex-shrink-0 border cursor-pointer">
             <BsEmojiDizzy className="text-xl text-yellow-400" />
           </div>
         </div>

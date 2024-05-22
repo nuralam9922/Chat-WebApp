@@ -8,6 +8,7 @@ import './About.css';
 import { Switch } from '@material-tailwind/react';
 import { RiGhostLine } from 'react-icons/ri';
 import { FaArrowRightToBracket } from 'react-icons/fa6';
+import { useSelector } from 'react-redux';
 
 function About({ showUserDetails = true, setShowUserDetails }) {
   const aboutRef = useRef();
@@ -109,6 +110,8 @@ function About({ showUserDetails = true, setShowUserDetails }) {
 }
 
 const Media = ({ showMedia, setShowMedia }) => {
+    const { theme } = useSelector(state => state.theme);
+
   const [showSection, setShowSection] = useState('Media');
   return (
     <div
@@ -145,46 +148,27 @@ const Media = ({ showMedia, setShowMedia }) => {
         <div className="w-full h-32 bg-blue-gray-300"></div>
         <div className="w-full h-32 bg-blue-gray-300"></div>
       </div>
-      <div style={{ display: showSection === 'Docs' ? 'grid' : 'none' }} className="w-full overflow-y-scroll">
-        <div className="w-full h-32 border-2 rounded-xl flex items-start gap-3 shadow-md overflow-hidden">
+      <div style={{ display: showSection === 'Docs' ? 'grid' : 'none' }} className="w-full overflow-y-scroll gap-4">
+        <div
+          style={{
+            backgroundColor: theme === 'light' ? 'white' : '#212121',
+          }}
+          className="w-full h-32 border-2 rounded-xl flex items-start gap-3 shadow-md overflow-hidden cursor-pointer"
+        >
           <div className="w-1/3 flex items-center justify-center h-full bg-blue-gray-300">
             <LiaLinkSolid className="text-5xl" />
           </div>
           <h2 className="text-linkColor">https://codingmonk.in/blogs</h2>
         </div>
-        <div className="w-full h-32 border-2 rounded-xl flex items-start gap-3 shadow-md overflow-hidden">
-          <div className="w-1/3 flex items-center justify-center h-full bg-blue-gray-300">
-            <LiaLinkSolid className="text-5xl" />
-          </div>
-          <h2 className="text-linkColor">https://codingmonk.in/blogs</h2>
-        </div>
-        <div className="w-full h-32 border-2 rounded-xl flex items-start gap-3 shadow-md overflow-hidden">
-          <div className="w-1/3 flex items-center justify-center h-full bg-blue-gray-300">
-            <LiaLinkSolid className="text-5xl" />
-          </div>
-          <h2 className="text-linkColor">https://codingmonk.in/blogs</h2>
-        </div>
-        <div className="w-full h-32 border-2 rounded-xl flex items-start gap-3 shadow-md overflow-hidden">
-          <div className="w-1/3 flex items-center justify-center h-full bg-blue-gray-300">
-            <LiaLinkSolid className="text-5xl" />
-          </div>
-          <h2 className="text-linkColor">https://codingmonk.in/blogs</h2>
-        </div>
-        <div className="w-full h-32 border-2 rounded-xl flex items-start gap-3 shadow-md overflow-hidden">
-          <div className="w-1/3 flex items-center justify-center h-full bg-blue-gray-300">
-            <LiaLinkSolid className="text-5xl" />
-          </div>
-          <h2 className="text-linkColor">https://codingmonk.in/blogs</h2>
-        </div>
-        <div className="w-full h-32 border-2 rounded-xl flex items-start gap-3 shadow-md overflow-hidden">
-          <div className="w-1/3 flex items-center justify-center h-full bg-blue-gray-300">
-            <LiaLinkSolid className="text-5xl" />
-          </div>
-          <h2 className="text-linkColor">https://codingmonk.in/blogs</h2>
-        </div>
+  
       </div>
       <div style={{ display: showSection === 'Links' ? 'grid' : 'none' }} className="w-ful overflow-y-scroll flex flex-col gap-3">
-        <div>
+        <div
+          style={{
+            backgroundColor: theme === 'light' ? 'white' : '#212121',
+          }}
+          className="p-3 rounded-md"
+        >
           <div className="w-full min-h-40 bg-blue-gray-100 rounded-md"></div>
           <div className="w-full justify-between items-center flex mt-3">
             <h1>THis is file name</h1>
@@ -197,7 +181,12 @@ const Media = ({ showMedia, setShowMedia }) => {
             </h1>
           </div>
         </div>
-        <div>
+        <div
+          style={{
+            backgroundColor: theme === 'light' ? 'white' : '#212121',
+          }}
+          className="p-3 rounded-md"
+        >
           <div className="w-full min-h-40 bg-blue-gray-100 rounded-md"></div>
           <div className="w-full justify-between items-center flex mt-3">
             <h1>THis is file name</h1>
@@ -210,7 +199,12 @@ const Media = ({ showMedia, setShowMedia }) => {
             </h1>
           </div>
         </div>
-        <div>
+        <div
+          style={{
+            backgroundColor: theme === 'light' ? 'white' : '#212121',
+          }}
+          className="p-3 rounded-md"
+        >
           <div className="w-full min-h-40 bg-blue-gray-100 rounded-md"></div>
           <div className="w-full justify-between items-center flex mt-3">
             <h1>THis is file name</h1>
@@ -223,7 +217,12 @@ const Media = ({ showMedia, setShowMedia }) => {
             </h1>
           </div>
         </div>
-        <div>
+        <div
+          style={{
+            backgroundColor: theme === 'light' ? 'white' : '#212121',
+          }}
+          className="p-3 rounded-md"
+        >
           <div className="w-full min-h-40 bg-blue-gray-100 rounded-md"></div>
           <div className="w-full justify-between items-center flex mt-3">
             <h1>THis is file name</h1>
@@ -236,7 +235,12 @@ const Media = ({ showMedia, setShowMedia }) => {
             </h1>
           </div>
         </div>
-        <div>
+        <div
+          style={{
+            backgroundColor: theme === 'light' ? 'white' : '#212121',
+          }}
+          className="p-3 rounded-md"
+        >
           <div className="w-full min-h-40 bg-blue-gray-100 rounded-md"></div>
           <div className="w-full justify-between items-center flex mt-3">
             <h1>THis is file name</h1>
@@ -249,7 +253,138 @@ const Media = ({ showMedia, setShowMedia }) => {
             </h1>
           </div>
         </div>
-        <div>
+        <div
+          style={{
+            backgroundColor: theme === 'light' ? 'white' : '#212121',
+          }}
+          className="p-3 rounded-md"
+        >
+          <div className="w-full min-h-40 bg-blue-gray-100 rounded-md"></div>
+          <div className="w-full justify-between items-center flex mt-3">
+            <h1>THis is file name</h1>
+            <h1>
+              <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10.5 2.625V15.0938" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
+                <path d="M4.59375 9.1875L10.5 15.0938L16.4062 9.1875" stroke="black" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M3.28125 17.7188H17.7188" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
+              </svg>
+            </h1>
+          </div>
+        </div>
+        <div
+          style={{
+            backgroundColor: theme === 'light' ? 'white' : '#212121',
+          }}
+          className="p-3 rounded-md"
+        >
+          <div className="w-full min-h-40 bg-blue-gray-100 rounded-md"></div>
+          <div className="w-full justify-between items-center flex mt-3">
+            <h1>THis is file name</h1>
+            <h1>
+              <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10.5 2.625V15.0938" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
+                <path d="M4.59375 9.1875L10.5 15.0938L16.4062 9.1875" stroke="black" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M3.28125 17.7188H17.7188" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
+              </svg>
+            </h1>
+          </div>
+        </div>
+        <div
+          style={{
+            backgroundColor: theme === 'light' ? 'white' : '#212121',
+          }}
+          className="p-3 rounded-md"
+        >
+          <div className="w-full min-h-40 bg-blue-gray-100 rounded-md"></div>
+          <div className="w-full justify-between items-center flex mt-3">
+            <h1>THis is file name</h1>
+            <h1>
+              <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10.5 2.625V15.0938" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
+                <path d="M4.59375 9.1875L10.5 15.0938L16.4062 9.1875" stroke="black" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M3.28125 17.7188H17.7188" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
+              </svg>
+            </h1>
+          </div>
+        </div>
+        <div
+          style={{
+            backgroundColor: theme === 'light' ? 'white' : '#212121',
+          }}
+          className="p-3 rounded-md"
+        >
+          <div className="w-full min-h-40 bg-blue-gray-100 rounded-md"></div>
+          <div className="w-full justify-between items-center flex mt-3">
+            <h1>THis is file name</h1>
+            <h1>
+              <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10.5 2.625V15.0938" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
+                <path d="M4.59375 9.1875L10.5 15.0938L16.4062 9.1875" stroke="black" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M3.28125 17.7188H17.7188" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
+              </svg>
+            </h1>
+          </div>
+        </div>
+        <div
+          style={{
+            backgroundColor: theme === 'light' ? 'white' : '#212121',
+          }}
+          className="p-3 rounded-md"
+        >
+          <div className="w-full min-h-40 bg-blue-gray-100 rounded-md"></div>
+          <div className="w-full justify-between items-center flex mt-3">
+            <h1>THis is file name</h1>
+            <h1>
+              <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10.5 2.625V15.0938" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
+                <path d="M4.59375 9.1875L10.5 15.0938L16.4062 9.1875" stroke="black" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M3.28125 17.7188H17.7188" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
+              </svg>
+            </h1>
+          </div>
+        </div>
+        <div
+          style={{
+            backgroundColor: theme === 'light' ? 'white' : '#212121',
+          }}
+          className="p-3 rounded-md"
+        >
+          <div className="w-full min-h-40 bg-blue-gray-100 rounded-md"></div>
+          <div className="w-full justify-between items-center flex mt-3">
+            <h1>THis is file name</h1>
+            <h1>
+              <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10.5 2.625V15.0938" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
+                <path d="M4.59375 9.1875L10.5 15.0938L16.4062 9.1875" stroke="black" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M3.28125 17.7188H17.7188" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
+              </svg>
+            </h1>
+          </div>
+        </div>
+        <div
+          style={{
+            backgroundColor: theme === 'light' ? 'white' : '#212121',
+          }}
+          className="p-3 rounded-md"
+        >
+          <div className="w-full min-h-40 bg-blue-gray-100 rounded-md"></div>
+          <div className="w-full justify-between items-center flex mt-3">
+            <h1>THis is file name</h1>
+            <h1>
+              <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10.5 2.625V15.0938" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
+                <path d="M4.59375 9.1875L10.5 15.0938L16.4062 9.1875" stroke="black" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M3.28125 17.7188H17.7188" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
+              </svg>
+            </h1>
+          </div>
+        </div>
+        <div
+          style={{
+            backgroundColor: theme === 'light' ? 'white' : '#212121',
+          }}
+          className="p-3 rounded-md"
+        >
           <div className="w-full min-h-40 bg-blue-gray-100 rounded-md"></div>
           <div className="w-full justify-between items-center flex mt-3">
             <h1>THis is file name</h1>

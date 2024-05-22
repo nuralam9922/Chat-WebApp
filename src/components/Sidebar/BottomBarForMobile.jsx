@@ -21,7 +21,7 @@ function BottomBarForMobile() {
       style={{
         display: mdMode ? 'none' : 'flex',
       }}
-      className="w-full py-2  fixed bottom-0 left-0 bg-backgroundColor flex items-center justify-between px-2 z-[999]"
+      className="w-full py-2  fixed bottom-0 left-0 bg-sideBarBackgroundColor flex items-center justify-between px-2 z-[999]"
     >
       {navinks.map(link => (
         <NavLink

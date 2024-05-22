@@ -20,11 +20,11 @@ function EditProfile({ onNextStep }) {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center md:p-10 bg-backgroundColor border-2 h-full w-full">
-      <div className="bg-white md:shadow-md rounded-lg p-6 w-full md:max-w-md">
-        <h2 className="text-2xl font-bold text-center mb-6">Edit Profile</h2>
+    <div className="flex text-textPrimaryColor flex-col items-center justify-center md:p-10 b  h-full w-full">
+      <div className=" shadow-md rounded-lg p-6 w-full md:max-w-md ">
+        <h2 className="text-2xl font-bold text-center mb-6 text-primaryTextColor">Edit Profile</h2>
         <form onSubmit={handleSubmit} className="space-y-4 w-full">
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center w-full">
             <label className="cursor-pointer">
               <div className="relative w-32 h-32 rounded-full overflow-hidden bg-gray-200">
                 {profileImage ? (
@@ -48,8 +48,8 @@ function EditProfile({ onNextStep }) {
           <div>
             <Textarea type="text" label="About" color="blue" size="lg" placeholder="About" value={about} onChange={e => setAbout(e.target.value)} required />
           </div>
-          <div className="flex justify-center">
-            <Button type="submit" color="blue" size="lg">
+          <div className="flex justify-center w-full">
+            <Button type="submit" color="blue" className='w-full'>
               Save Changes
             </Button>
           </div>

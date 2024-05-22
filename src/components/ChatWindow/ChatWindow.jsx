@@ -1,16 +1,13 @@
-import React, { useState } from 'react';
-import aboutIcon from '../../assets/about.svg';
-import userImage from '../../assets/userImage.png';
-import videoCallIcon from '../../assets/video.svg';
-import About from '../../pages/About/About';
-import MessageInput from '../MessageInput/MessageInput';
-import { useRef } from 'react';
-import { useEffect } from 'react';
-import { FcAbout } from 'react-icons/fc';
-import { PiArrowBendUpLeftThin } from 'react-icons/pi';
+import React, { useEffect, useRef, useState } from 'react';
 import { BsExclamationCircle } from 'react-icons/bs';
 import { CiVideoOn } from 'react-icons/ci';
 import { IoReturnUpBack } from 'react-icons/io5';
+import userImage from '../../assets/userImage.png';
+import About from '../../pages/About/About';
+import MessageInput from '../MessageInput/MessageInput';
+import './chatWindow.css'
+import { useSelector } from 'react-redux';
+
 const messages = [
   { text: 'Hey there! How can I help you today?', time: '10:05', isCurrentUser: false },
   { text: "Sure, I'm looking for some information on your products.", time: '10:05', isCurrentUser: true, isRead: true },
@@ -37,6 +34,7 @@ function ChatWindow({ visibleBackArrow = false, setShowChatWindow }) {
   const [showUserDetails, setShowUserDetails] = useState(false);
   const [isTyping, setIsTyping] = useState(true);
   const messageSectionRef = useRef(null);
+  const { theme } = useSelector(state => state.theme);
 
   useEffect(() => {
     if (messageSectionRef.current) {
@@ -55,7 +53,12 @@ function ChatWindow({ visibleBackArrow = false, setShowChatWindow }) {
       <div ref={messageSectionRef} className="overflow-y-auto flex-grow px-4 py-2">
         {messages.map((item, index) => (
           <div key={index} className={`w-full flex ${item.isCurrentUser ? 'justify-end' : 'justify-start'} mb-2`}>
-            <div className={`max-w-xs p-2 text-xs md:p-3 rounded-lg bg-gray-200 text-gray-900`}>
+            <div
+              style={{
+                backgroundColor: theme === 'light' ? '#dadada' : '#212121',
+              }}
+              className={`max-w-md p-2 text-xs md:p-3 rounded-lg  text-primaryTextColor`}
+            >
               {item.text}
               <div className="flex items-center justify-end mt-1">
                 <span className="block text-xs text-gray-600">{item.time}</span>
@@ -86,11 +89,7 @@ function ChatWindow({ visibleBackArrow = false, setShowChatWindow }) {
 }
 export const Navbar = ({ visibleBackArrow, setShowChatWindow, setShowUserDetails }) => {
   return (
-<<<<<<< HEAD
-    <nav className="w-full h-[71px] sticky flex-shrink-0   top-0 flex items-center justify-between px-4 bg-backgroundColor  shadow-inherit shadow-white text-primaryTextColor">
-=======
-    <nav className="w-full h-[71px] sticky flex-shrink-0 border  top-0 flex items-center justify-between px-4 bg-backgroundColor border-b border-gray-200 shadow-sm">
->>>>>>> 97491e286ad67102bb72fef90d138440b649b6ba
+    <nav className="w-full navbar h-[71px] sticky flex-shrink-0   top-0 flex items-center justify-between px-4 bg-backgroundColor   text-primaryTextColor">
       <div className="flex items-center gap-4">
         {/* make a go back arrow */}
         {visibleBackArrow && <GoBackSvg setShowChatWindow={setShowChatWindow} />}

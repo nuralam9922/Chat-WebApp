@@ -15,8 +15,8 @@ function UserOnboarding() {
 
   return (
     <div className="w-full h-screen flex items-center justify-center">
-      <div className=" w-full h-full border-2 p-3 md:p-10">
-        <div> </div>
+      <div className=" w-full h-full border-2 p-3 md:p-10  ">
+        
         <div className="w-full h-3 bg-blue-gray-100 rounded-full overflow-hidden ">
           <div className={`h-full bg-blue-600 transition-width duration-300 ${step === 1 ? 'w-1/3' : step === 2 ? 'w-2/3' : 'w-full'}`}></div>
         </div>

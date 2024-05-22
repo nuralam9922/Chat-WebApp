@@ -6,6 +6,7 @@ import useWindowWidth from '../../hooks/useWindowWidth';
 import ChatWindow from '../ChatWindow/ChatWindow';
 import Dropdown from '../Dropdown/Dropdown';
 import BottomBarForMobile from '../Sidebar/BottomBarForMobile';
+import { useSelector } from 'react-redux';
 
 function Messages() {
   const [width] = useWindowWidth();
@@ -49,6 +50,7 @@ function Messages() {
 const TopSection = () => {
   const [dropdown, setDropdown] = useState(false);
   const [dropdownValue, setDropdownValue] = useState('Latest');
+  const {theme} = useSelector(state => state.theme)
   return (
     <div className="flex-shrink-0">
       <div className="md:h-16 mt-2 md:mt-0 mb-2 w-full flex items-center">
@@ -66,8 +68,11 @@ const TopSection = () => {
         </svg>
 
         <input
+          style={{
+            backgroundColor: theme === 'light' ? '#dadada' : '#212121',
+          }}
           type="text"
-          className="w-full bg-[#EEEEEE] h-full rounded-[12px] indent-10 outline-none focus:border focus:border-blue-400 duration-200"
+          className="w-full  h-full rounded-[12px] indent-10 outline-none focus:border focus:border-blue-400 duration-200"
           placeholder="Search..."
           name=""
           id=""
