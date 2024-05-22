@@ -5,6 +5,9 @@ import { PiNotificationFill } from 'react-icons/pi';
 import userImage from '../../assets/userImage.png'; // Assuming you have a user image asset
 import BottomBarForMobile from '../../components/Sidebar/BottomBarForMobile';
 import './About.css';
+import { Switch } from '@material-tailwind/react';
+import { RiGhostLine } from 'react-icons/ri';
+import { FaArrowRightToBracket } from 'react-icons/fa6';
 
 function About({ showUserDetails = true, setShowUserDetails }) {
   const aboutRef = useRef();
@@ -27,28 +30,28 @@ function About({ showUserDetails = true, setShowUserDetails }) {
     <>
       <div
         ref={aboutRef}
-        className={`fixed top-0 right-0 h-screen w-full lg:w-[400px] bg-white shadow-md z-[100] transition-transform duration-300 flex flex-col  ${
+        className={`fixed top-0 right-0 h-screen w-full lg:w-[400px] bg-backgroundColor text-primaryTextColor shadow-md z-[100] transition-transform duration-300 flex flex-col  ${
           showUserDetails ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
         <div className="flex items-center justify-between p-4 border-b border-gray-200 h-f">
           <h2 className="text-lg font-semibold">User Info</h2>
-          <button onClick={() => setShowUserDetails(false)} className="text-gray-500 hover:text-gray-700 text-xl">
+          <button onClick={() => setShowUserDetails(false)} className="text-gray-500 hover:text-primaryTextColor text-xl">
             &times;
           </button>
         </div>
-        <div className="p-4">
+        <div className="p-4 w-full">
           <div className="flex items-center mb-4">
             <img src={userImage} className="w-16 h-16 rounded-full mr-4" alt="User Avatar" />
             <div>
-              <h2 className="text-xl font-semibold text-gray-900">Shreyansh Shah</h2>
+              <h2 className="text-xl font-semibold text-primaryTextColor">Shreyansh Shah</h2>
               <a href="tel:+916265081928" className="text-blue-600">
                 +91 6265 081 928
               </a>
             </div>
           </div>
           <div className="flex items-center justify-around w-full py-3">
-            <button className="flex items-center justify-center flex-col w-20 h-10  text-primaryTextColor border-blue-500 text-white rounded-md">
+            <button className="flex items-center justify-center flex-col w-20 h-10  text-primaryTextColor  text-white rounded-md">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M2.25 5.625H14.25C15.0456 5.625 15.8087 5.94107 16.3713 6.50368C16.9339 7.06629 17.25 7.82935 17.25 8.625V17.625C17.25 17.8239 17.171 18.0147 17.0303 18.1553C16.8897 18.296 16.6989 18.375 16.5 18.375H4.5C3.70435 18.375 2.94129 18.0589 2.37868 17.4963C1.81607 16.9337 1.5 16.1706 1.5 15.375V6.375C1.5 6.17609 1.57902 5.98532 1.71967 5.84467C1.86032 5.70402 2.05109 5.625 2.25 5.625V5.625Z"
@@ -67,18 +70,15 @@ function About({ showUserDetails = true, setShowUserDetails }) {
               <p className="text-secondaryTextColor">Video</p>
             </button>
           </div>
-          <div className="border-t border-gray-200 py-4">
-            <div className="text-sm text-gray-700">About</div>
-            <p className="text-sm text-gray-900 mt-1">Hi there, I am using</p>
+          <div className=" py-4">
+            <div className="text-sm text-primaryTextColor">About</div>
+            <p className="text-sm text-secondaryTextColor mt-1">Hi there, I am using</p>
           </div>
-          <div className="border-t border-gray-200 py-4">
+          <div className="text-primaryTextColor py-4">
             <div className="w-full justify-between items-center flex">
-              <p className="text-sm text-gray-700">Media, links and docs</p>
-              <p onClick={() => setShowMedia(!showMedia)} className="flex items-center justify-center gap-2">
-                201{' '}
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M6.75 3.375L12.375 9L6.75 14.625" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
-                </svg>
+              <p className="text-sm text-primaryTextColor">Media, links and docs</p>
+              <p onClick={() => setShowMedia(!showMedia)} className="flex items-center justify-center gap-2 cursor-pointer">
+                201 <FaArrowRightToBracket className="text-primaryTextColor" />
               </p>
             </div>
             <div className="flex space-x-2 mt-2">
@@ -88,24 +88,21 @@ function About({ showUserDetails = true, setShowUserDetails }) {
             </div>
           </div>
 
-          <div className="border-t border-gray-200 py-4">
+          <div className=" py-4">
             <div className="flex items-center justify-between">
-              <div className="text-sm text-gray-700 flex items-center justify-center gap-2">
+              <div className="text-sm text-primaryTextColor flex items-center justify-center gap-2">
                 <PiNotificationFill /> <p>Mute Notifications</p>
               </div>
-              <label className="switch">
-                <input type="checkbox" checked />
-                <span className="slider round"></span>
-              </label>
+              <Switch defaultChecked color="blue" />
             </div>
           </div>
-          <div className="flex justify-between p-4 border-t border-gray-200">
-            <button className="flex-1 bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-md mr-2">Block</button>
+          <div className="flex mt-5 w-full">
+            <button className=" w-full flex-grow bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-md mr-2">Block</button>
           </div>
         </div>
 
-              <Media showMedia={showMedia} setShowMedia={setShowMedia} />
-              <BottomBarForMobile/>
+        <Media showMedia={showMedia} setShowMedia={setShowMedia} />
+        <BottomBarForMobile />
       </div>
     </>
   );
@@ -115,13 +112,13 @@ const Media = ({ showMedia, setShowMedia }) => {
   const [showSection, setShowSection] = useState('Media');
   return (
     <div
-      className={`fixed top-0 right-0 h-screen w-full lg:w-[400px] bg-white shadow-md z-[100] p-4 transition-transform duration-300 flex flex-col  ${
+      className={`fixed top-0 right-0 h-screen w-full lg:w-[400px] bg-backgroundColor shadow-md z-[100] p-4 transition-transform duration-300 flex flex-col  ${
         showMedia ? 'translate-x-0' : 'translate-x-full'
       }`}
     >
       <div className="flex items-center justify-between  border-b border-gray-200 h-f">
         <h2 className="text-lg font-semibold">Media</h2>
-        <button onClick={() => setShowMedia(false)} className="text-gray-500 hover:text-gray-700 text-xl">
+        <button onClick={() => setShowMedia(false)} className="text-gray-500 hover:text-primaryTextColor text-xl">
           &times;
         </button>
       </div>

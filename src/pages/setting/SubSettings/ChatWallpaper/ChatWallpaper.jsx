@@ -30,7 +30,7 @@ const bg = [
 function ChatWallpaper({ currentSetting, setCurrentSetting }) {
   return (
     <div
-      className={`absolute top-0 right-0 h-screen w-full  bg-white z-[100] p-4 transition-transform duration-300 flex flex-col  ${
+      className={`absolute top-0 right-0 h-screen w-full  bg-backgroundColor text-primaryTextColor z-[100] p-4 transition-transform duration-300 flex flex-col  ${
         currentSetting === 'ChatWallpaper' ? 'translate-x-0' : 'translate-x-full'
       }`}
     >

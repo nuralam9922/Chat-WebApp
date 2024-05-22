@@ -34,12 +34,12 @@ const settingName = [
     icon: <LuWallpaper />,
   },
   {
-    name: 'Account',
-    icon: <CgShortcut />,
-  },
-  {
     name: 'Theme',
     icon: <FaThemeco />,
+  },
+  {
+    name: 'Account',
+    icon: <CgShortcut />,
   },
   {
     name: 'Shortcuts',
@@ -56,13 +56,13 @@ const SettingsPage = () => {
   return (
     <div className="h-screen w-full flex justify-between md:flex-row bg-backgroundColor select-none ">
       {/* SettingsSidebar */}
-      <div className="w-full lg:w-[384px] h-full border p-4 relative overflow-hidden">
+      <div className="w-full lg:w-[384px] h-full  p-4 relative overflow-hidden">
         <h1 className="text-2xl font-bold text-primaryTextColor">Setting</h1>
 
         <div className="w-full mt-10 flex items-start gap-5">
           <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" className="size-[70px] object-cover rounded-full" alt="" />
           <div>
-            <h1 className="font-[600]">User Name</h1>
+            <h1 className="font-[600] text-primaryTextColor">User Name</h1>
             <p className="text-secondaryTextColor">Lorem ipsum dolor sit amet.</p>
           </div>
         </div>
@@ -72,7 +72,10 @@ const SettingsPage = () => {
             <div
               onClick={() => setCurrentSetting(item.name === 'Chat Wallpaper' ? 'ChatWallpaper' : item.name)}
               key={item.name}
-              className="w-full border-b-2 flex items-center h-16 cursor-pointer"
+              style={{
+                borderBottom: '1px solid rgb(229 231 235 / 17%)',
+              }}
+              className="w-full  flex items-center h-16 cursor-pointer"
             >
               <div className="flex items-center gap-5 font-[600] text-primaryTextColor cursor-pointer">
                 {item.icon}

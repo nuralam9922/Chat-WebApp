@@ -6,6 +6,11 @@ import About from '../../pages/About/About';
 import MessageInput from '../MessageInput/MessageInput';
 import { useRef } from 'react';
 import { useEffect } from 'react';
+import { FcAbout } from 'react-icons/fc';
+import { PiArrowBendUpLeftThin } from 'react-icons/pi';
+import { BsExclamationCircle } from 'react-icons/bs';
+import { CiVideoOn } from 'react-icons/ci';
+import { IoReturnUpBack } from 'react-icons/io5';
 const messages = [
   { text: 'Hey there! How can I help you today?', time: '10:05', isCurrentUser: false },
   { text: "Sure, I'm looking for some information on your products.", time: '10:05', isCurrentUser: true, isRead: true },
@@ -44,7 +49,7 @@ function ChatWindow({ visibleBackArrow = false, setShowChatWindow }) {
       style={{
         position: 'relative ',
       }}
-      className="w-full  flex flex-col gap-2 bg-backgroundColor relative border-gray-200 overflow-y-scroll h-screen"
+      className="w-full  flex flex-col gap-2 bg-backgroundColor relative text-primaryTextColor overflow-y-scroll h-screen"
     >
       <Navbar visibleBackArrow={visibleBackArrow} setShowChatWindow={setShowChatWindow} setShowUserDetails={setShowUserDetails} />{' '}
       <div ref={messageSectionRef} className="overflow-y-auto flex-grow px-4 py-2">
@@ -81,22 +86,22 @@ function ChatWindow({ visibleBackArrow = false, setShowChatWindow }) {
 }
 export const Navbar = ({ visibleBackArrow, setShowChatWindow, setShowUserDetails }) => {
   return (
-    <nav className="w-full h-[71px] fixed flex-shrink-0 border  top-0 flex items-center justify-between px-4 bg-backgroundColor border-b border-gray-200 shadow-sm">
+    <nav className="w-full h-[71px] sticky flex-shrink-0   top-0 flex items-center justify-between px-4 bg-backgroundColor  shadow-inherit shadow-white text-primaryTextColor">
       <div className="flex items-center gap-4">
         {/* make a go back arrow */}
         {visibleBackArrow && <GoBackSvg setShowChatWindow={setShowChatWindow} />}
 
         <div className="w-10 h-10 rounded-full bg-slate-400 overflow-hidden">
-          <img src={userImage} className="w-full h-full object-cover" alt="User Avatar" />
+          <img src={userImage} className="w-full h-full object-cover " alt="User Avatar" />
         </div>
         <div>
-          <div className="font-medium text-gray-900">Nuralam Mondal</div>
+          <div className="font-medium text-primaryTextColor">Nuralam Mondal</div>
           <div className="text-green-500 text-xs">ONLINE</div>
         </div>
       </div>
       <div className="flex items-center gap-3">
-        <img src={videoCallIcon} alt="Video Call" className="w-6 h-6 cursor-pointer" />
-        <img onClick={() => setShowUserDetails(true)} src={aboutIcon} alt="About" className="w-6 h-6 cursor-pointer" />
+        <CiVideoOn className="text-xl cursor-pointer" />
+        <BsExclamationCircle onClick={() => setShowUserDetails(true)} className="text-xl cursor-pointer" />
       </div>
     </nav>
   );
@@ -106,20 +111,8 @@ export const GoBackSvg = ({ setShowChatWindow }) => {
     setShowChatWindow(false);
   };
   return (
-    <div>
-      <svg
-        onClick={handleBackClick}
-        className="w-[18px] h-[18px] cursor-pointer"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <polyline points="15 18 9 12 15 6" />
-      </svg>
+    <div onClick={handleBackClick} className="w-6 h-6 cursor-pointer" >
+      <IoReturnUpBack />
     </div>
   );
 };

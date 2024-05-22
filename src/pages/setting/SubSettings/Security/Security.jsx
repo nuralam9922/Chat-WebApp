@@ -8,7 +8,7 @@ import { MdSecurity } from 'react-icons/md';
 function Security({ currentSetting, setCurrentSetting }) {
   return (
     <div
-      className={`absolute top-0 right-0 h-screen w-full  bg-backgroundColor z-[100] p-4 transition-transform duration-300 flex flex-col  ${
+      className={`absolute top-0 right-0 h-screen w-full  bg-backgroundColor text-primaryTextColor z-[100] p-4 transition-transform duration-300 flex flex-col  ${
         currentSetting === 'Security' ? 'translate-x-0' : 'translate-x-full'
       }`}
     >

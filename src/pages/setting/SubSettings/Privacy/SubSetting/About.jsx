@@ -11,7 +11,7 @@ function About({ currentPrivacySetting, setCurrentPrivacySetting }) {
 
   return (
     <div
-      className={`absolute top-0 right-0 h-screen w-full bg-white z-[100] p-4 transition-transform duration-300 flex flex-col ${
+      className={`absolute top-0 right-0 h-screen w-full bg-backgroundColor text-primaryTextColor z-[100] p-4 transition-transform duration-300 flex flex-col ${
         currentPrivacySetting === 'About' ? 'translate-x-0' : 'translate-x-full'
       }`}
     >
@@ -24,15 +24,13 @@ function About({ currentPrivacySetting, setCurrentPrivacySetting }) {
         </h1>
       </div>
 
-    
-
       <p className="text-linkColor text-xs mt-5">Choose who can see your profile information.</p>
 
       <div className="w-full mt-10 flex flex-col gap-3">
         <div className="w-full border-b-2">
           <Checkbox label="Everyone" name="about" checked={selectedOption === 'option1'} onChange={() => handleCheckboxChange('option1')} />
         </div>
-      
+
         <div className="w-full border-b-2">
           <Checkbox label="Nobody" name="about" checked={selectedOption === 'option3'} onChange={() => handleCheckboxChange('option3')} />
         </div>

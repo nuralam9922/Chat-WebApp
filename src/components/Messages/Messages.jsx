@@ -30,16 +30,16 @@ function Messages() {
       <div
         style={{
           display: showChatWindow && (mdMode || mobileMode) ? 'none' : 'flex',
+          borderRight: '1px solid rgb(229 231 235 / 17%)',
         }}
-        className="w-full h-screen flex flex-col p-1 px-3 bg-backgroundColor"
+        className="w-full h-screen flex flex-col p-1 px-3 bg-backgroundColor text-primaryTextColor border-none lg:border"
       >
         <TopSection />
         {/* message profile avatar and a short preview of the message and tick mark if your read the message or not time  */}
         <div className="w-full mt-5 flex flex-col h-[calc(100% -10rem)]  overflow-y-scroll pb-20">
           <MessageLabel handleClick={handleClick} />
-          
         </div>
-        <BottomBarForMobile/>
+        <BottomBarForMobile />
       </div>
       {showChatWindow && (mdMode || mobileMode) && <ChatWindow visibleBackArrow={mdMode || mobileMode} setShowChatWindow={setShowChatWindow} />}
     </>
@@ -81,7 +81,7 @@ const TopSection = () => {
         </div>
 
         {/* dropdown short items */}
-        <Dropdown options={['Oldest', 'Latest']} isOpen={dropdown} isClose={setDropdown} setOptionValue={setDropdownValue} />
+        <Dropdown options={['Oldest', 'Latest']} isOpen={dropdown} isClose={setDropdown} dropdownValue={dropdownValue} setDropdownValue={setDropdownValue} />
       </div>
     </div>
   );

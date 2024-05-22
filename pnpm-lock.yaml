@@ -11,6 +11,12 @@ dependencies:
   '@reduxjs/toolkit':
     specifier: ^2.2.5
     version: 2.2.5(react-redux@9.1.2)(react@18.3.1)
+  emoji-picker-element:
+    specifier: ^1.21.3
+    version: 1.21.3
+  emoji-picker-react:
+    specifier: ^4.9.3
+    version: 4.9.3(react@18.3.1)
   react:
     specifier: ^18.2.0
     version: 18.3.1
@@ -1414,6 +1420,20 @@ packages:
     resolution: {integrity: sha512-132O1XCd7zcTkzS3FgkAzKmnBuNJjK8WjcTtNuoylj7MYbqw5eXehjQ5OK91g0zm7OTKIPeaAG4CPoRfD9M1Mg==}
     dev: true
 
+  /emoji-picker-element@1.21.3:
+    resolution: {integrity: sha512-o1wQmPX0+8dmp/v4BfHVSMD2x32ZmCQd5LMHpHTw1M9ltDW99P+IIPbveI7nPxwGw74TW9E6jds6Kitf14UCOg==}
+    dev: false
+
+  /emoji-picker-react@4.9.3(react@18.3.1):
+    resolution: {integrity: sha512-1O38tt6Yty8MiAB/3BWBpjyKr6sKVIl7Uc/fcATBxgz43fN31j1gVAsbY0+S2Yolaxgro838tFd2iADV2Ot2nA==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      react: '>=16'
+    dependencies:
+      flairup: 0.0.38
+      react: 18.3.1
+    dev: false
+
   /emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
     dev: true
@@ -1770,6 +1790,10 @@ packages:
       locate-path: 6.0.0
       path-exists: 4.0.0
     dev: true
+
+  /flairup@0.0.38:
+    resolution: {integrity: sha512-W9QA5TM7eYNlGoBYwfVn/o6v4yWBCxfq4+EJ5w774oFeyWvVWnYq6Dgt4CJltjG9y/lPwbOqz3jSSr8K66ToGg==}
+    dev: false
 
   /flat-cache@3.2.0:
     resolution: {integrity: sha512-CYcENa+FtcUKLmhhqyctpclsq7QF38pKjZHsGNiSQF5r4FtoKDWabFDl3hzaEQMvT1LHEysw5twgLvpYYb4vbw==}

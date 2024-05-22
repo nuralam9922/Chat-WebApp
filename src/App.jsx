@@ -52,10 +52,10 @@ const router = createBrowserRouter([
         path: '/',
         element: (
           <Suspense fallback={<Loading />}>
-            <div className="w-full lg:w-[393px] flex justify-center flex-shrink-0">
+            <div  className="w-full lg:w-[393px] flex justify-center flex-shrink-0">
               <Messages />
             </div>
-            <div className="w-full  hidden lg:block lg:border">
+            <div className="w-full  hidden lg:block ">
               <ChatWindow />
             </div>
           </Suspense>

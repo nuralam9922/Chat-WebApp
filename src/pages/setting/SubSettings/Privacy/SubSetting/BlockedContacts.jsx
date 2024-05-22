@@ -15,7 +15,7 @@ function BlockedContacts({ currentPrivacySetting, setCurrentPrivacySetting }) {
 
   return (
     <div
-      className={`absolute top-0 right-0 h-screen w-full bg-white z-[100] p-4 transition-transform duration-300 flex flex-col ${
+      className={`absolute top-0 right-0 h-screen w-full bg-backgroundColor text-primaryTextColor z-[100] p-4 transition-transform duration-300 flex flex-col ${
         currentPrivacySetting === 'Blocked Contacts' ? 'translate-x-0' : 'translate-x-full'
       }`}
     >
@@ -31,7 +31,7 @@ function BlockedContacts({ currentPrivacySetting, setCurrentPrivacySetting }) {
       <div className="mt-10">
         {blockedUsers.map(user => (
           <div key={user.id} className="w-full flex items-center justify-between border-b-2 py-2">
-                <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4">
               <img src={user.avatar} alt={user.name} className="w-12 h-12 object-cover rounded-full" />
               <p className="font-medium text-lg">{user.name}</p>
             </div>

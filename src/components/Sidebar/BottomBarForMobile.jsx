@@ -7,11 +7,11 @@ import { NavLink } from 'react-router-dom';
 import useWindowWidth from '../../hooks/useWindowWidth';
 import { CgProfile } from 'react-icons/cg';
 const navinks = [
-  { name: 'messages', path: '/', icon: <BiMessageSquare className="text-xl" /> },
-  { name: 'friends feed', path: '/feed', icon: <MdOutlineSubscriptions className="text-xl" /> },
-  { name: 'add friends', path: '/friends', icon: <FiUserPlus className="text-xl" /> },
-  { name: 'profile page', path: '/user', icon: <CgProfile className="text-xl" /> },
-  { name: 'setting page', path: '/settings', icon: <IoSettingsOutline className="text-xl" /> },
+  { name: 'messages', path: '/', icon: <BiMessageSquare className="text-xl text-primaryTextColor" /> },
+  { name: 'friends feed', path: '/feed', icon: <MdOutlineSubscriptions className="text-xl text-primaryTextColor" /> },
+  { name: 'add friends', path: '/friends', icon: <FiUserPlus className="text-xl text-primaryTextColor" /> },
+  { name: 'profile page', path: '/user', icon: <CgProfile className="text-xl text-primaryTextColor" /> },
+  { name: 'setting page', path: '/settings', icon: <IoSettingsOutline className="text-xl text-primaryTextColor" /> },
 ];
 function BottomBarForMobile() {
   const [width] = useWindowWidth();
@@ -21,7 +21,7 @@ function BottomBarForMobile() {
       style={{
         display: mdMode ? 'none' : 'flex',
       }}
-      className="w-full py-2 border fixed bottom-0 left-0 bg-backgroundColor flex items-center justify-between px-2 z-[999]"
+      className="w-full py-2  fixed bottom-0 left-0 bg-backgroundColor flex items-center justify-between px-2 z-[999]"
     >
       {navinks.map(link => (
         <NavLink

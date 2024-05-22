@@ -1,8 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import toggleSidebarSlice from '../slices/toggleSidebarSlice';
+import useThemeSlice from '../slices/useThemeSlice';
 
 export const store = configureStore({
 	reducer: {
-    toggle: toggleSidebarSlice.reducer,
+		// toggle: toggleSidebarSlice.reducer,
+		theme: useThemeSlice.reducer,
 	},
 });
