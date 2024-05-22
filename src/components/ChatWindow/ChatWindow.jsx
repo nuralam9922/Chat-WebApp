@@ -86,7 +86,11 @@ function ChatWindow({ visibleBackArrow = false, setShowChatWindow }) {
 }
 export const Navbar = ({ visibleBackArrow, setShowChatWindow, setShowUserDetails }) => {
   return (
+<<<<<<< HEAD
     <nav className="w-full h-[71px] sticky flex-shrink-0   top-0 flex items-center justify-between px-4 bg-backgroundColor  shadow-inherit shadow-white text-primaryTextColor">
+=======
+    <nav className="w-full h-[71px] sticky flex-shrink-0 border  top-0 flex items-center justify-between px-4 bg-backgroundColor border-b border-gray-200 shadow-sm">
+>>>>>>> 97491e286ad67102bb72fef90d138440b649b6ba
       <div className="flex items-center gap-4">
         {/* make a go back arrow */}
         {visibleBackArrow && <GoBackSvg setShowChatWindow={setShowChatWindow} />}
