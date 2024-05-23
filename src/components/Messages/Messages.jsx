@@ -7,13 +7,13 @@ import ChatWindow from '../ChatWindow/ChatWindow';
 import Dropdown from '../Dropdown/Dropdown';
 import BottomBarForMobile from '../Sidebar/BottomBarForMobile';
 import { useSelector } from 'react-redux';
-
+import './Messages.css';
 function Messages() {
   const [width] = useWindowWidth();
   const mobileMode = width < 768;
   const mdMode = width >= 768 && width < 1024;
   const [showChatWindow, setShowChatWindow] = useState(false);
-
+const {theme} = useSelector(state => state.theme)
   useEffect(() => {
     if (!mdMode) {
       setShowChatWindow(false);
@@ -31,9 +31,9 @@ function Messages() {
       <div
         style={{
           display: showChatWindow && (mdMode || mobileMode) ? 'none' : 'flex',
-          borderRight: '1px solid rgb(229 231 235 / 17%)',
+          borderRight: theme === 'light' ? '1px solid #dadada' : '1px solid rgb(229 231 235 / 17%)',
         }}
-        className="w-full h-screen flex flex-col p-1 px-3 bg-backgroundColor text-primaryTextColor border-none lg:border"
+        className="w-full h-screen flex flex-col  message-container p-1 px-3 bg-backgroundColor text-primaryTextColor border-none md:border-r-2 select-none"
       >
         <TopSection />
         {/* message profile avatar and a short preview of the message and tick mark if your read the message or not time  */}
@@ -52,8 +52,8 @@ const TopSection = () => {
   const [dropdownValue, setDropdownValue] = useState('Latest');
   const {theme} = useSelector(state => state.theme)
   return (
-    <div className="flex-shrink-0">
-      <div className="md:h-16 mt-2 md:mt-0 mb-2 w-full flex items-center">
+    <div className="flex-shrink-0 select-none">
+      <div className="md:h-16 mt-2 md:mt-0 mb-2 w-full flex items-center select-none">
         <h1 className="text-[23px] font-[700]">Messages</h1>
       </div>
       {/* search bar  */}

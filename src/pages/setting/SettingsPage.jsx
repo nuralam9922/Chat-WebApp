@@ -13,6 +13,10 @@ import { Notifications } from './SubSettings/Notifications/Notifications';
 import { Privacy } from './SubSettings/Privacy/Privacy';
 import Security from './SubSettings/Security/Security';
 import Theme from './SubSettings/Theme';
+import { Button } from '@material-tailwind/react';
+import authService from '../../services/authService';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../slices/authSlice';
 
 const settingName = [
   {
@@ -51,11 +55,22 @@ const settingName = [
 
 const SettingsPage = () => {
   const [currentSetting, setCurrentSetting] = useState('');
+  const dispatch = useDispatch();
+
+  const handelLogout = async () => {
+    await authService.logout();
+    dispatch(logout());
+  }
+
+
   return (
     <div className="h-screen w-full flex justify-between md:flex-row bg-backgroundColor select-none ">
       {/* SettingsSidebar */}
       <div className="w-full lg:w-[384px] h-full  p-4 relative overflow-hidden">
-        <h1 className="text-2xl font-bold text-primaryTextColor">Setting</h1>
+        <div className='w-full flex items-center justify-between'>
+          <h1 className="text-2xl font-bold text-primaryTextColor">Setting</h1>
+          <Button onClick={handelLogout} className="rounded-full">LogOut</Button>
+        </div>
 
         <div className="w-full mt-10 flex items-start gap-5">
           <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" className="size-[70px] object-cover rounded-full" alt="" />

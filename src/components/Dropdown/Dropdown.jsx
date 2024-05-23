@@ -30,7 +30,7 @@ const Dropdown = React.memo(({ isOpen = true, isClose, options = [], dropdownVal
     >
       {options?.map(
         (option, index) => (
-          console.log(dropdownValue),
+          
           (
             <div
               key={index}
@@ -38,7 +38,7 @@ const Dropdown = React.memo(({ isOpen = true, isClose, options = [], dropdownVal
                 setDropdownValue(option);
                 isClose(false);
               }}
-              className={`w-full h-12 px-4 flex items-center cursor-pointer ${option === dropdownValue ? 'bg-blue-100' : ''} hover:bg-gray-100 transition-colors duration-200`}
+              className={`w-full h-12 px-4 flex items-center cursor-pointer ${option === dropdownValue ? 'bg-blue-500 text-white hover:bg' : ''} hover:bg-green-200  transition-colors duration-200`}
             >
               <span className="text-gray-700">{option}</span>
             </div>

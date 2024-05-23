@@ -1,13 +1,54 @@
+import { Button, Checkbox } from '@material-tailwind/react';
 import React from 'react';
-import { BsGoogle } from 'react-icons/bs';
-import { FaFacebook, FaFacebookF } from 'react-icons/fa6';
+import { FaFacebookF } from 'react-icons/fa6';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import loginPage from '../assets/loginPage.jpg';
-import { Checkbox } from '@material-tailwind/react';
-import { Button } from '@material-tailwind/react';
+import { selectLoggedInStatus } from '../selectors/authStatusSelectors';
+import authService from '../services/authService';
+import { login } from '../slices/authSlice';
+import { useState } from 'react';
 
 const LoginPage = () => {
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const dispatch = useDispatch();
+  const loggedInStatus = useSelector(selectLoggedInStatus);
+  const navigate = useNavigate()
+  if (loggedInStatus === true) {
+    navigate('/')
+    return
+  }
+
+
+
+  const loginWithGoogle = async () => {
+    try {
+      setLoading(true);
+      const response = await authService.loginWithGoogle();
+
+      if (response) {
+        dispatch(login(response));
+        setLoading(false);
+        console.log(response.newUser === false);
+        if (response.newUser === false) {
+          navigate('/')
+        } else {
+          navigate('/user-initiation')
+
+        }
+      }
+    } catch (error) {
+      setError(error.message);
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="flex h-screen">
+
       <div className="w-full md:w-1/2 bg-white p-8 flex flex-col justify-center items-center">
         <svg className="w-32 md:w-40 lg:w-40" viewBox="0 0 350 212.909198897464">
           <defs id="SvgjsDefs1194"></defs>
@@ -34,8 +75,8 @@ const LoginPage = () => {
         </p>
 
         <div className="flex gap-2 flex-col md:flex-row mt-5">
-          <Button size="lg" variant="outlined" color="blue-gray" className="flex items-center gap-3">
-            <img src="https://docs.material-tailwind.com/icons/google.svg" alt="metamask" className="h-6 w-6" />
+          <Button loading={loading} onClick={loginWithGoogle} size="lg" variant="outlined" color="blue-gray" className="flex items-center gap-3 flex-grow">
+            <img src="https://docs.material-tailwind.com/icons/google.svg" alt="metamask" className="h-6 w-6 flex-grow" />
             Continue with Google
           </Button>
           <Button size="lg" variant="outlined" color="blue-gray" className="flex items-center gap-3">
@@ -45,9 +86,14 @@ const LoginPage = () => {
         </div>
       </div>
       <div className="hidden md:block w-1/2 bg-gradient-to-br from-purple-500 to-pink-500 flex flex-col justify-center items-center text-white  flex-shrink-0">
+
         <img src={loginPage} className="w-full h-full flex-shrink-0" alt="" />
       </div>
     </div>
+
+
+
+
   );
 };
 

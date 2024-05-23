@@ -5,6 +5,9 @@ import { toggleSidebar } from '../slices/toggleSidebarSlice';
 import { BiEdit } from 'react-icons/bi';
 
 export const ProfileSettings = () => {
+
+  
+
   const [displayName, setDisplayName] = useState('');
   const [bio, setBio] = useState('');
   const [username, setUsername] = useState('');

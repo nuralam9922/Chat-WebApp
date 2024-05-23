@@ -40,7 +40,7 @@ function SidebarMini() {
             <NavLink
               key={link.path}
               to={link.path}
-              className={({ isActive }) => `flex items-center justify-center w-12 h-12 rounded-md transition ${isActive ? 'bg-blue-500 text-white' : 'hover:bg-gray-300'}`}
+              className={({ isActive }) => `flex items-center justify-center w-12 h-12 rounded-md transition ${isActive ? 'bg-blue-500 text-white' : 'hover:bg-gray-300 hover:text-black'}`}
             >
               {link.icon}
             </NavLink>
@@ -52,13 +52,13 @@ function SidebarMini() {
       <div className="flex flex-col items-center py-4 space-y-4">
         <NavLink
           to="/user"
-          className={({ isActive }) => `flex items-center justify-center w-12 h-12 rounded-md transition ${isActive ? 'bg-blue-500 text-white' : 'hover:bg-gray-300'}`}
+          className={({ isActive }) => `flex items-center justify-center w-12 h-12 rounded-md transition text-primaryTextColor ${isActive ? 'bg-blue-500 text-white' : 'hover:bg-gray-300 hover:text-black'}`}
         >
           <CgProfile />
         </NavLink>
         <NavLink
           to="/settings"
-          className={({ isActive }) => `flex items-center justify-center w-12 h-12 rounded-md transition ${isActive ? 'bg-blue-500 text-white' : 'hover:bg-gray-300'}`}
+          className={({ isActive }) => `flex items-center justify-center w-12 h-12 rounded-md transition text-primaryTextColor ${isActive ? 'bg-blue-500 text-white' : 'hover:bg-gray-300 hover:text-black'}`}
         >
           <IoSettingsOutline />
         </NavLink>

@@ -6,16 +6,19 @@ import { MdOutlineSubscriptions } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 import useWindowWidth from '../../hooks/useWindowWidth';
 import { CgProfile } from 'react-icons/cg';
+import { useSelector } from 'react-redux';
 const navinks = [
-  { name: 'messages', path: '/', icon: <BiMessageSquare className="text-xl text-primaryTextColor" /> },
-  { name: 'friends feed', path: '/feed', icon: <MdOutlineSubscriptions className="text-xl text-primaryTextColor" /> },
-  { name: 'add friends', path: '/friends', icon: <FiUserPlus className="text-xl text-primaryTextColor" /> },
-  { name: 'profile page', path: '/user', icon: <CgProfile className="text-xl text-primaryTextColor" /> },
-  { name: 'setting page', path: '/settings', icon: <IoSettingsOutline className="text-xl text-primaryTextColor" /> },
+  { name: 'messages', path: '/', icon: <BiMessageSquare className={"text-xl "} /> },
+  { name: 'friends feed', path: '/feed', icon: <MdOutlineSubscriptions className={"text-xl "} /> },
+  { name: 'add friends', path: '/friends', icon: <FiUserPlus className={"text-xl "} /> },
+  { name: 'profile page', path: '/user', icon: <CgProfile className={"text-xl "} /> },
+  { name: 'setting page', path: '/settings', icon: <IoSettingsOutline className={"text-xl "} /> },
 ];
 function BottomBarForMobile() {
   const [width] = useWindowWidth();
   const mdMode = width >= 970;
+
+  const { theme } = useSelector(state => state.theme);
   return (
     <div
       style={{
@@ -27,7 +30,7 @@ function BottomBarForMobile() {
         <NavLink
           key={link.path}
           to={link.path}
-          className={({ isActive }) => `flex items-center justify-center w-12 h-12 rounded-md transition ${isActive ? 'bg-blue-500 text-white' : 'hover:bg-gray-300'}`}
+          className={({ isActive }) => `flex items-center justify-center w-12 h-12 rounded-md transition text-primaryTextColor ${isActive ? 'bg-blue-500 text-white' : 'hover:bg-gray-300 hover:text-black'}`}
         >
           {link.icon}
         </NavLink>

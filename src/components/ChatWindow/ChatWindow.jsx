@@ -50,7 +50,7 @@ function ChatWindow({ visibleBackArrow = false, setShowChatWindow }) {
       className="w-full  flex flex-col gap-2 bg-backgroundColor relative text-primaryTextColor overflow-y-scroll h-screen"
     >
       <Navbar visibleBackArrow={visibleBackArrow} setShowChatWindow={setShowChatWindow} setShowUserDetails={setShowUserDetails} />{' '}
-      <div ref={messageSectionRef} className="overflow-y-auto flex-grow px-4 py-2">
+      <div ref={messageSectionRef} className="overflow-y-auto flex-grow px-4 py-2 ">
         {messages.map((item, index) => (
           <div key={index} className={`w-full flex ${item.isCurrentUser ? 'justify-end' : 'justify-start'} mb-2`}>
             <div
@@ -89,7 +89,7 @@ function ChatWindow({ visibleBackArrow = false, setShowChatWindow }) {
 }
 export const Navbar = ({ visibleBackArrow, setShowChatWindow, setShowUserDetails }) => {
   return (
-    <nav className="w-full navbar h-[71px] sticky flex-shrink-0   top-0 flex items-center justify-between px-4 bg-backgroundColor   text-primaryTextColor">
+    <nav className="w-full navbar h-[71px]  flex-shrink-0   top-0 flex items-center justify-between px-4 bg-backgroundColor   text-primaryTextColor">
       <div className="flex items-center gap-4">
         {/* make a go back arrow */}
         {visibleBackArrow && <GoBackSvg setShowChatWindow={setShowChatWindow} />}
