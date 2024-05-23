@@ -10,6 +10,7 @@ import { fetchUser } from './slices/authSlice';
 import { selectAuthLoading } from './selectors/authLoadingSelector';
 import { useEffect } from 'react';
 import { selectUserDetails } from './selectors/userSelector';
+import AlertComponent from './components/AlertComponent';
 const LoginPage = React.lazy(() => import('./pages/LoginPage'));
 const MainLayout = () => {
   const dispatch = useDispatch();
@@ -40,7 +41,7 @@ const MainLayout = () => {
       <div className="h-screen w-[70px] flex-shrink-0 bg-sideBarBackgroundColor hidden lg:block">
         <Sidebar />
       </div>
-
+      <AlertComponent />
       <Outlet />
 
       <Tooltip id="my-tooltip" />

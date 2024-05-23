@@ -6,7 +6,7 @@ export const Notifications = ({ currentSetting, setCurrentSetting }) => {
   return (
     <div
       className={`absolute top-0 right-0 h-screen w-full  bg-backgroundColor shadow-md shadow-white z-[100] p-4 transition-transform duration-300 flex flex-col  ${
-        currentSetting === 'Notifications' ? 'translate-x-0' : 'translate-x-full'
+        currentSetting === 'Notifications' ? 'flex' : 'hidden'
       }`}
     >
       <div className="w-full flex items-center justify-between">

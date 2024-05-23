@@ -28,7 +28,7 @@ const LoginPage = () => {
     try {
       setLoading(true);
       const response = await authService.loginWithGoogle();
-
+      
       if (response) {
         dispatch(login(response));
         setLoading(false);

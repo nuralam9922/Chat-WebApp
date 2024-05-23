@@ -1,3 +1,4 @@
+import { Button } from '@material-tailwind/react';
 import React, { useState } from 'react';
 import { CgShortcut } from 'react-icons/cg';
 import { FaThemeco } from 'react-icons/fa6';
@@ -6,23 +7,26 @@ import { IoHelp } from 'react-icons/io5';
 import { LiaThemeisle } from 'react-icons/lia';
 import { LuWallpaper } from 'react-icons/lu';
 import { MdPrivacyTip, MdSecurity } from 'react-icons/md';
+import { useDispatch, useSelector } from 'react-redux';
 import settingPageImage from '../../assets/setting.svg';
+import ImageComponent from '../../components/ImageComponent';
 import BottomBarForMobile from '../../components/Sidebar/BottomBarForMobile';
+import { selectUserDetails } from '../../selectors/userSelector';
+import authService from '../../services/authService';
+import { logout } from '../../slices/authSlice';
+import './SettingsPage.css';
 import ChatWallpaper from './SubSettings/ChatWallpaper/ChatWallpaper';
 import { Notifications } from './SubSettings/Notifications/Notifications';
 import { Privacy } from './SubSettings/Privacy/Privacy';
 import Security from './SubSettings/Security/Security';
 import Theme from './SubSettings/Theme';
-import { Button } from '@material-tailwind/react';
-import authService from '../../services/authService';
-import { useDispatch } from 'react-redux';
-import { logout } from '../../slices/authSlice';
 
 const settingName = [
   {
     name: 'Notifications',
     icon: <GrNotification />,
   },
+  
   {
     name: 'Privacy',
     icon: <MdPrivacyTip />,
@@ -55,6 +59,7 @@ const settingName = [
 
 const SettingsPage = () => {
   const [currentSetting, setCurrentSetting] = useState('');
+  const user = useSelector(selectUserDetails)
   const dispatch = useDispatch();
 
   const handelLogout = async () => {
@@ -64,7 +69,7 @@ const SettingsPage = () => {
 
 
   return (
-    <div className="h-screen w-full flex justify-between md:flex-row bg-backgroundColor select-none ">
+    <div className="h-screen w-full flex justify-between md:flex-row bg-backgroundColor select-none   ">
       {/* SettingsSidebar */}
       <div className="w-full lg:w-[384px] h-full  p-4 relative overflow-hidden">
         <div className='w-full flex items-center justify-between'>
@@ -72,15 +77,15 @@ const SettingsPage = () => {
           <Button onClick={handelLogout} className="rounded-full">LogOut</Button>
         </div>
 
-        <div className="w-full mt-10 flex items-start gap-5">
-          <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" className="size-[70px] object-cover rounded-full" alt="" />
+        <div className="w-full mt-10 flex items-start  gap-5 ">
+          <ImageComponent className={'size-[70px] flex-shrink-0 object-cover rounded-full border bg-blue-gray-800'} imageUrl={user.profile_picture_url.imageUrl}  imageAlt={user.full_name} />
           <div>
-            <h1 className="font-[600] text-primaryTextColor">User Name</h1>
-            <p className="text-secondaryTextColor">Lorem ipsum dolor sit amet.</p>
+            <h1 className="font-[600] text-primaryTextColor">{user.full_name }</h1>
+            <p className="text-secondaryTextColor">{ user.bio}</p>
           </div>
         </div>
 
-        <div className="overflow-y-scroll h-full  w-full pb-32">
+        <div className=" overflow-y-scroll pb-80 h-full">
           {settingName.map(item => (
             <div
               onClick={() => setCurrentSetting(item.name === 'Chat Wallpaper' ? 'ChatWallpaper' : item.name)}

@@ -9,7 +9,7 @@ function Security({ currentSetting, setCurrentSetting }) {
   return (
     <div
       className={`absolute top-0 right-0 h-screen w-full  bg-backgroundColor text-primaryTextColor z-[100] p-4 transition-transform duration-300 flex flex-col  ${
-        currentSetting === 'Security' ? 'translate-x-0' : 'translate-x-full'
+        currentSetting === 'Security' ? 'flex' : 'hidden'
       }`}
     >
       <div className="w-full flex items-center justify-between">

@@ -1,6 +1,6 @@
 const Loading = () => {
   return (
-    <div className="w-full h-screen flex items-center justify-center">
+    <div className="w-full h-screen flex items-center justify-center bg-backgroundColor">
       <svg className="w-40" viewBox="0 0 350 212.909198897464">
         <defs id="SvgjsDefs1194"></defs>
         <g id="SvgjsG1195" featurekey="e7LhAk-0" transform="matrix(7.777777777777778,0,0,7.777777777777778,81.66666666666667,-27.22222222222222)" fill="#5e63b6">

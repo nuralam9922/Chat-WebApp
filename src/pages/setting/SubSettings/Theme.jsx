@@ -1,28 +1,48 @@
 import { Checkbox } from '@material-tailwind/react';
-import React from 'react'
-import { useState } from 'react';
-import { BiLeftArrowAlt } from 'react-icons/bi';
-import { useDispatch } from 'react-redux';
+import React, { useState } from 'react';
+import { BiEdit, BiLeftArrowAlt } from 'react-icons/bi';
+import { FaThemeco } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import AlertComponent from '../../../components/AlertComponent';
+import { selectUserDetails } from '../../../selectors/userSelector';
+import userService from '../../../services/userService';
 import { setTheme } from '../../../slices/useThemeSlice';
+import { setAlert } from '../../../slices/alertSlice';
 
 function Theme({ currentSetting, setCurrentSetting }) {
+  const user = useSelector(selectUserDetails);
+  const [showAlert, setShowAlert] = useState(false);
 
-
-  const [selectedOption, setSelectedOption] = useState(localStorage.getItem('theme') || 'dark');
+  const [selectedOption, setSelectedOption] = useState(user.preferences.theme);
   const dispatch = useDispatch();
+ 
+ 
+  const handelShowAlert = () => {
+    dispatch(setAlert({ open: true, type: 'success', icon: <BiEdit />, content: 'theme update successfully!!' }))
+  };
+ 
+  const handleCheckboxChange = async option => {
+    const updatedObject = { preferences: { theme: option } }
 
-      const handleCheckboxChange = option => {
-        setSelectedOption(option);
-        dispatch(setTheme(option))
+    try {
+      setSelectedOption(option);
+      const respond = userService.updateUserDetails(user.id, updatedObject);
+    if (respond) {
+      dispatch(setTheme(option))
+      handelShowAlert();
+    }
+    } catch (error) {
+      console.log('Error updating user details:', error);
+    }
 
-      };
+  };
 
   return (
     <div
-      className={`absolute top-0 right-0 h-screen w-full  bg-backgroundColor text-primaryTextColor z-[100] p-4 transition-transform duration-300 flex flex-col  ${
-        currentSetting === 'Theme' ? 'translate-x-0' : 'translate-x-full'
-      }`}
+      className={`absolute top-0 right-0 h-screen w-full  bg-backgroundColor text-primaryTextColor z-[100] p-4 transition-transform duration-300 flex flex-col  ${currentSetting === 'Theme' ? 'flex' : 'hidden'
+        }`}
     >
+
       <div className="w-full flex items-center justify-between">
         <div onClick={() => setCurrentSetting('')}>
           <BiLeftArrowAlt className="text-3xl cursor-pointer" />

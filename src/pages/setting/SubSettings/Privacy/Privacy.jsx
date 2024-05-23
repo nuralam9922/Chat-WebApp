@@ -1,11 +1,14 @@
-import { Checkbox, ListItem, ListItemPrefix } from "@material-tailwind/react";
 import { useState } from "react";
 import { BiLeftArrowAlt, BiRightArrowAlt } from "react-icons/bi";
 import { MdPrivacyTip } from "react-icons/md";
-import LastSeen from "./SubSetting/LastSeen";
-import ProfilePhotoSetting from "./SubSetting/ProfilePhotoSetting";
+import { useSelector } from "react-redux";
+import { selectUserDetails } from "../../../../selectors/userSelector";
 import About from "./SubSetting/About";
 import BlockedContacts from "./SubSetting/BlockedContacts";
+import LastSeen from "./SubSetting/LastSeen";
+import OnlineStatus from "./SubSetting/OnlineStatus";
+import ProfilePhotoSetting from "./SubSetting/ProfilePhotoSetting";
+import PinSystem from "./SubSetting/PinSystem";
 
 
 const privacySettings = [
@@ -40,15 +43,15 @@ const privacySettings = [
 ]
 
 export const Privacy = ({ currentSetting, setCurrentSetting }) => {
-
+  const user = useSelector(selectUserDetails);
   const [currentPrivacySetting, setCurrentPrivacySetting] = useState('');
+
 
 
   return (
     <div
-      className={`absolute top-0 right-0 h-screen w-full  bg-backgroundColor z-[100] p-4 transition-transform duration-300 flex flex-col  ${
-        currentSetting === 'Privacy' ? 'translate-x-0' : 'translate-x-full'
-      }`}
+      className={`absolute top-0 right-0 h-screen w-full  bg-backgroundColor z-[100] p-4 transition-transform duration-300 flex flex-col  ${currentSetting === 'Privacy' ? 'translate-x-0' : 'translate-x-full'
+        }`}
     >
       <div className="w-full flex items-center justify-between">
         <div onClick={() => setCurrentSetting('')}>
@@ -60,7 +63,7 @@ export const Privacy = ({ currentSetting, setCurrentSetting }) => {
         </h1>
       </div>
 
-      <div className="mt-20 flex flex-col gap-4  cursor-pointer text-primaryTextColor">
+      <div className="mt-10 flex flex-col gap-4  overflow-y-scroll h-full w-full  cursor-pointer text-primaryTextColor pb-32">
         <div
           style={{
             borderBottom: '1px solid rgb(229 231 235 / 17%)',
@@ -70,7 +73,20 @@ export const Privacy = ({ currentSetting, setCurrentSetting }) => {
         >
           <div>
             <h1>Last Seen</h1>
-            <p className="text-sm text-secondaryTextColor">Everyone</p>
+            <p className="text-sm text-secondaryTextColor">{user?.settings.last_seen_view}</p>
+          </div>
+          <BiRightArrowAlt className="text-xl cursor-pointer font-[200] text-primaryTextColor" />
+        </div>
+        <div
+          style={{
+            borderBottom: '1px solid rgb(229 231 235 / 17%)',
+          }}
+          onClick={() => setCurrentPrivacySetting('Online Status')}
+          className="w-full h-16  flex justify-between items-center"
+        >
+          <div>
+            <h1>Online Status</h1>
+            <p className="text-sm text-secondaryTextColor">{user?.settings.online_status_view}</p>
           </div>
           <BiRightArrowAlt className="text-xl cursor-pointer font-[200] text-primaryTextColor" />
         </div>
@@ -81,7 +97,7 @@ export const Privacy = ({ currentSetting, setCurrentSetting }) => {
         >
           <div>
             <h1>Profile Photo</h1>
-            <p className="text-sm text-secondaryTextColor">Everyone</p>
+            <p className="text-sm text-secondaryTextColor">{user?.settings.user_profile_view}</p>
           </div>
           <BiRightArrowAlt className="text-xl cursor-pointer font-[200]" />
         </div>
@@ -92,17 +108,22 @@ export const Privacy = ({ currentSetting, setCurrentSetting }) => {
         >
           <div>
             <h1>About</h1>
-            <p className="text-sm text-secondaryTextColor">Everyone</p>
+            <p className="text-sm text-secondaryTextColor">{user.settings?.user_bio_view}</p>
           </div>
           <BiRightArrowAlt className="text-xl cursor-pointer font-[200]" />
         </div>
-        <div style={{ borderBottom: '1px solid rgb(229 231 235 / 17%)' }} className="w-full min-h-16  flex justify-between items-center">
+        <div
+          style={{ borderBottom: '1px solid rgb(229 231 235 / 17%)' }}
+          onClick={() => setCurrentPrivacySetting('Pin System')}
+          className="w-full h-16  flex justify-between items-center"
+        >
           <div>
-            <h1>Read receipts</h1>
-            <p className="text-sm text-secondaryTextColor">if turned off, you won’t send or receive read receipts. Read receipts are always sent for group chats.</p>
+            <h1>Pin System</h1>
+            <p className="text-sm text-secondaryTextColor">{user.settings?.user_bio_view}</p>
           </div>
-          <Checkbox color="blue" className="flex-shrink-0" defaultChecked />
+          <BiRightArrowAlt className="text-xl cursor-pointer font-[200]" />
         </div>
+
         <div style={{ borderBottom: '1px solid rgb(229 231 235 / 17%)' }} className="w-full h-16  flex justify-between items-center">
           <div>
             <h1>Groups</h1>
@@ -121,11 +142,14 @@ export const Privacy = ({ currentSetting, setCurrentSetting }) => {
           </div>
           <BiRightArrowAlt className="text-xl cursor-pointer font-[200]" />
         </div>
+
       </div>
 
       <LastSeen currentPrivacySetting={currentPrivacySetting} setCurrentPrivacySetting={setCurrentPrivacySetting} />
+      <OnlineStatus currentPrivacySetting={currentPrivacySetting} setCurrentPrivacySetting={setCurrentPrivacySetting} />
       <ProfilePhotoSetting currentPrivacySetting={currentPrivacySetting} setCurrentPrivacySetting={setCurrentPrivacySetting} />
       <About currentPrivacySetting={currentPrivacySetting} setCurrentPrivacySetting={setCurrentPrivacySetting} />
+      <PinSystem currentPrivacySetting={currentPrivacySetting} setCurrentPrivacySetting={setCurrentPrivacySetting} />
       <BlockedContacts currentPrivacySetting={currentPrivacySetting} setCurrentPrivacySetting={setCurrentPrivacySetting} />
     </div>
   );

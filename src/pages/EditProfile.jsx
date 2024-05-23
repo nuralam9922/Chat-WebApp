@@ -1,14 +1,16 @@
-import { Button, Input, Textarea } from '@material-tailwind/react';
-import React, { useState } from 'react';
-import { FiEdit, FiEdit2 } from 'react-icons/fi';
+import { Button, Input, Textarea, Typography } from '@material-tailwind/react';
+import React, { useEffect, useState } from 'react';
+import { BiEdit } from 'react-icons/bi';
+import { FiEdit } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
+import ImageComponent from '../components/ImageComponent';
+import ProgressComponent from '../components/ProgressComponent';
+import useUserUploadProfilePicture from '../hooks/useUserUploadProfilePicture';
+import { selectThemeDetails } from '../selectors/themeSelector';
 import { selectUserDetails } from '../selectors/userSelector';
 import userService from '../services/userService';
+import { setAlert } from '../slices/alertSlice';
 import { updateUserDetails } from '../slices/authSlice';
-import { Typography } from '@material-tailwind/react';
-import { useEffect } from 'react';
-import { Alert } from '@material-tailwind/react';
-import { selectThemeDetails } from '../selectors/themeSelector';
 
 
 
@@ -17,10 +19,11 @@ function EditProfile({ onNextStep }) {
   const user = useSelector(selectUserDetails);
   const theme = useSelector(selectThemeDetails);
   const dispatch = useDispatch();
-  // how to get path of the usrl last path 
+
   const path = window.location.pathname.split('/').pop();
 
   const [profileImage, setProfileImage] = useState(user?.profile_picture_url?.imageUrl || null);
+  const [profile_picture_Local, setProfile_picture_Local] = useState(null);
   const [name, setName] = useState(user?.full_name || '');
   const [username, setUsername] = useState(user?.username || '');
   const [about, setAbout] = useState(user?.bio || '');
@@ -39,16 +42,19 @@ function EditProfile({ onNextStep }) {
     setEnableSaveChangesButton(isChanged);
   }, [profileImage, name, username, about, user]);
 
+  const { uploadImage, uploading, error: uploadError, uploadPercentage } = useUserUploadProfilePicture();
 
-  const handleImageChange = e => {
-    setProfileImage(URL.createObjectURL(e.target.files[0]));
+  const handleImageChange = async e => {
+    try {
+      const downloadURL = await uploadImage(e.target.files[0]);
+      setProfileImage(downloadURL);
+    } catch (error) {
+      console.error('Upload failed:', error);
+    }
   };
 
   const handelShowAlert = () => {
-    setShowAlert(true);
-    setTimeout(() => {
-      setShowAlert(false);
-    }, 3000);
+    dispatch(setAlert({ open: true, type: 'success', icon: <BiEdit/> , content: 'profile update successfully!!' }))
   };
 
   const handleSubmit = async (e) => {
@@ -101,33 +107,19 @@ function EditProfile({ onNextStep }) {
     }
   };
 
-  console.log(theme);
-
   return (
     <>
-      <Alert
-        color={theme === "dark" ? "green" : "blue"}
-        // icon={<Icon />}
-        icon={<FiEdit2 />}
-        // variant="outlined"
-
-        open={showAlert}
-        onClose={() => setShowAlert(false)}
-        className={`rounded-none border-l-4 border-[#2ec946] ${theme === "dark" ? " text-white" : ""} font-medium absolute`}
-
-      >
-        Profile updated successfully
-      </Alert>
-      <div className="flex text-textPrimaryColor flex-col items-center justify-center md:p-10 b  h-full w-full">
+      <div className="flex text-textPrimaryColor overflow-y-scroll py-20 flex-col items-center justify-center md:p-10 b  h-full w-full">
         <div className=" shadow-md rounded-lg p-6 w-full md:max-w-md ">
 
           <h2 className="text-2xl font-bold text-center mb-6 text-primaryTextColor">Edit Profile</h2>
           <form onSubmit={handleSubmit} className="space-y-4 w-full">
             <div className="flex flex-col items-center w-full">
-              <label className="cursor-pointer">
-                <div className="relative w-32 h-32 rounded-full overflow-hidden bg-gray-200">
+              <label className="cursor-pointer relative">
+                <div className=" w-32 h-32 rounded-full overflow-hidden bg-gray-200 relative">
                   {profileImage ? (
-                    <img src={profileImage} alt="Profile" className="w-full h-full object-cover" />
+                    <ImageComponent className={'w-full h-full object-cover'} imageUrl={profileImage} imageAlt={name} />
+
                   ) : (
                     <div className="flex items-center justify-center h-full text-gray-500">
                       <FiEdit size={32} />
@@ -136,6 +128,7 @@ function EditProfile({ onNextStep }) {
                 </div>
                 <input type="file" className="hidden" onChange={handleImageChange} />
               </label>
+              {uploading && <ProgressComponent value={uploadPercentage} />}
               <span className="text-gray-600 mt-2">Change Profile Picture</span>
             </div>
             <div>
@@ -151,7 +144,7 @@ function EditProfile({ onNextStep }) {
             <div>
               <Textarea type="text" label="About" color="blue" size="lg" placeholder="About" value={about} onChange={e => setAbout(e.target.value)} required />
             </div>
-            {error && <p className="text-red-500 text-xs capitalize">{error}</p>}
+            {error && <p className="text-red-500 text-xs capitalize">{error || uploadError}</p>}
             <div className="flex justify-center w-full">
 
 
@@ -159,7 +152,7 @@ function EditProfile({ onNextStep }) {
                 <Button loading={true}>Loading</Button>
 
               ) : (
-                <Button disabled={!enableSaveChangesButton} type="submit" color="blue" className='w-full'>
+                <Button disabled={!enableSaveChangesButton || uploading} type="submit" color="blue" className='w-full'>
                   Save Changes
                 </Button>
               )}

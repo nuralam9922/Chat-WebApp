@@ -174,9 +174,9 @@ const Media = ({ showMedia, setShowMedia }) => {
             <h1>THis is file name</h1>
             <h1>
               <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10.5 2.625V15.0938" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
-                <path d="M4.59375 9.1875L10.5 15.0938L16.4062 9.1875" stroke="black" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M3.28125 17.7188H17.7188" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
+                <path d="M10.5 2.625V15.0938" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M4.59375 9.1875L10.5 15.0938L16.4062 9.1875" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M3.28125 17.7188H17.7188" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </h1>
           </div>
@@ -192,9 +192,9 @@ const Media = ({ showMedia, setShowMedia }) => {
             <h1>THis is file name</h1>
             <h1>
               <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10.5 2.625V15.0938" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
-                <path d="M4.59375 9.1875L10.5 15.0938L16.4062 9.1875" stroke="black" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M3.28125 17.7188H17.7188" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
+                <path d="M10.5 2.625V15.0938" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M4.59375 9.1875L10.5 15.0938L16.4062 9.1875" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M3.28125 17.7188H17.7188" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </h1>
           </div>
@@ -210,9 +210,9 @@ const Media = ({ showMedia, setShowMedia }) => {
             <h1>THis is file name</h1>
             <h1>
               <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10.5 2.625V15.0938" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
-                <path d="M4.59375 9.1875L10.5 15.0938L16.4062 9.1875" stroke="black" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M3.28125 17.7188H17.7188" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
+                <path d="M10.5 2.625V15.0938" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M4.59375 9.1875L10.5 15.0938L16.4062 9.1875" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M3.28125 17.7188H17.7188" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </h1>
           </div>
@@ -228,9 +228,9 @@ const Media = ({ showMedia, setShowMedia }) => {
             <h1>THis is file name</h1>
             <h1>
               <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10.5 2.625V15.0938" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
-                <path d="M4.59375 9.1875L10.5 15.0938L16.4062 9.1875" stroke="black" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M3.28125 17.7188H17.7188" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
+                <path d="M10.5 2.625V15.0938" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M4.59375 9.1875L10.5 15.0938L16.4062 9.1875" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M3.28125 17.7188H17.7188" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </h1>
           </div>
@@ -246,9 +246,9 @@ const Media = ({ showMedia, setShowMedia }) => {
             <h1>THis is file name</h1>
             <h1>
               <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10.5 2.625V15.0938" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
-                <path d="M4.59375 9.1875L10.5 15.0938L16.4062 9.1875" stroke="black" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M3.28125 17.7188H17.7188" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
+                <path d="M10.5 2.625V15.0938" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M4.59375 9.1875L10.5 15.0938L16.4062 9.1875" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M3.28125 17.7188H17.7188" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </h1>
           </div>
@@ -264,9 +264,9 @@ const Media = ({ showMedia, setShowMedia }) => {
             <h1>THis is file name</h1>
             <h1>
               <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10.5 2.625V15.0938" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
-                <path d="M4.59375 9.1875L10.5 15.0938L16.4062 9.1875" stroke="black" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M3.28125 17.7188H17.7188" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
+                <path d="M10.5 2.625V15.0938" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M4.59375 9.1875L10.5 15.0938L16.4062 9.1875" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M3.28125 17.7188H17.7188" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </h1>
           </div>
@@ -282,9 +282,9 @@ const Media = ({ showMedia, setShowMedia }) => {
             <h1>THis is file name</h1>
             <h1>
               <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10.5 2.625V15.0938" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
-                <path d="M4.59375 9.1875L10.5 15.0938L16.4062 9.1875" stroke="black" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M3.28125 17.7188H17.7188" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
+                <path d="M10.5 2.625V15.0938" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M4.59375 9.1875L10.5 15.0938L16.4062 9.1875" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M3.28125 17.7188H17.7188" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </h1>
           </div>
@@ -300,9 +300,9 @@ const Media = ({ showMedia, setShowMedia }) => {
             <h1>THis is file name</h1>
             <h1>
               <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10.5 2.625V15.0938" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
-                <path d="M4.59375 9.1875L10.5 15.0938L16.4062 9.1875" stroke="black" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M3.28125 17.7188H17.7188" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
+                <path d="M10.5 2.625V15.0938" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M4.59375 9.1875L10.5 15.0938L16.4062 9.1875" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M3.28125 17.7188H17.7188" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </h1>
           </div>
@@ -318,9 +318,9 @@ const Media = ({ showMedia, setShowMedia }) => {
             <h1>THis is file name</h1>
             <h1>
               <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10.5 2.625V15.0938" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
-                <path d="M4.59375 9.1875L10.5 15.0938L16.4062 9.1875" stroke="black" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M3.28125 17.7188H17.7188" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
+                <path d="M10.5 2.625V15.0938" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M4.59375 9.1875L10.5 15.0938L16.4062 9.1875" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M3.28125 17.7188H17.7188" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </h1>
           </div>
@@ -336,9 +336,9 @@ const Media = ({ showMedia, setShowMedia }) => {
             <h1>THis is file name</h1>
             <h1>
               <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10.5 2.625V15.0938" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
-                <path d="M4.59375 9.1875L10.5 15.0938L16.4062 9.1875" stroke="black" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M3.28125 17.7188H17.7188" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
+                <path d="M10.5 2.625V15.0938" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M4.59375 9.1875L10.5 15.0938L16.4062 9.1875" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M3.28125 17.7188H17.7188" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </h1>
           </div>
@@ -354,9 +354,9 @@ const Media = ({ showMedia, setShowMedia }) => {
             <h1>THis is file name</h1>
             <h1>
               <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10.5 2.625V15.0938" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
-                <path d="M4.59375 9.1875L10.5 15.0938L16.4062 9.1875" stroke="black" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M3.28125 17.7188H17.7188" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
+                <path d="M10.5 2.625V15.0938" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M4.59375 9.1875L10.5 15.0938L16.4062 9.1875" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M3.28125 17.7188H17.7188" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </h1>
           </div>
@@ -372,9 +372,9 @@ const Media = ({ showMedia, setShowMedia }) => {
             <h1>THis is file name</h1>
             <h1>
               <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10.5 2.625V15.0938" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
-                <path d="M4.59375 9.1875L10.5 15.0938L16.4062 9.1875" stroke="black" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M3.28125 17.7188H17.7188" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
+                <path d="M10.5 2.625V15.0938" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M4.59375 9.1875L10.5 15.0938L16.4062 9.1875" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M3.28125 17.7188H17.7188" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </h1>
           </div>
@@ -390,9 +390,9 @@ const Media = ({ showMedia, setShowMedia }) => {
             <h1>THis is file name</h1>
             <h1>
               <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10.5 2.625V15.0938" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
-                <path d="M4.59375 9.1875L10.5 15.0938L16.4062 9.1875" stroke="black" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M3.28125 17.7188H17.7188" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
+                <path d="M10.5 2.625V15.0938" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M4.59375 9.1875L10.5 15.0938L16.4062 9.1875" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M3.28125 17.7188H17.7188" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </h1>
           </div>

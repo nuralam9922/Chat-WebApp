@@ -1,8 +1,8 @@
 import { useState } from 'react';
+import { BiEdit } from 'react-icons/bi';
 import { FaBars } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { toggleSidebar } from '../slices/toggleSidebarSlice';
-import { BiEdit } from 'react-icons/bi';
 
 export const ProfileSettings = () => {
 
