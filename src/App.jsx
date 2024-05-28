@@ -7,7 +7,7 @@ const MainLayout = React.lazy(() => import('./MainLayout'));
 const SettingsPage = React.lazy(() => import('./pages/setting/SettingsPage'));
 const UserFeed = React.lazy(() => import('./pages/UserFeed'));
 const ChatWindow = React.lazy(() => import('./components/ChatWindow/ChatWindow'));
-const Messages = React.lazy(() => import('./components/Messages/Messages'));
+const ChatsComponents = React.lazy(() => import('./components/ChatsComponents/ChatsComponents'));
 const LoginPage = React.lazy(() => import('./pages/LoginPage'));
 const FriendRequestPage = React.lazy(() => import('./pages/UserFriends/UserFriends'));
 // const UserInitiation = React.lazy(() => import('./pages/UserInitiation/UserInitiation'));
@@ -33,8 +33,8 @@ const router = createBrowserRouter([
         path: '/',
         element: (
           <Suspense fallback={<Loading />}>
-            <div  className="w-full lg:w-[393px] flex justify-center flex-shrink-0">
-              <Messages />
+            <div className="w-full lg:w-[393px] flex justify-center flex-shrink-0">
+              <ChatsComponents />
             </div>
             <div className="w-full  hidden lg:block ">
               <ChatWindow />

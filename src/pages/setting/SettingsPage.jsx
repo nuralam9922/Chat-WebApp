@@ -76,7 +76,7 @@ const SettingsPage = () => {
       <div className="w-full lg:w-[384px] h-full  p-4 relative overflow-hidden">
         <div className='w-full flex items-center justify-between'>
           <h1 className="text-2xl font-bold text-primaryTextColor">Setting</h1>
-          <Button onClick={handelLogout} className="rounded-full">LogOut</Button>
+          <Button onClick={handelLogout} size='sm' className="rounded-full">LogOut</Button>
         </div>
 
         <div className="w-full mt-10 flex items-start  gap-5 ">

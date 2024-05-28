@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 
-const Dropdown = React.memo(({ isOpen = true, isClose, options = [], dropdownValue, setDropdownValue }) => {
+const Dropdown = React.memo(({ isOpen = false, isClose, options = [], dropdownValue, setDropdownValue }) => {
   const dropdownRef = useRef();
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const Dropdown = React.memo(({ isOpen = true, isClose, options = [], dropdownVal
   return (
     <div
       ref={dropdownRef}
-      className={`absolute top-7 left-0 z-[999]  border w-full flex flex-col bg-backgroundColor rounded-lg shadow-lg duration-300 overflow-hidden transition-all ${
+      className={`absolute top-7 right-0 z-[999]  border w-72 flex flex-col bg-backgroundColor rounded-lg shadow-lg duration-300 overflow-hidden transition-all ${
         isOpen ? 'max-h-40 opacity-100 select-none' : 'max-h-0 opacity-0'
       }`}
     >
@@ -35,12 +35,12 @@ const Dropdown = React.memo(({ isOpen = true, isClose, options = [], dropdownVal
             <div
               key={index}
               onClick={() => {
-                setDropdownValue(option);
                 isClose(false);
+                setDropdownValue(option);
               }}
-              className={`w-full h-12 px-4 flex items-center cursor-pointer ${option === dropdownValue ? 'bg-blue-500 text-white hover:bg' : ''} hover:bg-green-200  transition-colors duration-200`}
+              className={`w-full h-12 px-4 flex items-center cursor-pointer ${option === dropdownValue ? 'bg-blue-gray-300 text-white ' : ''} hover:bg-blue-gray-400 hover:text-white text-primaryTextColor  transition-colors duration-200`}
             >
-              <span className="text-gray-700">{option}</span>
+              <span className="">{option}</span>
             </div>
           )
         )
