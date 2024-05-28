@@ -10,7 +10,8 @@ const toggleSidebarSlice = createSlice({
     reducers: {
     toggleSidebar: state => {
       state.isSidebarOpen = !state.isSidebarOpen;
-    },
+      },
+      
     }
 
 })

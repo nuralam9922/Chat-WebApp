@@ -24,7 +24,6 @@ class UserService {
         const q = query(usernameRef, where('username', '==', username), limit(1)); 
         try {
             const querySnapshot = await getDocs(q);
-            console.log(querySnapshot.size > 0);
             return querySnapshot.size > 0; 
         } catch (error) {
             console.log('Error checking username exists:', error);

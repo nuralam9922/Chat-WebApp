@@ -16,14 +16,18 @@ const themeSlice = createSlice({
             state.theme = action.payload;
             document.documentElement.setAttribute("theme", action.payload);
             localStorage.setItem("theme", action.payload);
-            console.log(action);
         },
-        setBackground: (state, action) => {
-            state.background = action.payload.background;
-            localStorage.setItem("background", action.payload.background);
+
+        setChatBackground: (state, action) => {
+            state.background = action.payload;
+        },
+        resetTheme: (state) => {
+            state.theme = '';
+            document.documentElement.setAttribute("theme", '');
+            localStorage.setItem("theme", '');
         },
     },
 });
 
-export const { setTheme } = themeSlice.actions;
+export const { setTheme, resetTheme, setChatBackground } = themeSlice.actions;
 export default themeSlice;

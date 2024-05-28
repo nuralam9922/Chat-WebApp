@@ -6,7 +6,7 @@ import settingPageImage from '../assets/setting.svg';
 function user() {
   return (
     <div className="w-full h-screen relative flex items-center justify-between">
-      <div className="h-screen w-full flex justify-between md:flex-row bg-backgroundColor select-none ">
+      <div className="h-screen w-full lg:w-[404px] flex justify-between md:flex-row bg-backgroundColor select-none   px-5">
         <EditProfile />
       </div>
 

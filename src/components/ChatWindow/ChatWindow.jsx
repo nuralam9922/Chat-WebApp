@@ -7,6 +7,7 @@ import About from '../../pages/About/About';
 import MessageInput from '../MessageInput/MessageInput';
 import './chatWindow.css'
 import { useSelector } from 'react-redux';
+import { selectUserDetails } from '../../selectors/userSelector';
 
 const messages = [
   { text: 'Hey there! How can I help you today?', time: '10:05', isCurrentUser: false },
@@ -34,7 +35,8 @@ function ChatWindow({ visibleBackArrow = false, setShowChatWindow }) {
   const [showUserDetails, setShowUserDetails] = useState(false);
   const [isTyping, setIsTyping] = useState(true);
   const messageSectionRef = useRef(null);
-  const { theme } = useSelector(state => state.theme);
+  const theme = useSelector(state => state.theme);
+  const user = useSelector(selectUserDetails)
 
   useEffect(() => {
     if (messageSectionRef.current) {
@@ -47,15 +49,20 @@ function ChatWindow({ visibleBackArrow = false, setShowChatWindow }) {
       style={{
         position: 'relative ',
       }}
-      className="w-full  flex flex-col gap-2 bg-backgroundColor relative text-primaryTextColor overflow-y-scroll h-screen"
+      className="w-full  flex flex-col  bg-backgroundColor relative text-primaryTextColor overflow-y-scroll h-screen"
     >
       <Navbar visibleBackArrow={visibleBackArrow} setShowChatWindow={setShowChatWindow} setShowUserDetails={setShowUserDetails} />{' '}
-      <div ref={messageSectionRef} className="overflow-y-auto flex-grow px-4 py-2 ">
+      <div style={{
+        backgroundColor: theme.theme === 'dark' ? '#181818' : theme.background || '#D9D9D9',
+      }} ref={messageSectionRef} className="overflow-y-auto flex-grow px-4 py-2">
         {messages.map((item, index) => (
           <div key={index} className={`w-full flex ${item.isCurrentUser ? 'justify-end' : 'justify-start'} mb-2`}>
             <div
               style={{
-                backgroundColor: theme === 'light' ? '#dadada' : '#212121',
+                backgroundColor: theme.theme === 'light'
+                  ? (item.isCurrentUser ? '#dadada' : '#dadada')
+                  : '#212121', // Default dark theme background
+                color: theme.theme === 'light' ? 'black' : 'white',
               }}
               className={`max-w-md p-2 text-xs md:p-3 rounded-lg  text-primaryTextColor`}
             >

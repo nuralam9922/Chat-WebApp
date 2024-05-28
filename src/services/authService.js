@@ -30,20 +30,20 @@ class AuthService {
                 id: userId,
                 username: "",
                 email: user.user.email,
-                full_name: user.user.displayName,
+                full_name: user.user.displayName.toLocaleLowerCase(),
                 bio: "",
                 profile_picture_url: {
                     imageId: null,
                     imageUrl: user.user.photoURL || null,
                 },
                 settings: {
-                    pin_ask_time: 20,
+                    pin_ask_time: 5,
                     pin_enabled: false,
                     pin: null,
-                    user_profile_view: 'Everyone',
-                    user_bio_view: 'Everyone',
-                    online_status_view: 'Everyone',
-                    last_seen_view: 'Everyone',
+                    user_profile_view: 'everyone',
+                    user_bio_view: 'everyone',
+                    online_status_view: 'everyone',
+                    last_seen_view: 'everyone',
                     showProfile: true,
                 },
                 notifications: {
@@ -59,11 +59,11 @@ class AuthService {
                 },
             }
             if (userData.exists()) {
-                return { ...userData.data(), newUser: false };
+                return userData.data();
             } else {
                 await setDoc(userRef, userDetails, { merge: true });
                 const userData = await getDoc(userRef);
-                return { ...userData.data(), newUser: true };
+                return userData.data();
             }
 
 
@@ -81,7 +81,6 @@ class AuthService {
             if (userId) {
                 const userRef = await doc(firebaseDb, 'users', userId);
                 const userData = await getDoc(userRef);
-                console.log(userData.data());
                 if (userData.exists()) {
                     return userData.data();
                 } else {

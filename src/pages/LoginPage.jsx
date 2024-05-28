@@ -9,7 +9,7 @@ import authService from '../services/authService';
 import { login } from '../slices/authSlice';
 import { useState } from 'react';
 
-const LoginPage = () => {
+const LoginPage = ({ setNewUser }) => {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -28,16 +28,17 @@ const LoginPage = () => {
     try {
       setLoading(true);
       const response = await authService.loginWithGoogle();
-      
+
+      console.log(response);
       if (response) {
         dispatch(login(response));
         setLoading(false);
-        console.log(response.newUser === false);
-        if (response.newUser === false) {
-          navigate('/')
-        } else {
-          navigate('/user-initiation')
+        if (response.username === '') {
+          setNewUser(true)
 
+        } else {
+          setNewUser(false)
+          navigate('/')
         }
       }
     } catch (error) {

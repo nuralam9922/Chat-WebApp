@@ -15,7 +15,7 @@ function ProgressComponent({value}) { // Destructure the value prop
                     {value}%
                 </Typography>
             </div>
-            <Progress value={value} size='sm' color='green' />
+            <Progress value={value} size='sm' color='green'  className='duration-300'/>
         </div>
     );
 }

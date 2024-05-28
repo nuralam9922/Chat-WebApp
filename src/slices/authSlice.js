@@ -42,6 +42,11 @@ const authSlice = createSlice({
         builder.addCase(fetchUser.fulfilled, (state, action) => {
             if (action.payload) {
                 state.user = action.payload;
+                console.log(action.payload.preferences.theme);
+                if (action.payload.preferences.theme) {
+                    localStorage.setItem("theme", action.payload.preferences.theme);
+
+                }
                 state.loggedInStatus = true;
             } else {
                 // If user details are not found, set loggedInStatus to false

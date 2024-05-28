@@ -12,8 +12,9 @@ import { setAlert } from '../../../slices/alertSlice';
 function Theme({ currentSetting, setCurrentSetting }) {
   const user = useSelector(selectUserDetails);
   const [showAlert, setShowAlert] = useState(false);
+  const theme = useSelector(state => state.theme);
 
-  const [selectedOption, setSelectedOption] = useState(user.preferences.theme);
+  const [selectedOption, setSelectedOption] = useState(theme.theme);
   const dispatch = useDispatch();
  
  
@@ -22,7 +23,7 @@ function Theme({ currentSetting, setCurrentSetting }) {
   };
  
   const handleCheckboxChange = async option => {
-    const updatedObject = { preferences: { theme: option } }
+    const updatedObject = { preferences: { ...user.preferences, theme: option } }
 
     try {
       setSelectedOption(option);
@@ -60,9 +61,7 @@ function Theme({ currentSetting, setCurrentSetting }) {
         <div className="w-full border-b-2">
           <Checkbox label="Light" checked={selectedOption === 'light'} onChange={() => handleCheckboxChange('light')} />
         </div>
-        <div className="w-full border-b-2">
-          <Checkbox label="Default" checked={selectedOption === 'default'} onChange={() => handleCheckboxChange('default')} />
-        </div>
+
       </div>
     </div>
   );

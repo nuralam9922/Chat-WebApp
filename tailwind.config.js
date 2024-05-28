@@ -13,9 +13,7 @@ export default withMT({
 			colors: {
 				backgroundColor: 'var(--background-color)',
 				sideBarBackgroundColor: 'var(--sidebar-background-color)',
-				messageBackgroundSent: 'var(--message-background-sent)',
-				messageBackgroundReceived:
-					'var(--message-background-received)',
+		
 				primaryTextColor: 'var(--primary-text-color)',
 				secondaryTextColor: 'var(--secondary-text-color)',
 				highlightColor: 'var(--highlight-color)',

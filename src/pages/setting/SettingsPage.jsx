@@ -20,6 +20,7 @@ import { Notifications } from './SubSettings/Notifications/Notifications';
 import { Privacy } from './SubSettings/Privacy/Privacy';
 import Security from './SubSettings/Security/Security';
 import Theme from './SubSettings/Theme';
+import { resetTheme } from '../../slices/useThemeSlice';
 
 const settingName = [
   {
@@ -64,7 +65,8 @@ const SettingsPage = () => {
 
   const handelLogout = async () => {
     await authService.logout();
-    dispatch(logout());
+    dispatch(logout(),);
+    dispatch(resetTheme());
   }
 
 
@@ -81,7 +83,7 @@ const SettingsPage = () => {
           <ImageComponent className={'size-[70px] flex-shrink-0 object-cover rounded-full border bg-blue-gray-800'} imageUrl={user.profile_picture_url.imageUrl}  imageAlt={user.full_name} />
           <div>
             <h1 className="font-[600] text-primaryTextColor">{user.full_name }</h1>
-            <p className="text-secondaryTextColor">{ user.bio}</p>
+            <p className="text-secondaryTextColor">{user.email}</p>
           </div>
         </div>
 

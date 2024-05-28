@@ -5,6 +5,8 @@ import { FiUserPlus } from 'react-icons/fi';
 import { IoSettingsOutline } from 'react-icons/io5';
 import { MdOutlineSubscriptions } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
+import { selectUserFriendRequestSelector } from '../../selectors/userFriendRequestSelector';
+import { useSelector } from 'react-redux';
 
 const navlinks = [
   { name: 'messages', path: '/', icon: <BiMessageSquare /> },
@@ -13,6 +15,11 @@ const navlinks = [
 ];
 
 function SidebarMini() {
+
+  const friendRequests = useSelector(selectUserFriendRequestSelector);
+
+
+
   return (
     <div className="w-full h-screen text-primaryTextColor flex flex-col justify-between shadow-lg">
       {/* Logo */}
@@ -35,14 +42,20 @@ function SidebarMini() {
         </div>
 
         {/* Navigation Links */}
-        <div className="flex flex-col items-center space-y-4">
+        <div className="flex flex-col items-center space-y-4 relative">
           {navlinks.map(link => (
             <NavLink
               key={link.path}
               to={link.path}
-              className={({ isActive }) => `flex items-center justify-center w-12 h-12 rounded-md transition ${isActive ? 'bg-blue-500 text-white' : 'hover:bg-gray-300 hover:text-black'}`}
+              className={({ isActive }) => `flex items-center relative gap-2 flex-col justify-center w-12 h-12 rounded-md transition ${isActive ? 'bg-blue-500 text-white' : 'hover:bg-gray-300 hover:text-black'}`}
             >
               {link.icon}
+
+              {link.name === 'add friends' && (
+                <span style={{
+                  display: friendRequests.length !== 0 ? 'block' : 'none',
+                }} className=' top-0 right-0 size-2 rounded-full bg-red-500 flex items-center justify-center text-xs text-primaryTextColor absolute'></span>
+              )}
             </NavLink>
           ))}
         </div>

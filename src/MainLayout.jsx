@@ -1,39 +1,87 @@
-import React, { Suspense } from 'react';
-import { useSelector } from 'react-redux';
+import React, { Suspense, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 import { Sidebar } from './components';
-import Loading from './components/Loading';
-import { selectLoggedInStatus } from './selectors/authStatusSelectors';
-import { useDispatch } from 'react-redux';
-import { fetchUser } from './slices/authSlice';
-import { selectAuthLoading } from './selectors/authLoadingSelector';
-import { useEffect } from 'react';
-import { selectUserDetails } from './selectors/userSelector';
 import AlertComponent from './components/AlertComponent';
+import Loading from './components/Loading';
+import { selectAuthLoading } from './selectors/authLoadingSelector';
+import { selectLoggedInStatus } from './selectors/authStatusSelectors';
+import { selectUserDetails } from './selectors/userSelector';
+import userFriendService from './services/userFriendService';
+import { fetchUser } from './slices/authSlice';
+import { setChatBackground, setTheme } from './slices/useThemeSlice';
+import { addFriendRequest } from './slices/userFriendRequestsSlice';
+import { setFriends } from './slices/userFriendsSlice';
 const LoginPage = React.lazy(() => import('./pages/LoginPage'));
+const UserInitiation = React.lazy(() => import('./pages/UserInitiation/UserInitiation'));
+const EditProfile = React.lazy(() => import('./pages/EditProfile'));
+
 const MainLayout = () => {
+  const loggedInUser = useSelector(selectUserDetails);
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true); // Loading state
+
   useEffect(() => {
     dispatch(fetchUser());
   }, [dispatch]);
 
-  
-  
+  useEffect(() => {
+    if (loggedInUser) {
+      if (loggedInUser.preferences) {
+        dispatch(setTheme(loggedInUser.preferences.theme));
+        dispatch(setChatBackground(loggedInUser.preferences.chatBackground));
+      }
+      if (loggedInUser.id) { // Check if user ID is available
+        userFriendService.getUserFriends(loggedInUser.id, (users) => {
+          dispatch(setFriends(users));
+          setLoading(false);
+        });
+        userFriendService.getUserFriendRequests(loggedInUser.id, (response) => {
+          dispatch(addFriendRequest(response));
+          setLoading(false);
+        });
+
+      }
+    }
+  }, [loggedInUser, dispatch]);
+
   const authLoading = useSelector(selectAuthLoading);
   const loggedInStatus = useSelector(selectLoggedInStatus);
+  const [newUser, setNewUser] = useState(false);
 
-
-  if (authLoading === true) {
+  if (authLoading === true && loading) {
     return <Loading />;
   }
+
   if (loggedInStatus === false) {
-      return (
-        <Suspense fallback={<Loading />}>
-          <LoginPage />
-        </Suspense>
-      );
-    }
+    return (
+      <Suspense fallback={<Loading />}>
+        <LoginPage setNewUser={setNewUser} />
+      </Suspense>
+    );
+  }
+
+  if (newUser === true) {
+    return (
+      <Suspense fallback={<Loading />}>
+        <UserInitiation setNewUser={setNewUser} />
+      </Suspense>
+    )
+  }
+
+  if (loggedInUser.username === undefined || loggedInUser.username === '') {
+    return (
+      <Suspense fallback={<Loading />}>
+        <div>
+          <h1 className='text-center py-5 '>Please Create A Unique Username!!</h1>
+          <div className='flex justify-center w-full lg:max-w-[393px] mx-auto'>
+            <EditProfile navigateLink={'/'} />
+          </div>
+        </div>
+      </Suspense>
+    )
+  }
 
   return (
     <div className="w-full h-screen flex overflow-hidden select-none">

@@ -1,38 +1,62 @@
-import { Checkbox } from '@material-tailwind/react';
-import React from 'react';
+
+import React, { useState } from 'react';
+
 import { BiLeftArrowAlt } from 'react-icons/bi';
 import { LuWallpaper } from 'react-icons/lu';
+import { useSelector } from 'react-redux';
+import { selectUserDetails } from '../../../../selectors/userSelector';
+import { GiHandOk } from 'react-icons/gi';
+import { TiTick } from 'react-icons/ti';
+import { useDispatch } from 'react-redux';
+import { setChatBackground } from '../../../../slices/useThemeSlice';
+import userService from '../../../../services/userService';
+import { setAlert } from '../../../../slices/alertSlice';
 
 const bg = [
-  '#D9D9D9',
-  '#000000',
-  '#255740',
-  '#2A835A',
-  '#1C4F6C',
-  '#C37F7F',
-  '#A49797',
-  '#16060B',
-  '#3B510B',
-  '#A94C79',
-  '#4FA083',
-  '#CD7D50',
-  '#BEAFDE',
-  '#01180C',
-  '#D19A9A',
-  '#2F2F2F',
-  '#96187A',
-  '#4E4779',
-  '#53BA8F',
-  '#865324',
-  '#28226C',
+  '#F0F8FF', // Alice Blue
+  '#FAEBD7', // Antique White
+  '#F5F5DC', // Beige
+  '#FFFACD', // Lemon Chiffon
+  '#E6E6FA', // Lavender
+  '#FFF5EE', // Seashell
+  '#F0FFF0', // Honeydew
+  '#F5FFFA', // Mint Cream
+  '#FFFFE0', // Light Yellow
 ];
 
 function ChatWallpaper({ currentSetting, setCurrentSetting }) {
+  const user = useSelector(selectUserDetails)
+  const dispatch = useDispatch();
+  const [currentSelectedChatBackground, setCurrentSelectedChatBackground] = useState(user.preferences.chatBackground || '#D9D9D9');
+
+  const handelShowAlert = () => {
+    dispatch(setAlert({ open: true, type: 'success',  content: 'theme update successfully!!' }))
+  };
+
+
+  const handelSetChatBackground = async (item) => {
+
+    try {
+     const respond = await userService.updateUserDetails(user.id, { preferences: { ...user.preferences, chatBackground: item } })
+      if (respond) {
+        setCurrentSelectedChatBackground(item)
+        dispatch(setChatBackground(item))
+        handelShowAlert()
+      }
+    } catch (error) {
+      console.log('Error setting chat background:', error);
+    }
+
+
+    // dispatch()
+  }
+
+
+
   return (
     <div
-      className={`absolute top-0 right-0 h-screen w-full  bg-backgroundColor text-primaryTextColor z-[100] p-4 transition-transform duration-300 flex flex-col  ${
-        currentSetting === 'ChatWallpaper' ? 'flex' : 'hidden'
-      }`}
+      className={`absolute top-0 right-0 h-screen w-full  bg-backgroundColor text-primaryTextColor z-[100] p-4 transition-transform duration-300 flex flex-col  ${currentSetting === 'ChatWallpaper' ? 'flex' : 'hidden'
+        }`}
     >
       <div className="w-full flex items-center justify-between">
         <div onClick={() => setCurrentSetting('')}>
@@ -47,19 +71,21 @@ function ChatWallpaper({ currentSetting, setCurrentSetting }) {
       <div className="w-full">
         <h1 className="font-[400] mb-2 mt-5 text-primaryTextColor flex items-center w-full justify-between">
           Set Chat Wallpaper
-          <Checkbox color="blue" defaultChecked />
         </h1>
       </div>
 
-      <div className="w-full grid grid-cols-3 gap-3 overflow-y-scroll h-full pb-20">
+      <div className="w-full grid grid-cols-3 md:grid-cols-6 lg:grid-cols-3 gap-3 overflow-y-scroll h-full pb-20 mt-4">
         {bg.map((item, index) => (
           <div
             key={index}
             style={{
               backgroundColor: `${item}`,
             }}
-            className={`size-20  rounded-lg`}
-          ></div>
+            onClick={() => handelSetChatBackground(item)}
+            className={`size-20  rounded-lg cursor-pointer hover:shadow-2xl shadow-[${item}] hover:scale-105   duration-150 flex items-center justify-center border border-blue-400`}
+          >
+            {currentSelectedChatBackground === item && <div className='bg-[#fff] p-2 rounded-full text-black'><TiTick /></div>}
+          </div>
         ))}
       </div>
     </div>

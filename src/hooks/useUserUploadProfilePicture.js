@@ -10,14 +10,14 @@ const useUserUploadProfilePicture = () => {
     const [uploading, setUploading] = useState(false);
     const [error, setError] = useState(null);
 
-    const uploadImage = async (file) => {
+    const uploadImage = async (file, userId) => {
         if (!file) {
             setError('No file provided');
             return;
         }
 
         setError(null);
-        const storageRef = ref(bucket, 'userProfileImage', user.id);
+        const storageRef = ref(bucket, `profilePictures/${userId}`);
 
         const uploadTask = uploadBytesResumable(storageRef, file);
         setUploading(true);

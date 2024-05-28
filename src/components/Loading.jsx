@@ -1,4 +1,4 @@
-const Loading = () => {
+const Loading = ({fullScreen}) => {
   return (
     <div className="w-full h-screen flex items-center justify-center bg-backgroundColor">
       <svg className="w-40" viewBox="0 0 350 212.909198897464">
