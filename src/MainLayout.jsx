@@ -13,6 +13,9 @@ import { fetchUser } from './slices/authSlice';
 import { setChatBackground, setTheme } from './slices/useThemeSlice';
 import { addFriendRequest } from './slices/userFriendRequestsSlice';
 import { setFriends } from './slices/userFriendsSlice';
+import AddNewChatComponent from './AddNewChatComponent/AddNewChatComponent';
+
+// dynamically imported components
 const LoginPage = React.lazy(() => import('./pages/LoginPage'));
 const UserInitiation = React.lazy(() => import('./pages/UserInitiation/UserInitiation'));
 const EditProfile = React.lazy(() => import('./pages/EditProfile'));
@@ -92,6 +95,8 @@ const MainLayout = () => {
       <AlertComponent />
       <Outlet />
 
+      {/* Add new chat */}
+      <AddNewChatComponent/>
       <Tooltip id="my-tooltip" />
     </div>
   );

@@ -12,12 +12,17 @@ import { Button } from '@material-tailwind/react';
 import { BiEditAlt } from 'react-icons/bi';
 import { FiEdit } from 'react-icons/fi';
 import { IoFilterOutline } from 'react-icons/io5';
+import { useDispatch } from 'react-redux';
+import { setShowAddNewComponent } from '../../slices/showAddNewComponentSlice';
 function ChatsComponents() {
   const [width] = useWindowWidth();
   const mobileMode = width < 768;
   const mdMode = width >= 768 && width < 1024;
   const [showChatWindow, setShowChatWindow] = useState(false);
   const { theme } = useSelector(state => state.theme)
+
+
+
   useEffect(() => {
     if (!mdMode) {
       setShowChatWindow(false);
@@ -55,18 +60,22 @@ const TopSection = () => {
   const [dropdown, setDropdown] = useState(false);
   const [dropdownValue, setDropdownValue] = useState('Latest');
   const { theme } = useSelector(state => state.theme)
+
+  const dispatch = useDispatch();
+  
   return (
     <div className="flex-shrink-0 select-none">
       <div className="w-full flex justify-between items-center py-2">
         <h1 className="text-[23px] font-[700]">Chats</h1>
         <div className='flex items-center justify-center gap-3'>
           <div onClick={() => setDropdown(prev => !prev)} className="relative">
-            <IoFilterOutline  className='text-lg cursor-pointer'/>
+            <IoFilterOutline data-tooltip-id="my-tooltip" data-tooltip-content="Filter" className='text-lg cursor-pointer outline-none'/>
             <Dropdown options={['Oldest', 'Latest']} isOpen={dropdown} isClose={setDropdown} dropdownValue={dropdownValue} setDropdownValue={setDropdownValue} />
           </div>
           <div>
-            <FiEdit className='text-lg cursor-pointer' />
+            <FiEdit onClick={() => dispatch(setShowAddNewComponent(true))}  data-tooltip-id="my-tooltip" data-tooltip-content="Edit"  className='text-lg cursor-pointer outline-none' />
           </div>
+          
         </div>
       </div>
 

@@ -113,47 +113,22 @@ function UserFeed() {
           </div>
 
           <div className="w-full py-5 lg:hidden">
-            <div className="w-full grid grid-cols-2 sm:flex mt-2 gap-3 flex-wrap">
-              <Button
-                color="blue"
-                // ripple="light"
-                onClick={() => console.log('Add post')}
-                buttonType="filled"
-                size="lg"
-                className="flex-grow h-10hover:bg-blue-700 rounded-lg cursor-pointer  text-primaryTextColor flex items-center px-2 gap-2 justify-center capitalize"
-              >
-                <CgAdd className="mr-2" /> Add post
-              </Button>
-              <Button
-                color="lightBlue"
-                ripple="light"
-                onClick={() => console.log('Add A story')}
-                buttonType="filled"
-                size="lg"
-                className="flex-grow h-10hover:bg-blue-700 rounded-lg cursor-pointer  text-primaryTextColor flex items-center justify-center px-2 gap-2"
-              >
-                <MdCreate className="mr-2" /> Add A story
-              </Button>
-              <Button
-                color="lightBlue"
-                ripple="light"
-                onClick={() => console.log('Manage Posts')}
-                buttonType="filled"
-                size="lg"
-                className="flex-grow h-10hover:bg-blue-700 rounded-lg cursor-pointer  text-primaryTextColor flex items-center justify-center px-2 gap-2"
-              >
-                <BsPostcard className="mr-2" /> Manage Posts
-              </Button>
-              <Button
-                color="lightBlue"
-                onClick={() => console.log('Saved post')}
-                ripple="light"
-                buttonType="filled"
-                size="lg"
-                className="flex-grow h-10hover:bg-blue-700 rounded-lg cursor-pointer  text-primaryTextColor flex items-center justify-center px-2 gap-2"
-              >
-                <FiSave className="mr-2" /> Saved post
-              </Button>
+            <div className="w-full grid grid-cols-3 sm:grid-cols-5  mt-2 gap-3 flex-wrap">
+              <button
+                className="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-blue-400 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none block w-full  "
+                type="button">
+                One
+              </button>
+              <button
+                className="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-blue-400 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none block w-full  border-none"
+                type="button">
+                Two
+              </button>
+              <button
+                className="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-blue-400 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none block w-full border-none"
+                type="button">
+                Three
+              </button>
             </div>
           </div>
 
@@ -168,12 +143,12 @@ function UserFeed() {
                 className={` md:p-4 text-primaryTextColor rounded-lg shadow-md mt-5 p-4`}
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-gray-200 rounded-full overflow-hidden">
+                  <div className="w-10 h-10 bg-light-green-200 rounded-full overflow-hidden">
                     <img src="https://via.placeholder.com/50" alt={post.user} className="w-full h-full rounded-full object-cover" />
                   </div>
                   <div>
                     <h4 className="font-semibold">{post.user}</h4>
-                    <span className="text-gray-500 text-sm">2 hours ago</span>
+                    <span className="text-light-green-500 text-sm">2 hours ago</span>
                   </div>
                 </div>
                 <p className="mt-4">{post.content}</p>
@@ -208,49 +183,26 @@ const FeedSidebar = () => {
   return (
     <div style={{
       borderRight: '1px solid rgb(229 231 235 / 17%)',
-    }} className="flex-col w-full md:w-full text-white h-full px-4 ">
+    }} className="flex-col w-full md:w-full text-white h-full px-4 border-2">
       <h1 className="text-2xl font-bold text-primaryTextColor mt-5">Menu</h1>
-      <div className="w-full flex flex-col mt-2 gap-3">
-        <Button
-          color="lightBlue"
-          ripple="light"
-          buttonType="filled"
-          size="lg"
-          className="w-full h-14 hover:bg-blue-700 rounded-lg cursor-pointer text-primaryTextColor flex items-center px-4 gap-2"
-          onClick={() => console.log('Add post')}
-        >
-          <CgAdd /> <p> Add post</p>
-        </Button>
-        <Button
-          color="gray"
-          ripple="light"
-          buttonType="filled"
-          size="lg"
-          className="w-full h-14  rounded-lg cursor-pointer text-primaryTextColor flex items-center px-4 gap-2"
-          onClick={() => console.log('Add A story')}
-        >
-          <MdCreate /> <p> Add A story</p>
-        </Button>
-        <Button
-          color="gray"
-          ripple="light"
-          buttonType="filled"
-          size="lg"
-          className="w-full h-14  rounded-lg cursor-pointer text-primaryTextColor flex items-center px-4 gap-2"
-          onClick={() => console.log('Delete post')}
-        >
-          <CgTrash /> <p> Delete post</p>
-        </Button>
-        <Button
-          color="gray"
-          ripple="light"
-          buttonType="filled"
-          size="lg"
-          className="w-full h-14  rounded-lg cursor-pointer text-primaryTextColor flex items-center px-4 gap-2"
-          onClick={() => console.log('Manage Posts')}
-        >
-          <BsPostcard /> <p> Manage Posts</p>
-        </Button>
+      <div className="w-full flex  gap-3 text-primaryTextColor border mt-2  ">
+        <div className="flex w-full divide-x divide-gray-800 gird grid-cols-3 gap-2">
+          <button
+            className="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-blue-400 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none block w-full  "
+            type="button">
+            One
+          </button>
+          <button
+            className="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-blue-400 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none block w-full  border-none"
+            type="button">
+            Two
+          </button>
+          <button
+            className="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-blue-400 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none block w-full border-none"
+            type="button">
+            Three
+          </button>
+        </div>
       </div>
     </div>
   );

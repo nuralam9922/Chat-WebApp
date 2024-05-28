@@ -5,6 +5,7 @@ import searchUserSlice from '../slices/searchUser';
 import userFriendRequestsSlice from '../slices/userFriendRequestsSlice';
 import userFriendsSlice from '../slices/userFriendsSlice';
 import useThemeSlice from '../slices/useThemeSlice';
+import showAddNewComponentSlice from '../slices/showAddNewComponentSlice';
 
 export const store = configureStore({
 	reducer: {
@@ -15,5 +16,6 @@ export const store = configureStore({
 		userFriends: userFriendsSlice.reducer,
 		userFriendRequests: userFriendRequestsSlice.reducer,
 		searchUserResults: searchUserSlice.reducer,
+		showAddNewComponent: showAddNewComponentSlice.reducer
 	},
 });
