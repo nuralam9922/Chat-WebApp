@@ -6,6 +6,7 @@ import { FiSearch } from 'react-icons/fi';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectUserFriends } from '../selectors/userFriendsSelector';
 import { setShowAddNewComponent } from '../slices/showAddNewComponentSlice';
+import { Link } from 'react-router-dom';
 
 const AddNewChatComponent = () => {
     const userFriends = useSelector(selectUserFriends);
@@ -67,6 +68,16 @@ const AddNewChatComponent = () => {
                     </div>
                 </div>
                 {/* Users */}
+
+                {userFriends.length === 0 && (
+                    <div className="w-full h-full mt-10 flex flex-col gap-4">
+                        <h1 className="text-center font-medium">No user found</h1>
+                        <Link to={'/friends'} onClick={() => dispatch(setShowAddNewComponent(false))} className=''>
+                            <Button color='blue' className="w-full" >Click Here To Add User</Button>
+                       </Link>
+                    </div>
+                )}
+
                 <div className="mt-5 w-full h-[calc(100%-10rem)] overflow-y-auto">
                     {userFriends.map(user => (
                         <div key={user.id} className="w-full min-h-10 border-b py-3 flex items-start justify-between flex-col gap-2 sm:flex-row">

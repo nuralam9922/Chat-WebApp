@@ -1,12 +1,13 @@
 import React from 'react';
 import { Typography, Button } from '@material-tailwind/react';
 import { Link } from 'react-router-dom';
+import { TbFlagDiscount } from 'react-icons/tb';
 
 export function ErrorSection() {
   return (
     <div className="h-screen mx-auto grid place-items-center text-center px-8">
       <div>
-        {/* <FlagIcon className="w-20 h-20 mx-auto" /> */}
+        <TbFlagDiscount className="w-20 h-20 mx-auto" />
         <Typography variant="h1" color="blue-gray" className="mt-10 !text-3xl !leading-snug md:!text-4xl">
           Error 404 <br /> It looks like something went wrong.
         </Typography>

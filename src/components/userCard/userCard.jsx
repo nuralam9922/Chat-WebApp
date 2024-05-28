@@ -21,7 +21,7 @@ const UserCard = React.memo(function ({ user: userInfo, AddUserButton = false, R
     const userRequests = useSelector(selectUserFriendRequestSelector);
     const userSendedRequest = useSelector(selectUserSendedFriendRequestReferences);
     const dispatch = useDispatch();
-    const [loading, setLoading] = useState({ add: false, cancel: false, reject: false });
+    const [loading, setLoading] = useState(false);
 
     const handelShowAlert = (message) => {
         dispatch(setAlert({ open: true, type: 'success', content: message }))
@@ -29,8 +29,10 @@ const UserCard = React.memo(function ({ user: userInfo, AddUserButton = false, R
 
 
     const handleAddUser = async (id) => {
+        setLoading(true);
         const response = await userFriendService.sendFriendRequest(loggedInUser.id, id);
         handelShowAlert(response);
+        setLoading(false);
     };
 
     const handelExceptFriendRequest = async (friendId) => {
@@ -100,7 +102,7 @@ const UserCard = React.memo(function ({ user: userInfo, AddUserButton = false, R
                         <div style={{
                             display: loggedInUser.id === userInfo.id || checkIfFriend() || checkIfUserSendedFriendRequest() || checkUserAlreadySentFriendRequest() ? 'none' : 'flex',
                         }} >
-                            <Button color='blue' className='' hidden={!AddUserButton} onClick={() => handleAddUser(userInfo.id, true)}>
+                            <Button loading={loading} color='blue' className='' hidden={!AddUserButton} onClick={() => handleAddUser(userInfo.id, true)}>
                                 Send Friend Request
                             </Button>
 
