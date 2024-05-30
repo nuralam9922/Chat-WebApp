@@ -18,7 +18,7 @@ import { setFriends } from './slices/userFriendsSlice';
 const LoginPage = React.lazy(() => import('./pages/LoginPage'));
 const UserInitiation = React.lazy(() => import('./pages/UserInitiation/UserInitiation'));
 const EditProfile = React.lazy(() => import('./pages/EditProfile'));
-const AddNewChatComponent = React.lazy(() => import('./AddNewChatComponent/AddNewChatComponent'))
+const AddNewChatComponent = React.lazy(() => import('./components/AddNewChatComponent/AddNewChatComponent'))
 
 const MainLayout = () => {
   const loggedInUser = useSelector(selectUserDetails);
@@ -34,17 +34,6 @@ const MainLayout = () => {
       if (loggedInUser.preferences) {
         dispatch(setTheme(loggedInUser.preferences.theme));
         dispatch(setChatBackground(loggedInUser.preferences.chatBackground));
-      }
-      if (loggedInUser.id) { // Check if user ID is available
-        userFriendService.getUserFriends(loggedInUser.id, (users) => {
-          dispatch(setFriends(users));
-          setLoading(false);
-        });
-        userFriendService.getUserFriendRequests(loggedInUser.id, (response) => {
-          dispatch(addFriendRequest(response));
-          setLoading(false);
-        });
-
       }
     }
   }, [loggedInUser, dispatch]);
@@ -96,7 +85,7 @@ const MainLayout = () => {
       <Outlet />
 
       {/* Add new chat */}
-        <AddNewChatComponent />
+      <AddNewChatComponent />
       <Tooltip id="my-tooltip" />
     </div>
   );

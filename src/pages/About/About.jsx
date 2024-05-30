@@ -1,8 +1,8 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect, useRef, useState } from 'react';
 import { FcVideoCall } from 'react-icons/fc';
 import { LiaLinkSolid } from 'react-icons/lia';
 import { PiNotificationFill } from 'react-icons/pi';
-import userImage from '../../assets/userImage.png'; // Assuming you have a user image asset
 import BottomBarForMobile from '../../components/Sidebar/BottomBarForMobile';
 import './About.css';
 import { Switch } from '@material-tailwind/react';
@@ -10,7 +10,7 @@ import { RiGhostLine } from 'react-icons/ri';
 import { FaArrowRightToBracket } from 'react-icons/fa6';
 import { useSelector } from 'react-redux';
 
-function About({ showUserDetails = true, setShowUserDetails }) {
+function About({ showUserDetails = true, setShowUserDetails, chatWindowInfo }) {
   const aboutRef = useRef();
   const [showMedia, setShowMedia] = useState(false);
 
@@ -26,6 +26,16 @@ function About({ showUserDetails = true, setShowUserDetails }) {
       removeEventListener('mousedown', handleClickOutside);
     };
   }, [aboutRef]);
+
+
+
+  const userDetails = chatWindowInfo.userInfo;
+
+  const userImage = userDetails.user_profile_view && userDetails?.profile_picture_url?.imageUrl;
+  const userName = userDetails.full_name;
+  const username = userDetails.username;
+  const bio = userDetails.user_bio_view && userDetails.bio;
+
 
   return (
     <>
@@ -43,14 +53,14 @@ function About({ showUserDetails = true, setShowUserDetails }) {
         </div>
         <div className="p-4 w-full">
           <div className="flex items-center mb-4">
-            <img src={userImage} className="w-16 h-16 rounded-full mr-4" alt="User Avatar" />
+            <img src={userImage} className="w-16 h-16 rounded-full object-cover  mr-4" alt="User Avatar" />
             <div>
-              <h2 className="text-xl font-semibold text-primaryTextColor">Shreyansh Shah</h2>
-              <a href="tel:+916265081928" className="text-blue-600">
-                +91 6265 081 928
-              </a>
+              <h2 className="text-xl font-semibold text-primaryTextColor">{ userName}</h2>
+              <p className='text-secondaryTextColor text-xs'>{ username}</p>
             </div>
           </div>
+
+
           <div className="flex items-center justify-around w-full py-3">
             <button className="flex items-center justify-center flex-col w-20 h-10  text-primaryTextColor  text-white rounded-md">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -72,10 +82,10 @@ function About({ showUserDetails = true, setShowUserDetails }) {
             </button>
           </div>
           <div className=" py-4">
-            <div className="text-sm text-primaryTextColor">About</div>
-            <p className="text-sm text-secondaryTextColor mt-1">Hi there, I am using</p>
+            <div className="text-sm text-primaryTextColor">Bio</div>
+            <p className="text-sm text-secondaryTextColor mt-1">{ bio}</p>
           </div>
-          <div className="text-primaryTextColor py-4">
+          <div className="text-primaryTextColor py-4 hidden">
             <div className="w-full justify-between items-center flex">
               <p className="text-sm text-primaryTextColor">Media, links and docs</p>
               <p onClick={() => setShowMedia(!showMedia)} className="flex items-center justify-center gap-2 cursor-pointer">
@@ -89,7 +99,9 @@ function About({ showUserDetails = true, setShowUserDetails }) {
             </div>
           </div>
 
-          <div className=" py-4">
+          
+          {/* working letter */}
+          <div className=" py-4 hidden">
             <div className="flex items-center justify-between">
               <div className="text-sm text-primaryTextColor flex items-center justify-center gap-2">
                 <PiNotificationFill /> <p>Mute Notifications</p>

@@ -8,6 +8,7 @@ import { selectUserDetails } from '../../selectors/userSelector';
 import { useEffect } from 'react';
 import userFriendService from '../../services/userFriendService';
 import { addFriendRequest, addUserSendedFriendRequestReferences } from '../../slices/userFriendRequestsSlice';
+import { setFriends } from '../../slices/userFriendsSlice';
 
 const FriendsComponent = React.lazy(() => import('./Tabs/FriendsComponent'));
 const SearchFriendsComponents = React.lazy(() => import('./Tabs/SearchFriendsComponents'));
@@ -22,26 +23,36 @@ function UserFriends() {
   const friendRequests = useSelector(selectUserFriendRequestSelector) || [];
 
   useEffect(() => {
-    const fetchSentFriendRequests = async () => {
-      const unsubscribe = await userFriendService.getUserSentFriendRequests(user.id, (response) => {
-        dispatch(addUserSendedFriendRequestReferences(response));
-      });
 
-      return unsubscribe;
-    };
-
-    let unsubscribe;
-
-    fetchSentFriendRequests().then(unsub => {
-      unsubscribe = unsub;
+    const unsubscribeSentRequests = userFriendService.getUserSentFriendRequests(user.id, (response) => {
+      dispatch(addUserSendedFriendRequestReferences(response));
     });
 
+    const unsubscribeFriends = userFriendService.getUserFriends(user.id, (users) => {
+      dispatch(setFriends(users));
+    });
+
+    const unsubscribeFriendsRequests = userFriendService.getUserFriendRequests(user.id, (response) => {
+      dispatch(addFriendRequest(response));
+    })
+
+
     return () => {
-      if (unsubscribe) {
+      unsubscribeFriendsRequests.then((unsubscribe) => {
         unsubscribe();
-      }
-    };
-  }, [user.id, dispatch]);
+      });
+
+      unsubscribeFriends.then((unsubscribe) => {
+        unsubscribe();
+      });
+
+      unsubscribeSentRequests.then((unsubscribe) => {
+        unsubscribe();
+      });
+
+    }
+
+  }, []);
 
 
   return (

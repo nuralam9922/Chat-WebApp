@@ -1,12 +1,13 @@
 import { Button, Input } from '@material-tailwind/react';
 import React, { useState, useEffect, useRef } from 'react';
 import { IoClose } from 'react-icons/io5';
-import ImageComponent from '../components/ImageComponent';
+import ImageComponent from '../ImageComponent';
 import { FiSearch } from 'react-icons/fi';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectUserFriends } from '../selectors/userFriendsSelector';
-import { setShowAddNewComponent } from '../slices/showAddNewComponentSlice';
+import { selectUserFriends } from '../../selectors/userFriendsSelector';
+import { setShowAddNewComponent } from '../../slices/showAddNewComponentSlice';
 import { Link } from 'react-router-dom';
+import { setUserInfo } from '../../slices/chatWindow';
 
 const AddNewChatComponent = () => {
     const userFriends = useSelector(selectUserFriends);
@@ -41,8 +42,12 @@ const AddNewChatComponent = () => {
         }
     }, [show]);
 
-    const handleAddNewChat = (userId) => {
-        // Logic to add a new chat
+    const handleAddNewChat = (userInfo) => {
+        if (!userInfo) {
+            return;
+        }
+        dispatch(setUserInfo(userInfo));
+        dispatch(setShowAddNewComponent(false));
     };
 
     return (
@@ -96,7 +101,7 @@ const AddNewChatComponent = () => {
                                     </p>
                                 </div>
                             </div>
-                            <Button color="blue" onClick={() => handleAddNewChat(user.id)} className="outline-none w-full sm:w-[5rem]">Add</Button>
+                            <Button color="blue" onClick={() => handleAddNewChat(user)} className="outline-none w-full sm:w-[5rem]">Chat</Button>
                         </div>
                     ))}
                 </div>

@@ -37,7 +37,7 @@ const EmojiPickerComponent = React.memo(({ setText, showEmoji, setShowEmoji }) =
   }, [setText, setShowEmoji]);
 
   return (
-    <div ref={emojiPickerComponentRef} className="absolute border bottom-24">
+    <div ref={emojiPickerComponentRef} className="absolute border bottom-24 z-[999]">
       {showEmoji && <emoji-picker ref={pickerRef} emoji-style="apple"></emoji-picker>}
     </div>
   );

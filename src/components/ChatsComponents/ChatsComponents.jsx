@@ -35,6 +35,8 @@ function ChatsComponents() {
     }
   };
 
+
+
   return (
     <>
       <div
@@ -45,13 +47,14 @@ function ChatsComponents() {
         className="w-full h-screen flex flex-col  message-container p-1 px-3 bg-backgroundColor text-primaryTextColor border-none md:border-r-2 select-none"
       >
         <TopSection />
-        {/* message profile avatar and a short preview of the message and tick mark if your read the message or not time  */}
         <div className="w-full mt-5 flex flex-col h-[calc(100% -10rem)]  overflow-y-scroll pb-20">
           <MessageLabel handleClick={handleClick} />
         </div>
+
+
         <BottomBarForMobile />
       </div>
-      {showChatWindow && (mdMode || mobileMode) && <ChatWindow visibleBackArrow={mdMode || mobileMode} setShowChatWindow={setShowChatWindow} />}
+      {showChatWindow && (mdMode || mobileMode) && <ChatWindow visibleBackArrow={mdMode || mobileMode} setShowChatWindow={setShowChatWindow} fullScreen={width <= 959} />}
     </>
   );
 }
@@ -62,20 +65,20 @@ const TopSection = () => {
   const { theme } = useSelector(state => state.theme)
 
   const dispatch = useDispatch();
-  
+
   return (
     <div className="flex-shrink-0 select-none">
       <div className="w-full flex justify-between items-center py-2">
         <h1 className="text-[23px] font-[700]">Chats</h1>
         <div className='flex items-center justify-center gap-3'>
           <div onClick={() => setDropdown(prev => !prev)} className="relative">
-            <IoFilterOutline data-tooltip-id="my-tooltip" data-tooltip-content="Filter" className='text-lg cursor-pointer outline-none'/>
+            <IoFilterOutline data-tooltip-id="my-tooltip" data-tooltip-content="Filter" className='text-lg cursor-pointer outline-none' />
             <Dropdown options={['Oldest', 'Latest']} isOpen={dropdown} isClose={setDropdown} dropdownValue={dropdownValue} setDropdownValue={setDropdownValue} />
           </div>
           <div>
-            <FiEdit onClick={() => dispatch(setShowAddNewComponent(true))}  data-tooltip-id="my-tooltip" data-tooltip-content="Edit"  className='text-lg cursor-pointer outline-none' />
+            <FiEdit onClick={() => dispatch(setShowAddNewComponent(true))} data-tooltip-id="my-tooltip" data-tooltip-content="Add" className='text-lg cursor-pointer outline-none' />
           </div>
-          
+
         </div>
       </div>
 
@@ -110,8 +113,8 @@ const TopSection = () => {
 const MessageLabel = ({ handleClick }) => {
   return (
     <>
-      {Array(20)
-        .fill(29)
+      {Array(1)
+        .fill()
         .map((_, index) => (
           <div
             key={index}

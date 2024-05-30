@@ -6,6 +6,7 @@ import userFriendRequestsSlice from '../slices/userFriendRequestsSlice';
 import userFriendsSlice from '../slices/userFriendsSlice';
 import useThemeSlice from '../slices/useThemeSlice';
 import showAddNewComponentSlice from '../slices/showAddNewComponentSlice';
+import chatWindowSlice from '../slices/chatWindow';
 
 export const store = configureStore({
 	reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
 		userFriends: userFriendsSlice.reducer,
 		userFriendRequests: userFriendRequestsSlice.reducer,
 		searchUserResults: searchUserSlice.reducer,
-		showAddNewComponent: showAddNewComponentSlice.reducer
+		showAddNewComponent: showAddNewComponentSlice.reducer,
+		chatWindowInfo: chatWindowSlice.reducer
 	},
 });
