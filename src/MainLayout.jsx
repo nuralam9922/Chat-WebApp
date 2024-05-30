@@ -8,11 +8,10 @@ import Loading from './components/Loading';
 import { selectAuthLoading } from './selectors/authLoadingSelector';
 import { selectLoggedInStatus } from './selectors/authStatusSelectors';
 import { selectUserDetails } from './selectors/userSelector';
-import userFriendService from './services/userFriendService';
+import messageService from './services/messageService';
 import { fetchUser } from './slices/authSlice';
+import { chatError, chatLoading, setChats } from './slices/chatsSlice';
 import { setChatBackground, setTheme } from './slices/useThemeSlice';
-import { addFriendRequest } from './slices/userFriendRequestsSlice';
-import { setFriends } from './slices/userFriendsSlice';
 
 // dynamically imported components
 const LoginPage = React.lazy(() => import('./pages/LoginPage'));
@@ -35,8 +34,36 @@ const MainLayout = () => {
         dispatch(setTheme(loggedInUser.preferences.theme));
         dispatch(setChatBackground(loggedInUser.preferences.chatBackground));
       }
+
+
+
+
+      const fetchChats = async () => {
+        try {
+          messageService.getChats(loggedInUser.id, (res) => {
+            dispatch(setChats(res))
+          }, (loading) => {
+            dispatch(chatLoading(loading))
+          }, (error) => {
+            dispatch(chatError(error))
+          })
+
+        } catch (error) {
+          console.error('Error fetching chats:', error);
+        }
+      };
+      fetchChats();
+
+
+
+
+
     }
   }, [loggedInUser, dispatch]);
+
+
+
+
 
   const authLoading = useSelector(selectAuthLoading);
   const loggedInStatus = useSelector(selectLoggedInStatus);

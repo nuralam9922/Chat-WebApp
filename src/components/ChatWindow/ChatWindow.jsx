@@ -64,6 +64,9 @@ function ChatWindow({ visibleBackArrow = false, setShowChatWindow, fullScreen })
     )
   }
 
+
+  console.log(chatWindowInfo);
+
   return (
     <div
       ref={chatWindowRef}
@@ -108,15 +111,18 @@ function ChatWindow({ visibleBackArrow = false, setShowChatWindow, fullScreen })
           </div>
         ))} */}
 
+
+
+
       </div>
-      <MessageInput user={user} friendInfo={{ ...chatWindowInfo.userInfo, typingStatus: chatWindowInfo.typingStatus }} />
+      <MessageInput user={user} chatWindowInfo={chatWindowInfo} />
       <About showUserDetails={showUserDetails} setShowUserDetails={setShowUserDetails} chatWindowInfo={chatWindowInfo} />
     </div>
   );
 }
 
 export const Navbar = ({ visibleBackArrow, setShowChatWindow, setShowUserDetails, handleFullScreen, handleExitFullScreen, isFullScreen, chatWindowInfo }) => {
-  const imageUr = chatWindowInfo.user_profile_view && chatWindowInfo.profile_picture_url.imageUrl;
+  const imageUr = chatWindowInfo.user_profile_view && chatWindowInfo.profile_picture_url;
   const name = chatWindowInfo.full_name;
   const userName = chatWindowInfo.username;
 
@@ -132,6 +138,7 @@ export const Navbar = ({ visibleBackArrow, setShowChatWindow, setShowUserDetails
         <div>
           <div className="font-medium text-primaryTextColor">{name}</div>
           <div className="text-green-500 text-xs">ONLINE</div>
+          <p>{chatWindowInfo.id}</p>
         </div>
       </div>
       <div className="flex items-center gap-3">

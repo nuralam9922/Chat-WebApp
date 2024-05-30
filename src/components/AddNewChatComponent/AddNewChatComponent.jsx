@@ -1,16 +1,18 @@
-import { Button, Input } from '@material-tailwind/react';
-import React, { useState, useEffect, useRef } from 'react';
-import { IoClose } from 'react-icons/io5';
-import ImageComponent from '../ImageComponent';
+import { Button } from '@material-tailwind/react';
+import React, { useEffect, useRef, useState } from 'react';
 import { FiSearch } from 'react-icons/fi';
-import { useSelector, useDispatch } from 'react-redux';
-import { selectUserFriends } from '../../selectors/userFriendsSelector';
-import { setShowAddNewComponent } from '../../slices/showAddNewComponentSlice';
+import { IoClose } from 'react-icons/io5';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { setUserInfo } from '../../slices/chatWindow';
+import { selectUserFriends } from '../../selectors/userFriendsSelector';
+import { setActiveChatId, setUserInfo } from '../../slices/chatWindowSlice';
+import { setShowAddNewComponent } from '../../slices/showAddNewComponentSlice';
+import ImageComponent from '../ImageComponent';
 
 const AddNewChatComponent = () => {
     const userFriends = useSelector(selectUserFriends);
+    const chats = useSelector((state) => state.chats)
+
     const show = useSelector((state) => state.showAddNewComponent.value);
     const dispatch = useDispatch();
     const containerRef = useRef(null);
@@ -46,8 +48,19 @@ const AddNewChatComponent = () => {
         if (!userInfo) {
             return;
         }
-        dispatch(setUserInfo(userInfo));
+
+        const checkUserAlreadyExist = chats.chats.filter((chat) => chat.friendInfo.id === userInfo.id)
+        if (checkUserAlreadyExist.length === 0) {
+            dispatch(setActiveChatId(null));
+        } else {
+            // console.log(checkUserAlreadyExist[0]);
+            dispatch(setActiveChatId(checkUserAlreadyExist[0].chatId));
+        }
+
+
+        dispatch(setUserInfo({ ...userInfo, profile_picture_url: userInfo.profile_picture_url.imageUrl }));
         dispatch(setShowAddNewComponent(false));
+
     };
 
     return (
@@ -79,7 +92,7 @@ const AddNewChatComponent = () => {
                         <h1 className="text-center font-medium">No user found</h1>
                         <Link to={'/friends'} onClick={() => dispatch(setShowAddNewComponent(false))} className=''>
                             <Button color='blue' className="w-full" >Click Here To Add User</Button>
-                       </Link>
+                        </Link>
                     </div>
                 )}
 

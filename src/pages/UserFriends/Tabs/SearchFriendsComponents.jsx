@@ -4,7 +4,7 @@ import { FiSearch } from 'react-icons/fi';
 import { useDispatch } from 'react-redux';
 import UserCard from '../../../components/userCard/userCard.jsx';
 import userFriendService from '../../../services/userFriendService';
-import { setSearchTeamsString, setSearchUser } from '../../../slices/searchUser.js';
+import { setSearchTeamsString, setSearchUser } from '../../../slices/searchUserSlice.js';
 import { useSelector } from 'react-redux';
 
 function SearchFriendsComponent() {

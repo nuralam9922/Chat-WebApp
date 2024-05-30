@@ -137,7 +137,7 @@ class UserFriendService {
     async getUserSentFriendRequests(userId, callback) {
         const sentRequestsRef = collection(firebaseDb, 'friendships');
         const sentRequestsQuery = query(sentRequestsRef, where('userId1', '==', userId));
-
+        
         const unsubscribe = onSnapshot(sentRequestsQuery, async (querySnapshot) => {
             const requests = await Promise.all(querySnapshot.docs.map(async (requestDoc) => {
                 const data = requestDoc.data();

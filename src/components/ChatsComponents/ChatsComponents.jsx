@@ -1,26 +1,45 @@
 import React, { useEffect, useState } from 'react';
-import downArrow from '../../assets/downArrow.svg';
-import singleTck from '../../assets/singleTck.svg';
-import userImage from '../../assets/userImage.png';
-import useWindowWidth from '../../hooks/useWindowWidth';
-import ChatWindow from '../ChatWindow/ChatWindow';
-import Dropdown from '../Dropdown/Dropdown';
-import BottomBarForMobile from '../Sidebar/BottomBarForMobile';
-import { useSelector } from 'react-redux';
-import './Messages.css';
-import { Button } from '@material-tailwind/react';
-import { BiEditAlt } from 'react-icons/bi';
 import { FiEdit } from 'react-icons/fi';
 import { IoFilterOutline } from 'react-icons/io5';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import singleTck from '../../assets/singleTck.svg';
+import useWindowWidth from '../../hooks/useWindowWidth';
+import { selectUserDetails } from '../../selectors/userSelector';
+import { setActiveChatId, setUserInfo } from '../../slices/chatWindowSlice';
 import { setShowAddNewComponent } from '../../slices/showAddNewComponentSlice';
+import { formatTime } from '../../utils/formatTime';
+import ChatWindow from '../ChatWindow/ChatWindow';
+import Dropdown from '../Dropdown/Dropdown';
+import ImageComponent from '../ImageComponent';
+import BottomBarForMobile from '../Sidebar/BottomBarForMobile';
+import './Messages.css';
+
+
+
+
 function ChatsComponents() {
+
+  // custom hooks
   const [width] = useWindowWidth();
   const mobileMode = width < 768;
   const mdMode = width >= 768 && width < 1024;
   const [showChatWindow, setShowChatWindow] = useState(false);
-  const { theme } = useSelector(state => state.theme)
 
+  // redux states
+  const { theme } = useSelector(state => state.theme)
+  const loggedInUser = useSelector(selectUserDetails)
+  const { chats, loading, error } = useSelector((state) => state.chats);
+
+
+  // initial variables
+  const dispatch = useDispatch();
+  // const checkUserAlreadyExist = chats.chats.filter((chat) => chat.friendInfo.id === userInfo.id)
+
+  useEffect(() => {
+    // dispatch(setActiveChatId([]));
+  }, [chats]);
+
+  const loggedInUserId = loggedInUser.id;
 
 
   useEffect(() => {
@@ -29,13 +48,15 @@ function ChatsComponents() {
     }
   }, [mdMode]);
 
-  const handleClick = () => {
+  const handleClick = (chat) => {
     if (mobileMode || mdMode) {
       setShowChatWindow(true);
     }
+
+    dispatch(setActiveChatId(chat.chatId))
+    dispatch(setUserInfo(chat.friendInfo))
+
   };
-
-
 
   return (
     <>
@@ -47,8 +68,28 @@ function ChatsComponents() {
         className="w-full h-screen flex flex-col  message-container p-1 px-3 bg-backgroundColor text-primaryTextColor border-none md:border-r-2 select-none"
       >
         <TopSection />
-        <div className="w-full mt-5 flex flex-col h-[calc(100% -10rem)]  overflow-y-scroll pb-20">
-          <MessageLabel handleClick={handleClick} />
+
+
+        {error && <p>{error?.message}</p>}
+
+        <div style={{
+          display: error ? 'none' : 'flex',
+        }} className="w-full mt-5 flex flex-col h-[calc(100% -10rem)]  overflow-y-scroll pb-20">
+          {loading ? (
+            Array(10).fill(10).map((_, index) => (
+              <MessageLabelSkeleton key={index} />
+            ))
+          ) : (
+            chats.length > 0 ? (
+              chats.map((chat) => (
+                <MessageLabel key={chat.chatId} handleClick={handleClick} chat={chat} />
+              ))
+            ) : (
+              <div className="flex justify-center items-center h-full">
+                <h1>No Chats</h1>
+              </div>
+            )
+          )}
         </div>
 
 
@@ -110,51 +151,73 @@ const TopSection = () => {
   );
 };
 
-const MessageLabel = ({ handleClick }) => {
+const MessageLabel = ({ handleClick, chat }) => {
+
+  const imageUr = chat.friendInfo.user_profile_view === 'everyone' && chat.friendInfo.profile_picture_url
+  const name = chat.friendInfo.full_name;
+  const userName = chat.friendInfo.username;
+  // Parse the timestamp to a Date object
+
+
   return (
-    <>
-      {Array(1)
-        .fill()
-        .map((_, index) => (
-          <div
-            key={index}
-            onClick={handleClick}
-            className="min-h-[36px] flex-shrink-0 py-3 md:px-5 rounded-md hover:bg-stone-200 duration-300 w-full flex items-center justify-between cursor-pointer"
-          >
-            <div className="flex items-start gap-4">
-              <div className="userAvatar size-14">
-                <img src={userImage} className="w-full h-full object-cover" alt="" />
-              </div>
-              <div>
-                <div className="userName font-[700]">Raj Das</div>
-                <div className="minMessagePreview text-secondaryTextColor">
-                  {'ok. see you tomorrow'.length > 40 ? 'ok. see you tomorrow'.slice(0, 40) + '...' : 'ok. see you tomorrow'}
-                </div>
-                <div
-                  style={{
-                    display: 'none',
-                  }}
-                  className="isTyping text-green-500"
-                >
-                  ...IsTyping
-                </div>
-              </div>
-            </div>
-            <div className="h-full flex flex-col items-center justify-between">
-              <p className="text-secondaryTextColor">10.10</p>
-              <img
-                style={{
-                  display: 'none',
-                }}
-                src={singleTck}
-                alt=""
-              />
-              <div className="size-[20px] rounded-full bg-green-600 flex items-center justify-center text-white ">2</div>
-            </div>
+    <div
+      onClick={() => handleClick(chat)}
+      className="min-h-[36px] flex-shrink-0 py-3 md:px-5 rounded-md hover:bg-stone-200 duration-300 w-full flex items-center justify-between cursor-pointer"
+    >
+      <div className="flex items-start gap-4">
+        <div className="userAvatar size-14">
+          <ImageComponent imageUrl={imageUr} className={'w-full h-full rounded-full object-cover'} />
+        </div>
+        <div>
+          <div className="userName font-[700]">{name}</div>
+          <div className="minMessagePreview text-secondaryTextColor">
+            {chat.last_message.length > 20 ? chat.last_message.slice(0, 15) + '...' : chat.last_message}
           </div>
-        ))}
-    </>
+          <p className='text-xs'  >{chat.friendInfo.id}</p>
+          <div
+            style={{
+              display: 'none',
+            }}
+            className="isTyping text-green-500"
+          >
+            ...IsTyping
+          </div>
+        </div>
+      </div>
+      <div className="h-full flex flex-col items-end justify-between">
+        <p className="text-secondaryTextColor">{formatTime(chat.last_message_timestamp)}</p>
+        <img
+          style={{
+            display: 'none',
+          }}
+          src={singleTck}
+          alt=""
+        />
+        {chat.unreadCount > 1 && <div className="size-[20px] w-auto p-1 rounded-full bg-green-600 flex items-center justify-center text-white ">{chat.unreadCount}</div>}
+      </div>
+    </div>
   );
 };
+
+const MessageLabelSkeleton = () => (
+  <div className="min-h-[36px] flex-shrink-0 py-3 md:px-5 rounded-md bg-gray-200 animate-pulse w-full flex items-center justify-between cursor-pointer">
+    <div className="flex items-start gap-4">
+      <div className="userAvatar size-14 bg-gray-300 rounded-full h-10 w-10"></div>
+      <div className="flex flex-col gap-2">
+        <div className="userName bg-gray-300 rounded h-4 w-24"></div>
+        <div className="minMessagePreview bg-gray-300 rounded h-3 w-32"></div>
+      </div>
+    </div>
+    <div className="h-full flex flex-col items-end justify-between">
+      <div className="bg-gray-300 rounded h-3 w-16"></div>
+      <div className="bg-gray-300 rounded-full h-5 w-5 mt-2"></div>
+    </div>
+  </div>
+);
+
+
+
+
+
 
 export default ChatsComponents;

@@ -31,10 +31,10 @@ function About({ showUserDetails = true, setShowUserDetails, chatWindowInfo }) {
 
   const userDetails = chatWindowInfo.userInfo;
 
-  const userImage = userDetails.user_profile_view && userDetails?.profile_picture_url?.imageUrl;
-  const userName = userDetails.full_name;
-  const username = userDetails.username;
-  const bio = userDetails.user_bio_view && userDetails.bio;
+  const userImage = userDetails?.user_profile_view === 'everyone' && userDetails?.profile_picture_url;
+  const userName = userDetails?.full_name;
+  const username = userDetails?.username;
+  const bio = userDetails?.user_bio_view && userDetails.bio;
 
 
   return (
