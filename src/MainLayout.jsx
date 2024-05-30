@@ -9,15 +9,20 @@ import { selectAuthLoading } from './selectors/authLoadingSelector';
 import { selectLoggedInStatus } from './selectors/authStatusSelectors';
 import { selectUserDetails } from './selectors/userSelector';
 import messageService from './services/messageService';
+import userFriendService from './services/userFriendService';
 import { fetchUser } from './slices/authSlice';
 import { chatError, chatLoading, setChats } from './slices/chatsSlice';
 import { setChatBackground, setTheme } from './slices/useThemeSlice';
+import { addFriendRequest, addUserSendedFriendRequestReferences } from './slices/userFriendRequestsSlice';
+import { setFriends } from './slices/userFriendsSlice'
 
-// dynamically imported components
+
+
+// Dynamically imported components
 const LoginPage = React.lazy(() => import('./pages/LoginPage'));
 const UserInitiation = React.lazy(() => import('./pages/UserInitiation/UserInitiation'));
 const EditProfile = React.lazy(() => import('./pages/EditProfile'));
-const AddNewChatComponent = React.lazy(() => import('./components/AddNewChatComponent/AddNewChatComponent'))
+const AddNewChatComponent = React.lazy(() => import('./components/AddNewChatComponent/AddNewChatComponent'));
 
 const MainLayout = () => {
   const loggedInUser = useSelector(selectUserDetails);
@@ -35,35 +40,56 @@ const MainLayout = () => {
         dispatch(setChatBackground(loggedInUser.preferences.chatBackground));
       }
 
-
-
-
       const fetchChats = async () => {
         try {
-          messageService.getChats(loggedInUser.id, (res) => {
-            dispatch(setChats(res))
-          }, (loading) => {
-            dispatch(chatLoading(loading))
-          }, (error) => {
-            dispatch(chatError(error))
-          })
-
+          messageService.getChats(loggedInUser.id,
+            (res) => {
+              dispatch(setChats(res));
+            },
+            (loading) => {
+              dispatch(chatLoading(loading));
+            },
+            (error) => {
+              dispatch(chatError(error));
+            }
+          );
         } catch (error) {
           console.error('Error fetching chats:', error);
         }
       };
       fetchChats();
-
-
-
-
-
     }
   }, [loggedInUser, dispatch]);
 
+  useEffect(() => {
+    if (loggedInUser) {
+      const unsubscribeSentRequests = userFriendService.getUserSentFriendRequests(loggedInUser.id, (response) => {
+        dispatch(addUserSendedFriendRequestReferences(response));
+      });
 
+      const unsubscribeFriends = userFriendService.getUserFriends(loggedInUser.id, (users) => {
+        dispatch(setFriends(users));
+      });
 
+      const unsubscribeFriendsRequests = userFriendService.getUserFriendRequests(loggedInUser.id, (response) => {
+        dispatch(addFriendRequest(response));
+      });
 
+      return () => {
+        unsubscribeFriendsRequests.then((unsubscribe) => {
+          unsubscribe();
+        });
+
+        unsubscribeFriends.then((unsubscribe) => {
+          unsubscribe();
+        });
+
+        unsubscribeSentRequests.then((unsubscribe) => {
+          unsubscribe();
+        });
+      };
+    }
+  }, [loggedInUser, dispatch]);
 
   const authLoading = useSelector(selectAuthLoading);
   const loggedInStatus = useSelector(selectLoggedInStatus);
@@ -86,10 +112,10 @@ const MainLayout = () => {
       <Suspense fallback={<Loading />}>
         <UserInitiation setNewUser={setNewUser} />
       </Suspense>
-    )
+    );
   }
 
-  if (loggedInUser.username === undefined || loggedInUser.username === '') {
+  if (!loggedInUser || !loggedInUser.username || loggedInUser.username === '') {
     return (
       <Suspense fallback={<Loading />}>
         <div>
@@ -99,7 +125,7 @@ const MainLayout = () => {
           </div>
         </div>
       </Suspense>
-    )
+    );
   }
 
   return (

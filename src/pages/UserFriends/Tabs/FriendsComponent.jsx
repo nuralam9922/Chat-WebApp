@@ -1,21 +1,10 @@
 import { Button, Card, CardBody, Input, Typography } from '@material-tailwind/react';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { FiSearch } from 'react-icons/fi';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import ImageComponent from '../../../components/ImageComponent';
 import { selectUserFriends } from '../../../selectors/userFriendsSelector';
-import { selectUserDetails } from '../../../selectors/userSelector';
 import userFriendService from '../../../services/userFriendService';
-import { setFriends } from '../../../slices/userFriendsSlice';
-
-const demoFriends = [
-    { id: 1, name: 'John Doe', bio: 'Lorem ipsum dolor sit amet.' },
-    { id: 2, name: 'Jane Smith', bio: 'Consectetur adipiscing elit.' },
-    { id: 3, name: 'Alice Johnson', bio: 'Sed do eiusmod tempor incididunt ut labore.' },
-    { id: 4, name: 'Bob Brown', bio: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco.' },
-    // Add more demo friends as needed
-];
-
 
 
 
@@ -23,9 +12,9 @@ function FriendsComponent() {
     const userFriends = useSelector(selectUserFriends)
     const [searchTerm, setSearchTerm] = useState('');
 
-    const filteredFriends = demoFriends.filter((friend) =>
-        friend.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    // const filteredFriends = demoFriends.filter((friend) =>
+    //     friend.name.toLowerCase().includes(searchTerm.toLowerCase())
+    // );
 
 
 

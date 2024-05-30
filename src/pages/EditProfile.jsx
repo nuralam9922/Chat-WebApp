@@ -54,7 +54,7 @@ function EditProfile({ navigateLink, setNewUser }) {
   };
 
   const handelShowAlert = () => {
-    dispatch(setAlert({ open: true, type: 'success', icon: <BiEdit />, content: 'profile update successfully!!' }))
+    dispatch(setAlert({ open: true, type: 'success', icon: 'BiEdit', content: 'profile update successfully!!' }))
   };
 
   const handleSubmit = async (e) => {
@@ -107,7 +107,7 @@ function EditProfile({ navigateLink, setNewUser }) {
   };
 
   return (
-    <div className="flex text-textPrimaryColor overflow-y-scroll  flex-col items-center justify-center   h-full w-full flex-shrink-0">
+    <div className="flex text-textPrimaryColor overflow-y-scroll  flex-col items-center justify-center   h-full w-full flex-shrink-0 py-32 lg:py-5">
       <h2 className="text-2xl font-bold text-center mb-6 text-primaryTextColor">Edit Profile</h2>
       <form onSubmit={handleSubmit} className="space-y-4 w-full">
         <div className="flex flex-col items-center w-full">

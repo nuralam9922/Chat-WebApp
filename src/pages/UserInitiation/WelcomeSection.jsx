@@ -5,7 +5,7 @@ import { FiEdit } from 'react-icons/fi';
 
 function WelcomeSection({ onNextStep }) {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 py-10 md:py-0">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 py-10 md:py-10">
       {/* Header Section */}
       <header className="w-full py-6 bg-blue-600 text-white text-center rounded-md">
         <h1 className="text-3xl md:text-4xl font-bold">Welcome to ChatHub</h1>

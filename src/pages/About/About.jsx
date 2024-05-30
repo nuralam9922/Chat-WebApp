@@ -110,7 +110,8 @@ function About({ showUserDetails = true, setShowUserDetails, chatWindowInfo }) {
             </div>
           </div>
           <div className="flex mt-5 w-full">
-            <button className=" w-full flex-grow bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-md mr-2">Block</button>
+            <button className=" w-full flex-grow bg-red-400 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-md mr-2">Delete</button>
+            <button className=" w-full flex-grow bg-red-600 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-md mr-2">Block</button>
           </div>
         </div>
 

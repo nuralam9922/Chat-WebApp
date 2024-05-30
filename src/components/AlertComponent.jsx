@@ -1,10 +1,8 @@
-import React, { useEffect, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { Alert } from '@material-tailwind/react';
-import { FiEdit2 } from 'react-icons/fi';
+import React, { useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectThemeDetails } from '../selectors/themeSelector';
 import { hideAlert } from '../slices/alertSlice';
-import { Button } from '@material-tailwind/react';
 
 function AlertComponent() {
     const theme = useSelector(selectThemeDetails);
@@ -26,7 +24,6 @@ function AlertComponent() {
         <div>
             <Alert
                 color={alertColor}
-                icon={alert.icon && alert.icon}
                 open={alert.open}
                 // onClose={() => dispatch(hideAlert())}
                 className={`rounded-none border-l-4 ${theme === "dark" ? "text-white" : ""} font-medium absolute ${alert.customClass} rounded-md z-[999] flex items-center capitalize`}

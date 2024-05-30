@@ -15,7 +15,7 @@ function UserOnboarding({ setNewUser }) {
 
   return (
     <div className="w-full h-screen flex items-center justify-center">
-      <div className=" w-full h-full  p-3 md:p-10  ">
+      <div className=" w-full h-full  p-2">
 
         <div className="w-full h-3 bg-blue-gray-100 rounded-full overflow-hidden ">
           <div className={`h-full bg-blue-600 transition-width duration-300 ${step === 1 ? 'w-1/3' : step === 2 ? 'w-3/3' : 'w-full'}`}></div>

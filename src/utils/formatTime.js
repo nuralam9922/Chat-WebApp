@@ -1,5 +1,8 @@
-import date from 'date-and-time'
+import date from 'date-and-time';
 
 export const formatTime = (time) => {
-    return date.format(new Date(time), 'h:mm A')
-}
+    if (!time) return ''; // Handle null or undefined time
+    const parsedDate = new Date(time);
+    if (isNaN(parsedDate)) return ''; // Handle invalid date
+    return date.format(parsedDate, 'h:mm A');
+};

@@ -2,16 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { FiEdit } from 'react-icons/fi';
 import { IoFilterOutline } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
-import singleTck from '../../assets/singleTck.svg';
 import useWindowWidth from '../../hooks/useWindowWidth';
 import { selectUserDetails } from '../../selectors/userSelector';
 import { setActiveChatId, setUserInfo } from '../../slices/chatWindowSlice';
 import { setShowAddNewComponent } from '../../slices/showAddNewComponentSlice';
-import { formatTime } from '../../utils/formatTime';
 import ChatWindow from '../ChatWindow/ChatWindow';
 import Dropdown from '../Dropdown/Dropdown';
-import ImageComponent from '../ImageComponent';
 import BottomBarForMobile from '../Sidebar/BottomBarForMobile';
+import MessageLabel from './MessageLabel';
 import './Messages.css';
 
 
@@ -151,56 +149,10 @@ const TopSection = () => {
   );
 };
 
-const MessageLabel = ({ handleClick, chat }) => {
 
-  const imageUr = chat.friendInfo.user_profile_view === 'everyone' && chat.friendInfo.profile_picture_url
-  const name = chat.friendInfo.full_name;
-  const userName = chat.friendInfo.username;
-  // Parse the timestamp to a Date object
-
-
-  return (
-    <div
-      onClick={() => handleClick(chat)}
-      className="min-h-[36px] flex-shrink-0 py-3 md:px-5 rounded-md hover:bg-stone-200 duration-300 w-full flex items-center justify-between cursor-pointer"
-    >
-      <div className="flex items-start gap-4">
-        <div className="userAvatar size-14">
-          <ImageComponent imageUrl={imageUr} className={'w-full h-full rounded-full object-cover'} />
-        </div>
-        <div>
-          <div className="userName font-[700]">{name}</div>
-          <div className="minMessagePreview text-secondaryTextColor">
-            {chat.last_message.length > 20 ? chat.last_message.slice(0, 15) + '...' : chat.last_message}
-          </div>
-          <p className='text-xs'  >{chat.friendInfo.id}</p>
-          <div
-            style={{
-              display: 'none',
-            }}
-            className="isTyping text-green-500"
-          >
-            ...IsTyping
-          </div>
-        </div>
-      </div>
-      <div className="h-full flex flex-col items-end justify-between">
-        <p className="text-secondaryTextColor">{formatTime(chat.last_message_timestamp)}</p>
-        <img
-          style={{
-            display: 'none',
-          }}
-          src={singleTck}
-          alt=""
-        />
-        {chat.unreadCount > 1 && <div className="size-[20px] w-auto p-1 rounded-full bg-green-600 flex items-center justify-center text-white ">{chat.unreadCount}</div>}
-      </div>
-    </div>
-  );
-};
 
 const MessageLabelSkeleton = () => (
-  <div className="min-h-[36px] flex-shrink-0 py-3 md:px-5 rounded-md bg-gray-200 animate-pulse w-full flex items-center justify-between cursor-pointer">
+  <div className="min-h-[36px] flex-shrink-0 py-3 md:px-5 rounded-md bg-backgroundColor animate-pulse w-full flex items-center justify-between cursor-pointer">
     <div className="flex items-start gap-4">
       <div className="userAvatar size-14 bg-gray-300 rounded-full h-10 w-10"></div>
       <div className="flex flex-col gap-2">

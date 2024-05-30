@@ -1,4 +1,4 @@
-import { addDoc, collection, doc, getDoc, getDocs, onSnapshot, query, serverTimestamp, setDoc, where } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, getDocs, onSnapshot, orderBy, query, serverTimestamp, setDoc, where } from "firebase/firestore";
 import { firebaseDb } from "../firebase/firebaseConfig";
 
 class MessageService {
@@ -15,7 +15,7 @@ class MessageService {
                 const newChatData = {
                     participants: [loggedInUserId, friendId],
                     last_message: message,
-                    last_message_timestamp: serverTimestamp(),
+                    last_message_timestamp: new Date(),
                     unreadCount: 0,
                     typingStatus: false,
                 };
@@ -28,7 +28,7 @@ class MessageService {
             const messageData = {
                 sender_id: loggedInUserId,
                 message: message,
-                created_at: serverTimestamp(),
+                created_at: new Date(),
                 seen: false,
             };
             await addDoc(messagesRef, messageData);
@@ -37,7 +37,7 @@ class MessageService {
             const chatDocRef = doc(firebaseDb, 'chats', chatid);
             await setDoc(chatDocRef, {
                 last_message: message,
-                last_message_timestamp: serverTimestamp(),
+                last_message_timestamp: new Date(),
                 typingStatus: false,
                 unreadCount: 0,
             }, { merge: true });
@@ -49,7 +49,7 @@ class MessageService {
     }
 
 
-    async getChats(loggedInUserId, setValue,chatLoading,setError) {
+    async getChats(loggedInUserId, setValue, chatLoading, setError) {
         const chatsRef = collection(firebaseDb, 'chats');
         const q = query(chatsRef, where('participants', 'array-contains', loggedInUserId));
 
@@ -117,6 +117,32 @@ class MessageService {
         }
     }
 
+    async getMessages(chatId, callback) {
+        const messagesRef = collection(firebaseDb, 'chats', chatId, 'messages');
+        const q = query(messagesRef, orderBy('created_at', 'asc'));
+
+        try {
+            const sub = onSnapshot(q, (querySnapshot) => {
+                const messages = querySnapshot.docs.map((doc) => {
+                    const data = doc.data();
+                    return {
+                        id: doc.id,
+                        sender_id: data.sender_id,
+                        message: data.message,
+                        created_at: data.created_at.toDate().toISOString(),
+                        seen: data.seen,
+                    };
+                });
+
+                callback(messages)
+                return messages;
+            });
+            return sub
+
+        } catch (error) {
+            console.error('Error getting messages:', error);
+        }
+    }
 
 
 
