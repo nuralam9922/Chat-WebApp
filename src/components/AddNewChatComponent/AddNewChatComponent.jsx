@@ -1,11 +1,11 @@
 import { Button } from '@material-tailwind/react';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { FiSearch } from 'react-icons/fi';
 import { IoClose } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { selectUserFriends } from '../../selectors/userFriendsSelector';
-import { setActiveChatId, setUserInfo } from '../../slices/chatWindowSlice';
+import { setActiveChatId, setMessages, setShowChatWindow, setUserInfo } from '../../slices/chatWindowSlice';
 import { setShowAddNewComponent } from '../../slices/showAddNewComponentSlice';
 import ImageComponent from '../ImageComponent';
 
@@ -44,7 +44,8 @@ const AddNewChatComponent = () => {
         }
     }, [show]);
 
-    const handleAddNewChat = (userInfo) => {
+
+    const handleAddNewChat = useCallback((userInfo) => {
         if (!userInfo) {
             return;
         }
@@ -52,16 +53,18 @@ const AddNewChatComponent = () => {
         const checkUserAlreadyExist = chats.chats.filter((chat) => chat.friendInfo.id === userInfo.id)
         if (checkUserAlreadyExist.length === 0) {
             dispatch(setActiveChatId(null));
+            dispatch(setMessages([]));
+
         } else {
-            // console.log(checkUserAlreadyExist[0]);
             dispatch(setActiveChatId(checkUserAlreadyExist[0].chatId));
         }
 
-
         dispatch(setUserInfo({ ...userInfo, profile_picture_url: userInfo.profile_picture_url.imageUrl }));
         dispatch(setShowAddNewComponent(false));
+        dispatch(setShowChatWindow(true));
 
-    };
+
+    }, [chats]);
 
     return (
         <div style={{ display: show ? 'flex' : 'none' }} className="fixed text-primaryTextColor left-0 top-0 bg-black bg-opacity-50 z-[90] w-full h-screen flex items-center justify-center backdrop-blur-sm duration-150">
@@ -108,7 +111,7 @@ const AddNewChatComponent = () => {
                                     />
                                 </div>
                                 <div>
-                                    <h1 className="text-sm font-medium">John Doe</h1>
+                                    <h1 className="text-sm font-medium">{user.full_name} ({user.username}) </h1>
                                     <p className="bio sm:w-60 text-xs text-wrap break-words text-left text-gray-500">
                                         {user.user_bio_view === 'everyone' && user.bio}
                                     </p>

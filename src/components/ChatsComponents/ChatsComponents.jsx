@@ -4,7 +4,7 @@ import { IoFilterOutline } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
 import useWindowWidth from '../../hooks/useWindowWidth';
 import { selectUserDetails } from '../../selectors/userSelector';
-import { setActiveChatId, setUserInfo } from '../../slices/chatWindowSlice';
+import { setActiveChatId, setShowChatWindow, setUserInfo } from '../../slices/chatWindowSlice';
 import { setShowAddNewComponent } from '../../slices/showAddNewComponentSlice';
 import ChatWindow from '../ChatWindow/ChatWindow';
 import Dropdown from '../Dropdown/Dropdown';
@@ -21,12 +21,14 @@ function ChatsComponents() {
   const [width] = useWindowWidth();
   const mobileMode = width < 768;
   const mdMode = width >= 768 && width < 1024;
-  const [showChatWindow, setShowChatWindow] = useState(false);
+  // const [showChatWindow, setShowChatWindow] = useState(false);
 
   // redux states
   const { theme } = useSelector(state => state.theme)
   const loggedInUser = useSelector(selectUserDetails)
   const { chats, loading, error } = useSelector((state) => state.chats);
+  const showChatWindow = useSelector(state => state.chatWindowInfo.showChatWindow);
+
 
 
   // initial variables
@@ -40,21 +42,21 @@ function ChatsComponents() {
   const loggedInUserId = loggedInUser.id;
 
 
-  useEffect(() => {
-    if (!mdMode) {
-      setShowChatWindow(false);
-    }
-  }, [mdMode]);
-
   const handleClick = (chat) => {
     if (mobileMode || mdMode) {
-      setShowChatWindow(true);
+      dispatch(setShowChatWindow(true));
     }
 
     dispatch(setActiveChatId(chat.chatId))
     dispatch(setUserInfo(chat.friendInfo))
 
   };
+
+
+
+  // useEffect(() => {
+    
+  // }, [])
 
   return (
     <>
@@ -72,7 +74,7 @@ function ChatsComponents() {
 
         <div style={{
           display: error ? 'none' : 'flex',
-        }} className="w-full mt-5 flex flex-col h-[calc(100% -10rem)]  overflow-y-scroll pb-20">
+        }} className="w-full mt-5 flex flex-col h-[calc(100% -10rem)]  overflow-y-scroll pb-20 gap-2">
           {loading ? (
             Array(10).fill(10).map((_, index) => (
               <MessageLabelSkeleton key={index} />
@@ -93,7 +95,7 @@ function ChatsComponents() {
 
         <BottomBarForMobile />
       </div>
-      {showChatWindow && (mdMode || mobileMode) && <ChatWindow visibleBackArrow={mdMode || mobileMode} setShowChatWindow={setShowChatWindow} fullScreen={width <= 959} />}
+      {showChatWindow && (mdMode || mobileMode) && <ChatWindow visibleBackArrow={mdMode || mobileMode}  fullScreen={width <= 959} />}
     </>
   );
 }
@@ -153,7 +155,7 @@ const TopSection = () => {
 
 const MessageLabelSkeleton = () => (
   <div className="min-h-[36px] flex-shrink-0 py-3 md:px-5 rounded-md bg-backgroundColor animate-pulse w-full flex items-center justify-between cursor-pointer">
-    <div className="flex items-start gap-4">
+    <div className="flex items-start gap-4 ">
       <div className="userAvatar size-14 bg-gray-300 rounded-full h-10 w-10"></div>
       <div className="flex flex-col gap-2">
         <div className="userName bg-gray-300 rounded h-4 w-24"></div>

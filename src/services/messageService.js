@@ -41,7 +41,7 @@ class MessageService {
                 typingStatus: false,
                 unreadCount: 0,
             }, { merge: true });
-            return true;
+            return chatid;
         } catch (error) {
             console.log('Error sending message:', error);
             return false;

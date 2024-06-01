@@ -1,9 +1,23 @@
-import React, { useEffect, useRef } from 'react';
-import 'emoji-picker-element'; // Ensure this import for the custom element
+import React, { useEffect, useRef, useState, memo } from 'react';
+import Picker from 'emoji-picker-react';
+import { useSelector } from 'react-redux';
 
-const EmojiPickerComponent = React.memo(({ setText, showEmoji, setShowEmoji }) => {
+const EmojiPicker = memo(({ onEmojiClick, theme }) => (
+  <Picker onEmojiClick={onEmojiClick} emojiStyle='native' className='bg-backgroundColor' theme={theme} lazyLoadEmojis={true} skinTonesDisabled={false} />
+));
+
+EmojiPicker.displayName = 'EmojiPicker';
+
+const EmojiPickerComponent = ({ setText, showEmoji, setShowEmoji }) => {
   const emojiPickerComponentRef = useRef(null);
-  const pickerRef = useRef(null);
+  const [loaded, setLoaded] = useState(false);
+  const theme = useSelector(state => state.theme.theme);
+
+  const onEmojiClick = (event) => {
+    setText(prevText => prevText + event.emoji);
+    // setShowEmoji(false);
+
+  };
 
   useEffect(() => {
     const handleOutsideClick = e => {
@@ -19,30 +33,20 @@ const EmojiPickerComponent = React.memo(({ setText, showEmoji, setShowEmoji }) =
   }, [setShowEmoji]);
 
   useEffect(() => {
-    const handleEmojiClick = event => {
-      setText(prevText => prevText + event.detail.unicode);
-      setShowEmoji(false);
-    };
-
-    const picker = pickerRef.current;
-    if (picker) {
-      picker.addEventListener('emoji-click', handleEmojiClick);
-    }
-
-    return () => {
-      if (picker) {
-        picker.removeEventListener('emoji-click', handleEmojiClick);
-      }
-    };
-  }, [setText, setShowEmoji]);
+    // Preload the picker by rendering it once off-screen
+    setLoaded(true);
+  }, []);
 
   return (
-    <div ref={emojiPickerComponentRef} className="absolute border bottom-24 z-[999]">
-      {showEmoji && <emoji-picker ref={pickerRef}  emoji-style="apple"></emoji-picker>}
+    <div ref={emojiPickerComponentRef} className="relative">
+      {loaded && (
+        <div className={`absolute  bottom-10 z-[999] hidden bg-backgroundColor lg:block ${showEmoji ? 'block' : 'hidden'}`}>
+          <EmojiPicker onEmojiClick={onEmojiClick} theme={theme === 'light' ? 'light' : 'dark'} />
+        </div>
+      )}
+      {!loaded && <div style={{ display: 'none' }}><EmojiPicker onEmojiClick={onEmojiClick} /></div>}
     </div>
   );
-});
-
-EmojiPickerComponent.displayName = 'EmojiPickerComponent';
+};
 
 export default EmojiPickerComponent;

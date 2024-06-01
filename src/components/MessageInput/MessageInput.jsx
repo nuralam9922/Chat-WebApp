@@ -1,74 +1,89 @@
 /* eslint-disable no-unused-vars */
 import { useState } from 'react';
-import { BsEmojiDizzy, BsSend } from 'react-icons/bs';
+import { BsEmojiDizzy, BsEmojiSmile, BsSend } from 'react-icons/bs';
 import { GrAttachment } from 'react-icons/gr';
+import { useDispatch, useSelector } from 'react-redux';
 import useAutoResizeTextarea from '../../hooks/useAutoResizeTextarea';
-import EmojiPickerComponent from '../EmojiPickerComponent';
-import { useDispatch } from 'react-redux';
+import { selectUserDetails } from '../../selectors/userSelector';
 import messageService from '../../services/messageService';
-import { useSelector } from 'react-redux';
 import { setActiveChatId } from '../../slices/chatWindowSlice';
-import { Button } from '@material-tailwind/react';
+import EmojiPickerComponent from '../EmojiPickerComponent';
 
 // eslint-disable-next-line react/prop-types
-const MessageInput = ({ user, chatWindowInfo }) => {
+const MessageInput = () => {
   const textareaRef = useAutoResizeTextarea();
   const [showEmoji, setShowEmoji] = useState(false);
   const [text, setText] = useState('');
+
+  // Redux states
   const chats = useSelector(state => state.chats);
+  const user = useSelector(selectUserDetails);
+  const chatWindowInfo = useSelector(state => state.chatWindowInfo);
 
+  // Initial variables
   const loggedInUserId = user.id;
-  const friendId = chatWindowInfo.userInfo.id
-  let chatId = chatWindowInfo.activeChatId || null
-
-
-  // if (chatId === null) {
-  //   chatId = checkUserAlreadyExist[0].chatId
-  // }
-
+  const friendId = chatWindowInfo.userInfo.id;
+  let chatId = chatWindowInfo.activeChatId || null;
 
   const dispatch = useDispatch();
-  const handelNewMessage = async () => {
+  const handleNewMessage = async () => {
     if (text !== '' && loggedInUserId && friendId) {
-      setText('')
-      textareaRef.current.focus()
-      const checkUserAlreadyExist = chats.chats.filter((chat) => chat.friendInfo.id === friendId)
-      if (checkUserAlreadyExist.length > 0 && chatId === null) {
-        dispatch(setActiveChatId(checkUserAlreadyExist[0].chatId));
-        chatId = checkUserAlreadyExist[0].chatId
+      setText('');
+      textareaRef.current.focus();
+
+      if (chatId === null) {
+        const checkChatAlreadyExist = chats.chats.filter((chat) => chat.friendInfo.id === friendId);
+        if (checkChatAlreadyExist.length > 0) {
+          dispatch(setActiveChatId(checkChatAlreadyExist[0].chatId));
+          chatId = checkChatAlreadyExist[0].chatId;
+          await messageService.sendMessage(loggedInUserId, friendId, chatId, text);
+        } else {
+          const newlyCreatedChatid = await messageService.sendMessage(loggedInUserId, friendId, chatId, text);
+          dispatch(setActiveChatId(newlyCreatedChatid));
+        }
+      } else {
+        await messageService.sendMessage(loggedInUserId, friendId, chatId, text);
       }
-
-      await messageService.sendMessage(loggedInUserId, friendId, chatId, text);
-
     }
-  }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleNewMessage();
+    }
+  };
 
   return (
-    <div className="w-full  absolute bottom-0 lg:bottom-0 flex flex-col md:flex-row px-2 md:px-4 items-end md:items-end lg:gap-1 md:gap-4 justify-between bg-transparent shadow-md mb-1 lg:py-3 ">
-      <div className="w-full md:w-fit h-full flex items-end  justify-start">
-        <div className=" items-end justify-between gap-2 mb-2 md:mb-0 h-full hidden">
-          <div className="min-h-10  rounded-md flex items-center p-3 px-4 justify-center flex-shrink-0 border cursor-pointer">
-            <GrAttachment className="text-primaryTextColor text-xl" />
+    <div className="w-full absolute bottom-0 flex items-center bg-backgroundColor shadow-md p-2 bg-">
+      {showEmoji && <EmojiPickerComponent  setText={setText} setShowEmoji={setShowEmoji} showEmoji={showEmoji} />}
+      <div className="flex w-full items-end border-2 border-green-500 rounded-lg p-1 overflow-hidden">
+        <div className="flex items-center space-x-2 md:px-2 py-3 md:p-2">
+          <div className="cursor-pointer">
+            <GrAttachment className="text-xl" />
           </div>
-
-        </div>
-      </div>
-      {showEmoji && <EmojiPickerComponent setText={setText} setShowEmoji={setShowEmoji} showEmoji={showEmoji} />}
-      <div className="flex items-end gap-1 w-full relative">
-        <div onClick={() => setShowEmoji(!showEmoji)} className=" min-h-10  flex items-center p-3  justify-center  cursor-pointer absolute bottom-0">
-          <BsEmojiDizzy className="text-xl text-yellow-700" />
+          <div onClick={() => setShowEmoji(!showEmoji)} className="cursor-pointer hidden lg:flex">
+            <BsEmojiSmile className="text-xl text-yellow-700" />
+          </div>
         </div>
         <textarea
           ref={textareaRef}
           onChange={e => setText(e.target.value)}
           value={text}
-          className="w-full min-h-10 max-h-60 bg-transparent placeholder:text-xs placeholder:md:text-base p-3 px-4 border-2 border-green-500 rounded-lg outline-none focus:border-blue-500 transition duration-200 resize-none overflow-y-auto pl-14"
-          placeholder="Type your message here..."
+          className="flex-1 h-full max-h-40 bg-transparent placeholder:text-xs md:placeholder:text-sm p-2 border-none outline-none resize-none overflow-y-auto"
+          placeholder="Type a message..."
           name="messageInput"
           id="messageInput"
           rows={1}
+        
+          onKeyPress={handleKeyPress}
         />
-        <Button onClick={handelNewMessage} color='green' className='min-h-10  p-4 px-5 pt-5 flex items-center justify-center focus:outline-1 focus:outline-blue-400'><BsSend /></Button>
+        <button style={{
+          marginRight: text.length > 0 ? '0px' : '-50px',
+          visibility: text.length > 0 ? 'visible' : 'hidden'
+        }} onClick={handleNewMessage} className="flex items-center justify-center cursor-pointer p-[0.6rem] duration-200">
+          <BsSend className="text-green-500 text-xl" />
+        </button>
       </div>
     </div>
   );

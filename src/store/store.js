@@ -8,6 +8,7 @@ import useThemeSlice from '../slices/useThemeSlice';
 import showAddNewComponentSlice from '../slices/showAddNewComponentSlice';
 import chatWindowSlice from '../slices/chatWindowSlice';
 import chatsSlice from '../slices/chatsSlice';
+import messageDropdownSlice from '../slices/messageDropdown';
 
 export const store = configureStore({
 	reducer: {
@@ -20,6 +21,7 @@ export const store = configureStore({
 		searchUserResults: searchUserSlice.reducer,
 		showAddNewComponent: showAddNewComponentSlice.reducer,
 		chatWindowInfo: chatWindowSlice.reducer,
-		chats: chatsSlice.reducer
+		chats: chatsSlice.reducer,
+		messageDropdown: messageDropdownSlice.reducer,
 	},
 });

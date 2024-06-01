@@ -8,6 +8,7 @@ const initialState = {
     error: null,
     typingStatus: null,
     unreadMessages: {},
+    showChatWindow: false,
 }
 
 
@@ -33,10 +34,14 @@ const chatWindowSlice = createSlice({
         },
         setUnreadMessages: (state, action) => {
             state.unreadMessages = action.payload;
+        },
+        setShowChatWindow: (state, action) => {
+            state.showChatWindow = action.payload;
         }
+
     }
 
 })
 
-export const { setUserInfo, setMessages, setActiveChatId, setLoading, setTypingStatus, setUnreadMessages } = chatWindowSlice.actions;
+export const { setUserInfo, setMessages, setShowChatWindow, setActiveChatId, setLoading, setTypingStatus, setUnreadMessages } = chatWindowSlice.actions;
 export default chatWindowSlice
