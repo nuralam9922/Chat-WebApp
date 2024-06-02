@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
-import { useState } from 'react';
-import { BsEmojiDizzy, BsEmojiSmile, BsSend } from 'react-icons/bs';
+import { useEffect, useRef, useState } from 'react';
+import { BsEmojiSmile, BsSend } from 'react-icons/bs';
 import { GrAttachment } from 'react-icons/gr';
 import { useDispatch, useSelector } from 'react-redux';
 import useAutoResizeTextarea from '../../hooks/useAutoResizeTextarea';
@@ -8,12 +8,14 @@ import { selectUserDetails } from '../../selectors/userSelector';
 import messageService from '../../services/messageService';
 import { setActiveChatId } from '../../slices/chatWindowSlice';
 import EmojiPickerComponent from '../EmojiPickerComponent';
+import { useMemo } from 'react';
 
 // eslint-disable-next-line react/prop-types
 const MessageInput = () => {
   const textareaRef = useAutoResizeTextarea();
   const [showEmoji, setShowEmoji] = useState(false);
   const [text, setText] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
 
   // Redux states
   const chats = useSelector(state => state.chats);
@@ -24,6 +26,9 @@ const MessageInput = () => {
   const loggedInUserId = user.id;
   const friendId = chatWindowInfo.userInfo.id;
   let chatId = chatWindowInfo.activeChatId || null;
+
+  // refs
+  const timeoutRef = useRef(null);
 
   const dispatch = useDispatch();
   const handleNewMessage = async () => {
@@ -52,11 +57,33 @@ const MessageInput = () => {
       e.preventDefault();
       handleNewMessage();
     }
+    if (chatId) {
+      if (!isTyping) {
+        setIsTyping(true);
+        messageService.setTypingStatus(chatId, loggedInUserId);
+      }
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = setTimeout(() => {
+        setIsTyping(false);
+        messageService.removeTypingStatus(chatId, loggedInUserId);
+      }, 1000);
+    }
+
+
+
+
   };
+
+
+  // Inside the Messages component
+
+
+
+
 
   return (
     <div className="w-full absolute bottom-0 flex items-center bg-backgroundColor shadow-md p-2 bg-">
-      {showEmoji && <EmojiPickerComponent  setText={setText} setShowEmoji={setShowEmoji} showEmoji={showEmoji} />}
+      {showEmoji && <EmojiPickerComponent setText={setText} setShowEmoji={setShowEmoji} showEmoji={showEmoji} />}
       <div className="flex w-full items-end border-2 border-green-500 rounded-lg p-1 overflow-hidden">
         <div className="flex items-center space-x-2 md:px-2 py-3 md:p-2">
           <div className="cursor-pointer">
@@ -75,7 +102,7 @@ const MessageInput = () => {
           name="messageInput"
           id="messageInput"
           rows={1}
-        
+
           onKeyPress={handleKeyPress}
         />
         <button style={{

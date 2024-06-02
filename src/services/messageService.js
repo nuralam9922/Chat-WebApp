@@ -1,4 +1,4 @@
-import { addDoc, collection, doc, getDoc, getDocs, onSnapshot, orderBy, query, serverTimestamp, setDoc, where } from "firebase/firestore";
+import { addDoc, arrayRemove, arrayUnion, collection, deleteDoc, doc, getDoc, onSnapshot, orderBy, query, setDoc, updateDoc, where, writeBatch } from "firebase/firestore";
 import { firebaseDb } from "../firebase/firebaseConfig";
 
 class MessageService {
@@ -17,7 +17,8 @@ class MessageService {
                     last_message: message,
                     last_message_timestamp: new Date(),
                     unreadCount: 0,
-                    typingStatus: false,
+                    typingStatus: [],
+                    notDeletedBy: [loggedInUserId, friendId],
                 };
                 const chatDocRef = await addDoc(chatsRef, newChatData);
                 chatid = chatDocRef.id;
@@ -29,7 +30,11 @@ class MessageService {
                 sender_id: loggedInUserId,
                 message: message,
                 created_at: new Date(),
-                seen: false,
+                seen: [loggedInUserId],
+                notDeletedBy: [loggedInUserId, friendId],
+                deletedForEveryone: false,
+                reactions: [],
+
             };
             await addDoc(messagesRef, messageData);
 
@@ -38,7 +43,7 @@ class MessageService {
             await setDoc(chatDocRef, {
                 last_message: message,
                 last_message_timestamp: new Date(),
-                typingStatus: false,
+                typingStatus: [],
                 unreadCount: 0,
             }, { merge: true });
             return chatid;
@@ -117,10 +122,10 @@ class MessageService {
         }
     }
 
-    async getMessages(chatId, callback) {
+    async getMessages(userId, chatId, callback) {
         const messagesRef = collection(firebaseDb, 'chats', chatId, 'messages');
-        const q = query(messagesRef, orderBy('created_at', 'asc'));
-
+        const q = query(messagesRef, where('notDeletedBy', 'array-contains', userId), orderBy('created_at', 'asc'));
+        // console.log('calling me');
         try {
             const sub = onSnapshot(q, (querySnapshot) => {
                 const messages = querySnapshot.docs.map((doc) => {
@@ -131,16 +136,135 @@ class MessageService {
                         message: data.message,
                         created_at: data.created_at.toDate().toISOString(),
                         seen: data.seen,
+                        deletedForEveryone: data?.deletedForEveryone,
+                        notDeletedBy: data?.notDeletedBy,
+                        reactions: data?.reactions
                     };
                 });
 
                 callback(messages)
+                // console.log(chatId, messages);
                 return messages;
             });
             return sub
 
         } catch (error) {
             console.error('Error getting messages:', error);
+        }
+    }
+
+    async deleteForEveryone(chatId, messageId) {
+        try {
+            // Reference the specific message document in the chat
+            const messageRef = doc(firebaseDb, 'chats', chatId, 'messages', messageId);
+
+            // Update the message to indicate it has been deleted
+            await updateDoc(messageRef, {
+                message: "This message was deleted",
+                deletedForEveryone: true,
+                seen: true
+            });
+
+
+        } catch (error) {
+            console.error('Error deleting message for everyone:', error);
+        }
+    }
+
+    async deleteMessageForUser(userId, chatId, messageId, paramentDelete) {
+        try {
+            // Reference the specific message document in the chat
+            const messageRef = doc(firebaseDb, 'chats', chatId, 'messages', messageId);
+
+            if (paramentDelete) {
+                await deleteDoc(messageRef);
+            } else {
+                await updateDoc(messageRef, {
+                    notDeletedBy: arrayRemove(userId),
+                });
+            }
+        } catch (error) {
+            console.error('Error deleting message:', error);
+        }
+    }
+
+    async setTypingStatus(chatId, userId) {
+        try {
+            // Reference the specific chat document
+            const chatRef = doc(firebaseDb, 'chats', chatId);
+            // Update the typing status
+            await updateDoc(chatRef, {
+                typingStatus: arrayUnion(userId),
+            });
+        } catch (error) {
+            console.error('Error updating typing status:', error);
+        }
+    }
+
+    async removeTypingStatus(chatId, userId) {
+        try {
+            // Reference the specific chat document
+            const chatRef = doc(firebaseDb, 'chats', chatId);
+            // Update the typing status
+            await updateDoc(chatRef, {
+                typingStatus: arrayRemove(userId),
+            });
+        } catch (error) {
+            console.error('Error updating typing status:', error);
+        }
+    }
+
+
+    async seenMessage(friendId, chatId, messagesIdArray) {
+        console.log('messagesIdArray', messagesIdArray);
+        try {
+            // Reference the specific chat document
+            const chatRef = doc(firebaseDb, 'chats', chatId);
+
+            // Create a WriteBatch to perform atomic updates
+            const batch = writeBatch(firebaseDb);
+
+            // Update the seen status for each message in the array within the batch
+            messagesIdArray.forEach(messageId => {
+                const messageRef = doc(firebaseDb, 'chats', chatId, 'messages', messageId);
+                batch.update(messageRef, { seen: arrayUnion(friendId) });
+            });
+
+            // Update the chat document's unread count based on the number of seen messages
+            // const chatDocSnapshot = await getDoc(chatRef);
+            // const chatData = chatDocSnapshot.data();
+            // const newUnreadCount = Math.max(0, chatData.unreadCount - messagesIdArray.length); // Ensure unread count doesn't go negative
+            // batch.update(chatRef, { unreadCount: newUnreadCount });
+
+            // Commit the batch of updates atomically
+            await batch.commit();
+
+            console.log('Messages seen and chat updated successfully');
+        } catch (error) {
+            console.error('Error updating message seen status:', error);
+        }
+    }
+
+
+    async seenSingeMessage(friendId, chatId, messageId) {
+        try {
+            // Reference the specific chat document
+            const messageRef = doc(firebaseDb, 'chats', chatId, 'messages', messageId);
+            await updateDoc(messageRef, { seen: arrayUnion(friendId) });
+        } catch (error) {
+            console.error('Error updating message seen status:', error);
+        }
+    }
+
+    async addReactionToMessage(chatId, messageId, userId, reaction) {
+        try {
+            // Reference the specific message document in the chat
+            const messageRef = doc(firebaseDb, 'chats', chatId, 'messages', messageId);
+
+            // Update the reactions field in the message document using arrayUnion
+            await updateDoc(messageRef, { [`reactions.${userId}`]: reaction }, { merge: true });
+        } catch (error) {
+            console.error('Error adding reaction to message:', error);
         }
     }
 

@@ -1,121 +1,178 @@
+/* eslint-disable react/display-name */
 /* eslint-disable react/prop-types */
-import React, { useEffect, useRef, useState } from 'react';
-import { HiPlus } from 'react-icons/hi'; // Import the icon you want to use
+import React, { useCallback, useEffect, useRef, useState, memo } from 'react';
+import { FaExclamationCircle } from 'react-icons/fa';
+import { HiPlus } from 'react-icons/hi';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUserDetails } from '../../selectors/userSelector';
 import messageService from '../../services/messageService';
 import { setMessages } from '../../slices/chatWindowSlice';
-import { setPosition, setShowMessageDropdown } from '../../slices/messageDropdown';
+import { setMessageDetails, setMessageDetailsDropdownPosition, setShowMessageDropdown } from '../../slices/messageDropdown';
 import { formatTime } from '../../utils/formatTime';
-import { MessageDropdown } from '../index';
 
-
-function Messages({ theme }) {
-    const messages = useSelector((state) => state.chatWindowInfo.messages);
-    const chatId = useSelector((state) => state.chatWindowInfo.activeChatId);
+const Messages = memo(({ theme }) => {
     const dispatch = useDispatch();
     const user = useSelector(selectUserDetails);
-
+    const messages = useSelector((state) => state.chatWindowInfo.messages);
+    const chatId = useSelector((state) => state.chatWindowInfo.activeChatId);
+    const friendId = useSelector((state) => state.chatWindowInfo.userInfo.id);
     const messageSectionRef = useRef(null);
 
     useEffect(() => {
         if (chatId) {
-            messageService.getMessages(chatId, (messages) => {
-                dispatch(setMessages(messages));
+            messageService.getMessages(user.id, chatId, (receivedMessages) => {
+                dispatch(setMessages(receivedMessages));
             });
         }
-    }, [chatId]);
+    }, [chatId, dispatch, user.id]);
 
     useEffect(() => {
         if (messageSectionRef.current) {
             messageSectionRef.current.scrollTop = messageSectionRef.current.scrollHeight;
         }
-    }, [chatId, messages]);
+    }, [messages, friendId]);
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (messageSectionRef.current) {
+                messageSectionRef.current.style.maxHeight = `${window.innerHeight - 140}px`;
+            }
+        };
+
+        window.addEventListener('resize', handleResize);
+        handleResize(); // Initial call to set the correct height
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     return (
-        <div
-            ref={messageSectionRef}
-            className="w-full text-primaryTextColor mt-14 overflow-y-scroll relative"
-            style={{
-                maxHeight: `calc(100vh - 140px)`
-            }}
-        >
+        <div ref={messageSectionRef} className="w-full text-primaryTextColor mt-14 overflow-y-scroll relative" style={{ maxHeight: `calc(100vh - 140px)` }}>
             <h1 className='text-center text-lg font-bold mb-4 mt-10'>Welcome to the Chat</h1>
-            {messages.length > 0 &&
-                messages.map((message, index) => (
-                    <div
-                        key={index}
-                        className={`w-full flex relative group  ${message.sender_id === user.id ? 'justify-end' : 'justify-start'
-                            }`}
-                    >
-                        <MessageBubble message={message} theme={theme} />
-                    </div>
-                ))}
-            <PlusIcon />
-            {/* <MessageDropdown /> */}
+            {messages.length > 0 && messages.map((message, index) => (
+                <div key={index} className={`w-full flex relative group ${message.sender_id === user.id ? 'justify-end' : 'justify-start'}`}>
+                    <MessageBubble message={message} theme={theme} />
+                </div>
+            ))}
         </div>
     );
-}
+});
 
-const MessageBubble = ({ message, theme }) => {
-    const messageClass = `min-w-40 max-w-72 sm:max-w-80 md:max-w-md  text-wrap p-2 mb-2 rounded-md ${theme.theme === 'light' ? 'bg-[#accca4] text-black ' : 'bg-[#23262b] text-white '
-        } text-xs sm:text-sm md:text-base`;
-
+const MessageBubble = memo(({ message, theme }) => {
     const [hovered, setHovered] = useState(false);
-
     const timeoutRef = useRef(null);
+    const messageRef = useRef(null);
+    const loggedInUser = useSelector(selectUserDetails);
+    const chatId = useSelector((state) => state.chatWindowInfo.activeChatId);
 
-    const handelHover = () => {
+    const handleHover = useCallback(() => {
         clearTimeout(timeoutRef.current);
-
         timeoutRef.current = setTimeout(() => {
             setHovered(true);
         }, 500);
-    };
+    }, []);
 
-    const handleMouseLeave = () => {
+    const handleMouseLeave = useCallback(() => {
         clearTimeout(timeoutRef.current);
         setHovered(false);
-    };
+    }, []);
 
+    useEffect(() => {
+        const handleIntersection = (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting && message.sender_id !== loggedInUser.id && message.seen.length === 1) {
+                    messageService.seenSingeMessage(loggedInUser.id, chatId, message.id);
+                }
+            });
+        };
 
+        const observer = new IntersectionObserver(handleIntersection, {
+            threshold: 0.1,
+        });
 
-    return (
-        <div onMouseLeave={handleMouseLeave} className='flex justify-end pl-10 relative' >
-            <div onMouseOver={handelHover} className={`${messageClass} break-all bg-opacity-80 font-thin  group relative`}>
-                <p style={{ hyphens: 'auto', wordBreak: 'break-word' }}>{message.message}</p>
-                <div className='w-fll flex items-center justify-between text-[10px]'>
-                    <h1 className='mt-2  flex items-center justify-between'>{formatTime(message.created_at)} </h1>
-                    {message.seen ? <p className='text-green-500'>&#10003; &#10003;</p> : <p className='text-gray-600'>&#10003;</p>}
-                </div>
-                <div className='lg:block hidden'>  <PlusIcon hovered={hovered} /></div>
-            </div>
+        if (messageRef.current) {
+            observer.observe(messageRef.current);
+        }
 
-        </div>
-    );
-};
+        return () => {
+            if (messageRef.current) {
+                observer.unobserve(messageRef.current);
+            }
+        };
+    }, [chatId, loggedInUser.id, message]);
 
-const PlusIcon = ({ hovered }) => {
-    const dispatch = useDispatch();
-    const iconRef = useRef(null);
+    const seen = message.seen.length >= 2;
 
-    const handelShowMessageDropdown = () => {
-
-        const { left, bottom } = iconRef.current.getBoundingClientRect();
-        dispatch(setPosition({ left, bottom }));
-        dispatch(setShowMessageDropdown(true));
-    };
-
+    console.log(message.reactions);
 
     return (
         <div
-            ref={iconRef}
-            onClick={handelShowMessageDropdown}
-            className={`absolute bottom-0 -left-10 flex items-center justify-center    rounded-full text-primaryTextColor  size-8 ${hovered ? 'scale-100' : 'scale-0'} duration-300 cursor-pointer border`}
+            ref={messageRef}
+            onMouseLeave={handleMouseLeave}
+            className={`flex justify-end ${loggedInUser.id === message.sender_id ? 'pl-10' : 'pr-10'} relative`}
         >
+            <div
+                onMouseOver={handleHover}
+                className={`${message.deletedForEveryone ? 'bg-red-400 text-white' : theme.theme === 'light' ? 'bg-[#accca4] text-black' : 'bg-[#23262b] text-white'} min-w-40 max-w-72 sm:max-w-80 md:max-w-md text-wrap p-2 mb-2 rounded-md text-lg sm:text-sm md:text-base break-all bg-opacity-80 font-thin group relative`}
+            >
+                {message.deletedForEveryone ? (
+                    <div className='flex items-center'>
+                        <FaExclamationCircle className='mr-2' />
+                        <p className={'text-xl'} style={{ hyphens: 'auto', wordBreak: 'break-word' }}>This message was deleted</p>
+                    </div>
+                ) : (
+                    <p className={'text-xl'} style={{ hyphens: 'auto', wordBreak: 'break-word' }}>{message.message}</p>
+                )}
+                <div className='w-full flex items-center justify-between text-[10px]'>
+                    <h1 className='mt-2 flex items-center justify-between w-full text-base'>
+                        <span>{formatTime(message.created_at)}</span>
+                        <span style={{
+                            display: !message?.deletedForEveryone ? 'block' : 'none'
+                        }}>
+                            {Object.entries(message.reactions).map(([userId, emojis]) => (
+                                <span key={userId}>
+                                    {emojis}
+                                </span>
+                            ))}
+                       </span>
+                    </h1>
+
+                </div>
+                <div className='w-full text-right' style={{ display: message.sender_id === loggedInUser.id && !message?.deletedForEveryone ? 'block' : 'none' }}>
+                    {seen ? (
+                        <p className='text-green-800'>&#10003;&#10003;</p>
+                    ) : (
+                        <p className='text-gray-600'>&#10003;</p>
+                    )}
+                </div>
+                <div className='lg:block hidden'>
+                    <PlusIcon message={message} hovered={hovered} loggedInUser={loggedInUser} />
+                </div>
+            </div>
+        </div>
+    );
+});
+
+const PlusIcon = memo(({ hovered, message, loggedInUser }) => {
+    const dispatch = useDispatch();
+    const iconRef = useRef(null);
+
+    const handelShowMessageDropdown = useCallback((e) => {
+        dispatch(setShowMessageDropdown(true));
+        dispatch(setMessageDetails(message));
+
+        const x = e.clientX;
+        const y = e.clientY;
+
+        dispatch(setMessageDetailsDropdownPosition({ x, y }));
+    }, [dispatch, message]);
+
+    return (
+        <div ref={iconRef} onClick={handelShowMessageDropdown} className={`absolute bottom-0 ${message?.sender_id === loggedInUser.id ? '-left-10' : '-right-10'} flex items-center justify-center rounded-full text-primaryTextColor size-8 ${hovered ? 'scale-100' : 'scale-0'} duration-300 cursor-pointer border`}>
             <HiPlus className="text-primaryTextColor" />
         </div>
     );
-};
+});
 
 export default Messages;

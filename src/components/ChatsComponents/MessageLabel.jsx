@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
+import { selectUserDetails } from "../../selectors/userSelector";
 import { formatTime } from "../../utils/formatTime";
 import ImageComponent from "../ImageComponent";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
 const MessageLabel = ({ handleClick, chat }) => {
-    const [selectedChat, setSelectedChat] = useState(false);
 
     // Setting variables for easy access
     const imageUr = chat.friendInfo.user_profile_view === 'everyone' && chat.friendInfo.profile_picture_url;
@@ -15,13 +15,15 @@ const MessageLabel = ({ handleClick, chat }) => {
     // Redux states
     const activeChatId = useSelector((state) => state.chatWindowInfo.activeChatId);
     const theme = useSelector((state) => state.theme.theme);
+    const loggedInUser = useSelector(selectUserDetails);
 
     // Conditional classes based on the theme
     const backgroundColor = theme === 'dark' ? 'bg-transparent' : 'bg-white';
     const hoverColor = theme === 'dark' ? 'lg:hover:bg-gray-700' : 'hover:bg-stone-200';
-    const activeBackgroundColor = theme === 'dark' ? 'lg:bg-gray-900' : 'bg-blue-gray-100';
+    const activeBackgroundColor = theme === 'dark' ? 'lg:bg-gray-900' : 'lg:bg-blue-gray-100';
     const textColor = theme === 'dark' ? 'text-white' : 'text-black';
     const secondaryTextColor = theme === 'dark' ? 'text-gray-400' : 'text-secondaryTextColor';
+
 
     return (
         <div
@@ -36,16 +38,9 @@ const MessageLabel = ({ handleClick, chat }) => {
                     <div className={`userName font-[700] ${textColor}`}>{name}</div>
                     {/* <div className={`userName font-[300] text-xs ${secondaryTextColor}`}>{userName}</div> */}
                     <div className={`minMessagePreview ${secondaryTextColor} text-xs`}>
-                        {chat.last_message.length > 20 ? chat.last_message.slice(0, 25) + '...' : chat.last_message}
+                        <span>  {chat.last_message.length > 20 ? chat.last_message.slice(0, 25) + '...' : chat.last_message}</span>
                     </div>
-                    <div
-                        style={{
-                            display: 'none',
-                        }}
-                        className="isTyping text-green-500"
-                    >
-                        ...IsTyping
-                    </div>
+                    
                 </div>
             </div>
             <div className="h-full flex flex-col items-end justify-between flex-shrink-0">
@@ -59,8 +54,14 @@ const MessageLabel = ({ handleClick, chat }) => {
                 {chat.unreadCount > 1 && (
                     <div className="size-[20px] w-auto p-1 rounded-full bg-green-600 flex items-center justify-center text-white ">
                         {chat.unreadCount}
+                     
                     </div>
                 )}
+                <span
+                    className="isTyping text-green-500"
+                >
+                    {chat.typingStatus.includes(chat.friendInfo?.id) && 'Typing...'}
+                </span>
             </div>
         </div>
     );

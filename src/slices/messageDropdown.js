@@ -2,7 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     showDropdown: false,
-    position: 0,
+    messageDetails: null,
+    positionX: 0,
+    positionY: 0,
 };
 
 
@@ -15,12 +17,19 @@ const messageDropdownSlice = createSlice({
             state.showDropdown = action.payload;
         },
 
-        setPosition: (state, action) => {
-            state.position = action.payload;
+        setMessageDetails: (state, action) => {
+            state.messageDetails = action.payload;
         },
+
+        setMessageDetailsDropdownPosition: (state, action) => {
+            state.positionX = action.payload.x;
+            state.positionY = action.payload.y;
+        },
+
+
     }
 });
 
-export const { setShowMessageDropdown, setPosition } = messageDropdownSlice.actions;
+export const { setShowMessageDropdown, setMessageDetails, setMessageDetailsDropdownPosition } = messageDropdownSlice.actions;
 
 export default messageDropdownSlice

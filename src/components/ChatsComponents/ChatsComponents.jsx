@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { FiEdit } from 'react-icons/fi';
 import { IoFilterOutline } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
@@ -33,13 +33,6 @@ function ChatsComponents() {
 
   // initial variables
   const dispatch = useDispatch();
-  // const checkUserAlreadyExist = chats.chats.filter((chat) => chat.friendInfo.id === userInfo.id)
-
-  useEffect(() => {
-    // dispatch(setActiveChatId([]));
-  }, [chats]);
-
-  const loggedInUserId = loggedInUser.id;
 
 
   const handleClick = (chat) => {
@@ -57,7 +50,6 @@ function ChatsComponents() {
   // useEffect(() => {
     
   // }, [])
-
   return (
     <>
       <div
@@ -95,7 +87,7 @@ function ChatsComponents() {
 
         <BottomBarForMobile />
       </div>
-      {showChatWindow && (mdMode || mobileMode) && <ChatWindow visibleBackArrow={mdMode || mobileMode}  fullScreen={width <= 959} />}
+      {showChatWindow && (mdMode || mobileMode) && <ChatWindow visibleBackArrow={mdMode || mobileMode} />}
     </>
   );
 }

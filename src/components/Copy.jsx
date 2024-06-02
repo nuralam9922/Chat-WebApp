@@ -19,15 +19,8 @@ function Copy({ text }) {
 
 
     }
-
-
-
-
-
-
-
     return (
-        <div>{copy ? <p>Copied</p> : <BsCopy  onClick={copyToClipboard} />}</div>
+        <div>{copy ? <p>Copied</p> : <BsCopy onClick={copyToClipboard} />}</div>
     )
 }
 
