@@ -9,6 +9,7 @@ import showAddNewComponentSlice from '../slices/showAddNewComponentSlice';
 import chatWindowSlice from '../slices/chatWindowSlice';
 import chatsSlice from '../slices/chatsSlice';
 import messageDropdownSlice from '../slices/messageDropdown';
+import messageImageSetSlice from '../slices/MessageImageSetSlice';
 
 export const store = configureStore({
 	reducer: {
@@ -23,5 +24,6 @@ export const store = configureStore({
 		chatWindowInfo: chatWindowSlice.reducer,
 		chats: chatsSlice.reducer,
 		messageDropdown: messageDropdownSlice.reducer,
+		messageImageSet: messageImageSetSlice.reducer
 	},
 });

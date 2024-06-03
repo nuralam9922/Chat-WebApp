@@ -61,7 +61,7 @@ export default function MessageDropdown() {
         }
     };
 
-    const reactionOptions = ['😊', '❤️', '👍', '🥰'];
+    const reactionOptions = ['👍', '❤️', '🙂', '😂'];
 
     const handleReaction = (reaction) => {
         messageService.addReactionToMessage(chatId, messageDetails.id, chatWindowInfo.id, reaction);
@@ -70,10 +70,10 @@ export default function MessageDropdown() {
     };
 
 
-    console.log(messageDetails);
+    // console.log(messageDetails);
 
     return (
-        <div style={{ top: `${positionY - 220}px`, left: `${positionX - 100}px` }} className={`${theme === 'light' ? 'bg-white text-black' : 'bg-[#23262b] text-white'}  w-72 rounded-lg overflow-hidden shadow-xl fixed  transition-all duration-300 ${showDropdown ? 'opacity-100 scale-100' : 'opacity-0 scale-90 pointer-events-none'}`} ref={dropdownRef}>
+        <div  className={` top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 lg:top-[${positionY - 220}px] md:left-[${positionX - 100}px] ${theme === 'light' ? 'bg-white text-black' : 'bg-[#23262b] text-white'}  w-72 rounded-lg overflow-hidden shadow-xl fixed  transition-all duration-300 ${showDropdown ? 'opacity-100 scale-100' : 'opacity-0 scale-90 pointer-events-none'}`} ref={dropdownRef}>
             <ul className="text-xl">
                 <DropdownItem fun={handelClick} icon={<HiDuplicate className="w-4 h-4 mr-3" />} text={copied ? 'Copied!' : 'Copy'} />
                 <DropdownItem fun={handelClick} icon={<HiTrash className="w-4 h-4 mr-3" />} text="Delete for me" />

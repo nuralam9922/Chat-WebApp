@@ -66,6 +66,8 @@ const MessageBubble = memo(({ message, theme }) => {
     const loggedInUser = useSelector(selectUserDetails);
     const chatId = useSelector((state) => state.chatWindowInfo.activeChatId);
 
+    const dispatch = useDispatch();
+
     const handleHover = useCallback(() => {
         clearTimeout(timeoutRef.current);
         timeoutRef.current = setTimeout(() => {
@@ -104,28 +106,47 @@ const MessageBubble = memo(({ message, theme }) => {
 
     const seen = message.seen.length >= 2;
 
-    console.log(message.reactions);
+    const touchedTimeoutRef = useRef(null);
+    let executeFun = false;
+    const handelStartPress = () => {
+        clearTimeout(touchedTimeoutRef.current);
+
+        touchedTimeoutRef.current = setTimeout(() => {
+            executeFun = true;
+        }, 500);
+    }
+
+    const handelEndPress = () => {
+        clearTimeout(touchedTimeoutRef.current);
+        if (executeFun) {
+            dispatch(setShowMessageDropdown(true));
+            dispatch(setMessageDetails(message));
+            //    console.log(e);
+        }
+    }
 
     return (
         <div
             ref={messageRef}
             onMouseLeave={handleMouseLeave}
+            onTouchStart={handelStartPress}
+            onTouchEnd={handelEndPress}
             className={`flex justify-end ${loggedInUser.id === message.sender_id ? 'pl-10' : 'pr-10'} relative`}
         >
             <div
                 onMouseOver={handleHover}
-                className={`${message.deletedForEveryone ? 'bg-red-400 text-white' : theme.theme === 'light' ? 'bg-[#accca4] text-black' : 'bg-[#23262b] text-white'} min-w-40 max-w-72 sm:max-w-80 md:max-w-md text-wrap p-2 mb-2 rounded-md text-lg sm:text-sm md:text-base break-all bg-opacity-80 font-thin group relative`}
+                className={`text-xs ${message.deletedForEveryone ? 'bg-red-400 text-white' : theme.theme === 'light' ? 'bg-[#accca4] text-black' : 'bg-[#23262b] text-white'} min-w-40 max-w-72 sm:max-w-80 md:max-w-md text-wrap p-2 mb-2 rounded-md text-lg sm:text-sm md:text-base break-all bg-opacity-80 font-thin group relative`}
             >
                 {message.deletedForEveryone ? (
                     <div className='flex items-center'>
                         <FaExclamationCircle className='mr-2' />
-                        <p className={'text-xl'} style={{ hyphens: 'auto', wordBreak: 'break-word' }}>This message was deleted</p>
+                        <p className={'md:text-xl'} style={{ hyphens: 'auto', wordBreak: 'break-word' }}>This message was deleted</p>
                     </div>
                 ) : (
-                    <p className={'text-xl'} style={{ hyphens: 'auto', wordBreak: 'break-word' }}>{message.message}</p>
+                    <p className={'md:text-xl'} style={{ hyphens: 'auto', wordBreak: 'break-word' }}>{message.message}</p>
                 )}
-                <div className='w-full flex items-center justify-between text-[10px]'>
-                    <h1 className='mt-2 flex items-center justify-between w-full text-base'>
+                <div className='w-full flex items-center justify-between  '>
+                    <h1 className='mt-2 flex items-center justify-between w-full text-xs md:text-base'>
                         <span>{formatTime(message.created_at)}</span>
                         <span style={{
                             display: !message?.deletedForEveryone ? 'block' : 'none'
@@ -135,7 +156,7 @@ const MessageBubble = memo(({ message, theme }) => {
                                     {emojis}
                                 </span>
                             ))}
-                       </span>
+                        </span>
                     </h1>
 
                 </div>

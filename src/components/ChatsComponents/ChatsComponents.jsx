@@ -20,7 +20,7 @@ function ChatsComponents() {
   // custom hooks
   const [width] = useWindowWidth();
   const mobileMode = width < 768;
-  const mdMode = width >= 768 && width < 1024;
+  const mdMode = width >= 768 && width < 959;
   // const [showChatWindow, setShowChatWindow] = useState(false);
 
   // redux states

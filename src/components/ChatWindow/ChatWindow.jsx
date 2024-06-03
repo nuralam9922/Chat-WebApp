@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AiOutlineFullscreen } from 'react-icons/ai';
 import { BsExclamationCircle } from 'react-icons/bs';
 import { CiVideoOn } from 'react-icons/ci';
@@ -10,10 +10,13 @@ import settingPageImage from '../../assets/setting.svg';
 import About from '../../pages/About/About';
 import { selectUserDetails } from '../../selectors/userSelector';
 import { setShowChatWindow } from '../../slices/chatWindowSlice';
+import ImageComponent from '../ImageComponent';
 import MessageDropdown from '../MessageDropdown/MessageDropdown';
+import { MessageImageSetComponent, MessageImageSetComponentAlert } from '../index'
 import MessageInput from '../MessageInput/MessageInput';
 import './chatWindow.css';
 import Messages from './Messages';
+
 
 function ChatWindow({ visibleBackArrow = false, setShowChatWindow, showChatWindow }) {
   const [showUserDetails, setShowUserDetails] = useState(false);
@@ -101,12 +104,13 @@ const Navbar = ({ visibleBackArrow, setShowUserDetails, handleFullScreen, handle
   const name = chatWindowInfo.full_name;
   const userName = chatWindowInfo.username;
 
+
   return (
     <nav className="w-full navbar h-16 flex-shrink-0 absolute top-0 left-0 flex items-center justify-between px-4 bg-backgroundColor text-primaryTextColor">
       <div className="flex items-center gap-2">
         {visibleBackArrow && <GoBackSvg />}
         <div className="w-10 h-10 rounded-full bg-slate-400 overflow-hidden bg-blue-gray-300">
-          <img src={imageUrl} alt="Profile Picture" className="w-full h-full object-cover" />
+          <ImageComponent className="w-full h-full object-cover" imageUrl={imageUrl} />
         </div>
         <div>
           <div className="font-medium text-primaryTextColor flex items-center gap-2 text-sm">{name}</div>
@@ -119,6 +123,7 @@ const Navbar = ({ visibleBackArrow, setShowUserDetails, handleFullScreen, handle
         <BsExclamationCircle onClick={() => setShowUserDetails(true)} className="sm:text-xl cursor-pointer" />
         {isFullScreen ? <MdFullscreenExit onClick={handleExitFullScreen} className="text-2xl cursor-pointer" /> : <AiOutlineFullscreen onClick={handleFullScreen} className="sm:text-xl cursor-pointer" />}
       </div>
+
     </nav>
   );
 };
